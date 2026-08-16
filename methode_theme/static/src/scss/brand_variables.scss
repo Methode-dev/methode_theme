@@ -1,0 +1,15 @@
+$m-bg-primary:     #FDFAF6;
+$m-bg-secondary:   #E9DBCA;
+$m-text:           #000000;
+$m-text-secondary: #6D6D6D;
+$m-accent:         #FAA140;
+
+$o-webclient-background-color: $m-bg-primary;
+$o-view-background-color:      #FFFFFF;   // provisional — see open question §13.3
+$o-main-text-color:            $m-text;
+$o-brand-primary:              $m-accent;
+$o-brand-odoo:                 $m-accent;
+
+// Inert until the woff2 files land in P4; falls back to system sans until then.
+$o-system-fonts: ("Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI",
+                Roboto, "Helvetica Neue", Arial, sans-serif);
