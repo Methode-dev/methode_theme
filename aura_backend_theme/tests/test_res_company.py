@@ -9,13 +9,14 @@ class TestResCompany(TransactionCase):
         cls.company = cls.env.company
 
     def test_default_theme_settings(self):
-        """Test default theme settings for a company."""
+        """A new company is born with the Méthode palette (THEME_PLAN §9.2)."""
         # Create a new company to test defaults
         company = self.env['res.company'].create({'name': 'Test Theme Company'})
-        self.assertEqual(company.tbt_brand_color, '#242424')
+        self.assertEqual(company.tbt_brand_color, '#FAA140')
         self.assertEqual(company.tbt_sidebar_dark_color, '#1E2433')
-        self.assertEqual(company.tbt_topbar_bg, '#ffffff')
-        self.assertEqual(company.tbt_content_bg, '#f6f6f6')
+        self.assertEqual(company.tbt_topbar_bg, '#E9DBCA')
+        self.assertEqual(company.tbt_content_bg, '#FDFAF6')
+        self.assertEqual(company.tbt_card_bg, '#FFFFFF')
 
     def test_hex_color_validation(self):
         """Test validation for hex colors."""

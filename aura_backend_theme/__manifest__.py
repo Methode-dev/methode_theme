@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Aura Backend Theme - Community Edition',
-    'version': '19.0.1.0.3',
+    'version': '19.0.1.1.0',
     'category': 'Themes/Backend',
     'summary': 'Premium backend theme for Odoo 19 Community',
     'description': """
@@ -28,6 +28,11 @@ Covers:
     'depends': ['web', 'base_setup', 'mail', 'auth_signup'],
     'data': [
         'security/ir.model.access.csv',
+        # Loads the FA6 webfont that fa_v6_shim.scss assumes is present, and
+        # server-renders the :root palette so the page paints on-brand before
+        # theme_bootstrap.js runs.  Dropped by mistake alongside the login and
+        # dashboard templates; THEME_PLAN §3.2 keeps it.
+        'views/web_assets.xml',
     ],
     'assets': {
         'web.assets_backend': [

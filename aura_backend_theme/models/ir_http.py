@@ -3,6 +3,14 @@
 from odoo import models
 from odoo.http import request
 
+from .res_company import (
+    DEFAULT_BRAND,
+    METHODE_BG_PRIMARY,
+    METHODE_BG_SECONDARY,
+    METHODE_CARD_BG,
+    METHODE_TEXT,
+)
+
 
 class IrHttp(models.AbstractModel):
     _inherit = 'ir.http'
@@ -11,17 +19,17 @@ class IrHttp(models.AbstractModel):
         info = super().session_info()
         if request.session.uid:
             company = _get_active_theme_company(request)
-            brand = company.tbt_brand_color or '#242424'
+            brand = company.tbt_brand_color or DEFAULT_BRAND
             brand_rgb = company.tbt_brand_color_rgb or _hex_to_rgb(brand)
             brand_dark = company.tbt_brand_color_dark or _darken(brand)
             info['tbt_theme'] = {
                 'brand': brand,
                 'brand_rgb': brand_rgb,
                 'brand_dark': brand_dark,
-                'topbar_bg': company.tbt_topbar_bg or '#ffffff',
-                'topbar_text': company.tbt_topbar_text or '#0c0f0f',
-                'content_bg': company.tbt_content_bg or '#f6f6f6',
-                'card_bg': company.tbt_card_bg or '#ffffff',
+                'topbar_bg': company.tbt_topbar_bg or METHODE_BG_SECONDARY,
+                'topbar_text': company.tbt_topbar_text or METHODE_TEXT,
+                'content_bg': company.tbt_content_bg or METHODE_BG_PRIMARY,
+                'card_bg': company.tbt_card_bg or METHODE_CARD_BG,
                 'dashboard_card_1': company.tbt_dashboard_card_1_color or '#2F6BFF',
                 'dashboard_card_2': company.tbt_dashboard_card_2_color or '#EF4444',
                 'dashboard_card_3': company.tbt_dashboard_card_3_color or '#F59E0B',
@@ -50,12 +58,12 @@ class IrHttp(models.AbstractModel):
 
 
 def _hex_to_rgb(hex_color):
-    v = (hex_color or '#242424').lstrip('#')
+    v = (hex_color or DEFAULT_BRAND).lstrip('#')
     return ','.join(str(int(v[i:i + 2], 16)) for i in (0, 2, 4))
 
 
 def _darken(hex_color, factor=0.55):
-    v = (hex_color or '#242424').lstrip('#')
+    v = (hex_color or DEFAULT_BRAND).lstrip('#')
     rgb = [max(0, min(255, int(int(v[i:i + 2], 16) * factor))) for i in (0, 2, 4)]
     return '#%02X%02X%02X' % tuple(rgb)
 

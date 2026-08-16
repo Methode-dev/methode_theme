@@ -13,7 +13,7 @@ class TestIrHttpTheme(TransactionCase):
         self.assertEqual(_hex_to_rgb('#FF0000'), '255,0,0')
         self.assertEqual(_hex_to_rgb('#00FF00'), '0,255,0')
         self.assertEqual(_hex_to_rgb('#0000FF'), '0,0,255')
-        self.assertEqual(_hex_to_rgb(None), '36,36,36') # DEFAULT_BRAND #242424 -> 36,36,36
+        self.assertEqual(_hex_to_rgb(None), '250,161,64') # DEFAULT_BRAND #FAA140 -> 250,161,64
 
     def test_darken_helper(self):
         """Test explicit darkening of themes in ir_http."""

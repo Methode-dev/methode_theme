@@ -7,7 +7,21 @@ from odoo.exceptions import ValidationError
 
 
 HEX_COLOR_RE = re.compile(r"^#[0-9A-Fa-f]{6}$")
-DEFAULT_BRAND = "#242424"
+
+# Méthode brand palette (THEME_PLAN §5.1).  These defaults are what
+# theme_bootstrap.js writes as inline styles on <html>, which beat every
+# stylesheet rule at the same custom-property name (§9.2) — so the brand has
+# to be seeded *here*, not fought with !important in methode_theme's SCSS.
+#
+# Keep in lockstep with the fallbacks in models/ir_http.py and
+# views/web_assets.xml; all three restate these values independently.
+DEFAULT_BRAND = "#FAA140"           # $m-accent
+METHODE_BG_PRIMARY = "#FDFAF6"      # $m-bg-primary — page / app background
+METHODE_BG_SECONDARY = "#E9DBCA"    # $m-bg-secondary — raised surfaces
+METHODE_TEXT = "#000000"            # $m-text
+# Card / form-sheet surface stays white pending the §14 open question; it is
+# the one value brand_variables.scss still marks provisional.  Revisit in P5.
+METHODE_CARD_BG = "#FFFFFF"
 DEFAULT_DASHBOARD_CARD_1 = "#2F6BFF"
 DEFAULT_DASHBOARD_CARD_2 = "#EF4444"
 DEFAULT_DASHBOARD_CARD_3 = "#F59E0B"
@@ -81,23 +95,26 @@ class ResCompany(models.Model):
 
     tbt_topbar_bg = fields.Char(
         string="Topbar Background",
-        default="#ffffff",
+        # Raised-surface token, so the navbar separates from the page by
+        # background contrast rather than a border (§8).  P6 owns the navbar
+        # and may revisit this.
+        default=METHODE_BG_SECONDARY,
         help="Background colour of the top navigation bar.",
     )
     tbt_topbar_text = fields.Char(
         string="Topbar Text Color",
-        default="#0c0f0f",
+        default=METHODE_TEXT,
         help="Text and icon colour used inside the top bar.",
     )
 
     tbt_content_bg = fields.Char(
         string="Content Background",
-        default="#f6f6f6",
+        default=METHODE_BG_PRIMARY,
         help="Background of the main content area (list, kanban, form views).",
     )
     tbt_card_bg = fields.Char(
         string="Card / Form Surface",
-        default="#ffffff",
+        default=METHODE_CARD_BG,
         help="Background of form sheets, cards and panel surfaces.",
     )
     tbt_dashboard_card_1_color = fields.Char(
