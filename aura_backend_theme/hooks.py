@@ -78,22 +78,3 @@ def post_init_hook(env):
     if companies:
         companies._compute_tbt_brand_palette()
         companies.flush_recordset()
-
-    # Compatibility: when Aura User Dashboard is installed, it should own the
-    # Home menu/action to avoid duplicate entries and ambiguous navigation.
-    dashboard_module = env['ir.module.module'].sudo().search([
-        ('name', '=', 'aura_user_dashboard'),
-        ('state', '=', 'installed'),
-    ], limit=1)
-    if dashboard_module:
-        theme_menu = env.ref('aura_backend_theme.menu_home_dashboard', raise_if_not_found=False)
-        if theme_menu and theme_menu._name == 'ir.ui.menu':
-            theme_menu.write({'active': False})
-
-        theme_action = env.ref('aura_backend_theme.action_home_dashboard', raise_if_not_found=False)
-        if theme_action and 'active' in theme_action._fields:
-            theme_action.write({'active': False})
-
-        dashboard_menu = env.ref('aura_user_dashboard.menu_home_dashboard', raise_if_not_found=False)
-        if dashboard_menu and dashboard_menu._name == 'ir.ui.menu':
-            dashboard_menu.write({'active': True})

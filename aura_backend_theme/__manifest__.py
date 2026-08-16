@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Aura Backend Theme - Community Edition',
-    'version': '19.0.1.0.2',
+    'version': '19.0.1.0.3',
     'category': 'Themes/Backend',
     'summary': 'Premium backend theme for Odoo 19 Community',
     'description': """
@@ -28,24 +28,10 @@ Covers:
     'depends': ['web', 'base_setup', 'mail', 'auth_signup'],
     'data': [
         'security/ir.model.access.csv',
-        'security/home_dashboard_security.xml',
-        'views/web_assets.xml',
-        'views/login_templates.xml',
-        'views/res_config_settings_views.xml',
-        'views/home_dashboard_templates.xml',
     ],
     'assets': {
         'web.assets_backend': [
             'aura_backend_theme/static/src/js/theme_bootstrap.js',
-
-            'aura_backend_theme/static/src/scss/home_dashboard.scss',
-            'aura_backend_theme/static/src/scss/home_widget_grid.scss',
-            'aura_backend_theme/static/src/xml/home_dashboard.xml',
-            'aura_backend_theme/static/src/js/home_dashboard.js',
-
-            'aura_backend_theme/static/src/scss/app_widgets.scss',
-            'aura_backend_theme/static/src/xml/app_widgets.xml',
-            'aura_backend_theme/static/src/js/app_widgets.js',
 
             'aura_backend_theme/static/src/scss/fa_v6_shim.scss',
 
@@ -54,7 +40,6 @@ Covers:
             'aura_backend_theme/static/src/webclient/theme_settings/theme_settings_dialog.xml',
             'aura_backend_theme/static/src/webclient/theme_settings/theme_settings_dialog.scss',
         ],
-        # 'web.assets_frontend' removed entirely — login.scss/signup.scss/rtl.scss are gone.
     },
     'images': [
         'static/description/banner.png',
