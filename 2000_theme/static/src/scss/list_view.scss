@@ -1,0 +1,146 @@
+// List View Headers - Discrete drop shadow on bottom
+// ===================================================
+
+// List view table headers
+.o_list_view {
+    .o_list_table {
+        thead {
+            th {
+                position: relative;
+
+                // Apply shadow to the entire header row
+                &::after {
+                    content: '';
+                    position: absolute;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    height: 1px;
+                    box-shadow: $theme-shadow-subtle;
+                }
+            }
+        }
+    }
+}
+
+// Alternative approach - apply to the header row container
+.o_list_renderer {
+    .o_list_table {
+        thead {
+            box-shadow: $theme-shadow-subtle;
+
+            th {
+                border-bottom: 1px solid $theme-border-color;
+                font-weight: 500;
+            }
+        }
+    }
+}
+
+// Grouped list headers
+.o_list_view {
+    .o_group_header {
+        box-shadow: $theme-shadow-subtle;
+
+        td {
+            font-weight: 500;
+        }
+    }
+}
+
+// Kanban view headers (for consistency)
+.o_kanban_view {
+    .o_kanban_header {
+        box-shadow: $theme-shadow-subtle;
+
+    }
+}
+
+// Tree view (similar to list)
+.o_tree_view {
+    thead {
+        box-shadow: $theme-shadow-subtle;
+
+        th {
+            border-bottom: 1px solid $theme-border-color;
+        }
+    }
+}
+
+// Sticky headers should also have shadow
+.o_list_view {
+    .o_list_table {
+        thead.o_sticky_header,
+        thead {
+            &.position-sticky,
+            &[style*="position: sticky"] {
+                box-shadow: $theme-shadow-subtle;
+                z-index: 1;
+            }
+        }
+    }
+}
+
+// Editable list in form views (one2many, many2many)
+.o_field_widget {
+    .o_list_view {
+        .o_list_table {
+            thead {
+                box-shadow: $theme-shadow-subtle;
+                th {
+                    font-weight: 500;
+                    border-bottom: 1px solid $theme-border-color;
+                }
+            }
+        }
+    }
+}
+
+// Pin control panel in "Search more" dialog throughout the full scroll.
+// Root cause: Odoo's select_create_dialog.scss forces height:100% on
+// .o_list_view, capping the sticky range to the visible viewport height.
+// height:auto lets the container grow to content height so sticky travels
+// the entire list — the Bootstrap .modal (overflow-y:auto) handles the scroll.
+.o_select_create_dialog_content {
+    .o_list_view.o_view_controller {
+        height: auto;
+
+        > .o_control_panel {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background-color: $body-bg;
+        }
+    }
+}
+
+// Sticky control panel inside act_window target:'new' dialogs.
+// Same root cause as o_select_create_dialog_content above: .o_list_view has
+// height:100% which caps the sticky range to the visible viewport. Setting
+// height:auto lets the list grow to content height so the control panel can
+// stick to the top while the modal-body handles the scroll.
+.o_dialog {
+    .modal-body {
+        .o_list_view.o_view_controller {
+            height: auto;
+
+            > .o_control_panel {
+                position: sticky;
+                top: 0;
+                z-index: 10;
+                background-color: $body-bg;
+            }
+        }
+    }
+}
+
+// Pivot table headers
+.o_pivot {
+    thead {
+        box-shadow: $theme-shadow-subtle;
+
+        th {
+            border-bottom: 1px solid $theme-border-color;
+        }
+    }
+}

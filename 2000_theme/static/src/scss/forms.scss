@@ -1,0 +1,45 @@
+// Forms - Sheet, fields, and layout
+// ==================================
+
+
+// Required fields indicator
+.o_required_modifier {
+    .o_input {
+        border-bottom: 2px solid #666666;
+        background-color: transparent !important;
+    }
+}
+
+// Many2one external button
+.o_field_widget.o_field_many2one .o_external_button {
+    color: $theme-primary;
+}
+
+// Button box
+.oe_button_box {
+    .oe_stat_button {
+        border-radius: 0 !important;
+
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.03) !important;
+        }
+
+        .o_button_icon {
+            color: #666666 !important;
+        }
+    }
+}
+
+// Control panel
+.o_control_panel > .o_cp_right {
+    max-height: 60px;
+}
+
+// Disabled many2one inputs
+.o_field_many2one input[type="text"]:disabled {
+    background-color: #FFF;
+}
+
+.btn-group .o_dropdown {
+    border: none;
+}

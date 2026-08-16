@@ -1,0 +1,1577 @@
+# French translations for the Aura Backend Theme module.
+# Copyright (C) LATI
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-25 00:00+0000\n"
+"PO-Revision-Date: 2026-06-25 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: French <fr@li.org>\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+# ── Model: res.company — field strings ──────────────────────────────────────
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Theme Brand Color"
+msgstr "Couleur de marque du thème"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Theme Brand Color RGB"
+msgstr "RVB de la couleur de marque du thème"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Theme Brand Color Dark"
+msgstr "Couleur de marque du thème (foncée)"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Dark Sidebar"
+msgstr "Barre latérale foncée"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Dark Sidebar Base Color"
+msgstr "Couleur de base de la barre latérale foncée"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Topbar Background"
+msgstr "Arrière-plan de la barre supérieure"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Topbar Text Color"
+msgstr "Couleur du texte de la barre supérieure"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Content Background"
+msgstr "Arrière-plan du contenu"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Card / Form Surface"
+msgstr "Surface des fiches / formulaires"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Dashboard Card 1 Color"
+msgstr "Couleur de la carte 1 du tableau de bord"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Dashboard Card 2 Color"
+msgstr "Couleur de la carte 2 du tableau de bord"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Dashboard Card 3 Color"
+msgstr "Couleur de la carte 3 du tableau de bord"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Dashboard Card 4 Color"
+msgstr "Couleur de la carte 4 du tableau de bord"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Solid Dashboard Cards"
+msgstr "Cartes du tableau de bord unies"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Login Split Screen"
+msgstr "Écran de connexion divisé"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Show Create Account Link"
+msgstr "Afficher le lien de création de compte"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Login Brand Copy"
+msgstr "Texte de marque de connexion"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Login Brand Footer"
+msgstr "Pied de page de marque de connexion"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Login Background Image"
+msgstr "Image d'arrière-plan de connexion"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Use Login Background Image"
+msgstr "Utiliser l'image d'arrière-plan de connexion"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Show Login Circular Pattern"
+msgstr "Afficher le motif circulaire de connexion"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Custom Loading Indicator"
+msgstr "Indicateur de chargement personnalisé"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Loading Text Color"
+msgstr "Couleur du texte de chargement"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Loading Style"
+msgstr "Style de chargement"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "High Contrast"
+msgstr "Contraste élevé"
+
+# loading style selection labels
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/webclient/theme_settings/theme_settings_dialog.js:0
+msgid "Arc"
+msgstr "Arc"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/webclient/theme_settings/theme_settings_dialog.js:0
+msgid "Dual Arc"
+msgstr "Double arc"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/webclient/theme_settings/theme_settings_dialog.js:0
+msgid "Spinner"
+msgstr "Spinner"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/webclient/theme_settings/theme_settings_dialog.js:0
+msgid "Sun"
+msgstr "Soleil"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/webclient/theme_settings/theme_settings_dialog.js:0
+msgid "Dots"
+msgstr "Points"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/webclient/theme_settings/theme_settings_dialog.js:0
+msgid "Quad"
+msgstr "Quadrant"
+
+# ── Model: res.company — help texts ─────────────────────────────────────────
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Primary brand color for the backend theme, in #RRGGBB format."
+msgstr "Couleur principale de marque du thème backend, au format #RRGGBB."
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Use a darker sidebar palette for better contrast in the navigation area."
+msgstr ""
+"Utilise une palette de couleurs plus sombre pour la barre latérale afin "
+"d'améliorer le contraste dans la zone de navigation."
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid ""
+"Base hue for the dark sidebar. The theme derives a deep dark shade from this "
+"colour. Default #1E2433 gives the classic dark navy look."
+msgstr ""
+"Teinte de base de la barre latérale foncée. Le thème en dérive une nuance "
+"sombre profonde. Par défaut, #1E2433 donne l'aspect bleu marine foncé "
+"classique."
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Background colour of the top navigation bar."
+msgstr "Couleur d'arrière-plan de la barre de navigation supérieure."
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Text and icon colour used inside the top bar."
+msgstr "Couleur du texte et des icônes dans la barre supérieure."
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Background of the main content area (list, kanban, form views)."
+msgstr "Arrière-plan de la zone de contenu principale (vues liste, kanban, formulaire)."
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Background of form sheets, cards and panel surfaces."
+msgstr "Arrière-plan des feuilles de formulaire, des fiches et des panneaux."
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Accent background color for the first dashboard stat card."
+msgstr "Couleur d'accentuation pour la première carte statistique du tableau de bord."
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Accent background color for the second dashboard stat card."
+msgstr "Couleur d'accentuation pour la deuxième carte statistique du tableau de bord."
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Accent background color for the third dashboard stat card."
+msgstr "Couleur d'accentuation pour la troisième carte statistique du tableau de bord."
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Accent background color for the fourth dashboard stat card."
+msgstr "Couleur d'accentuation pour la quatrième carte statistique du tableau de bord."
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid ""
+"Use flat solid backgrounds on dashboard stat cards instead of the soft "
+"gradient/circle pattern."
+msgstr ""
+"Utilise des fonds plats et unis pour les cartes statistiques du tableau de "
+"bord au lieu du motif dégradé."
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Show the branded split-screen layout on the login page."
+msgstr "Affiche la mise en page fractionnée brandée sur la page de connexion."
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Show the create account link on the login page."
+msgstr "Affiche le lien de création de compte sur la page de connexion."
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Descriptive text shown in the branded login panel."
+msgstr "Texte descriptif affiché dans le panneau de connexion brandé."
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid ""
+"Footer text shown in the branded login panel. Use {company_name} as a "
+"placeholder for the active company name."
+msgstr ""
+"Texte de pied de page dans le panneau de connexion brandé. Utilisez "
+"{company_name} comme espace réservé pour le nom de la société active."
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid ""
+"Optional background image for the left branded panel of the split login page."
+msgstr ""
+"Image d'arrière-plan optionnelle pour le panneau gauche brandé de la page "
+"de connexion fractionnée."
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Enable the uploaded image on the left split panel."
+msgstr "Active l'image téléchargée sur le panneau gauche de l'écran fractionné."
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Show circular ring patterns on the left split panel when image is used."
+msgstr "Affiche des motifs circulaires sur le panneau gauche lorsqu'une image est utilisée."
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Enable custom theme styling for the global loading indicator."
+msgstr "Active le style personnalisé du thème pour l'indicateur de chargement global."
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Text and spinner colour used by the loading indicator."
+msgstr "Couleur du texte et du spinner de l'indicateur de chargement."
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Visual style of the loading spinner."
+msgstr "Style visuel du spinner de chargement."
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Enable stronger contrast in form fields by restoring visible borders."
+msgstr "Active un contraste plus fort dans les champs de formulaire en restaurant les bordures visibles."
+
+# ── Model: theme.home.dashboard.config — field strings ──────────────────────
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Home Dashboard Widget Configuration"
+msgstr "Configuration des widgets du tableau de bord principal"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Show Overview Stats"
+msgstr "Afficher les statistiques générales"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Show My Activities"
+msgstr "Afficher mes activités"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Show Top Invoices"
+msgstr "Afficher les principales factures"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Show My Pipeline (CRM)"
+msgstr "Afficher mon pipeline (CRM)"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Show Recently Opened"
+msgstr "Afficher les éléments récemment ouverts"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Show Quick Access"
+msgstr "Afficher l'accès rapide"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Max invoices to show"
+msgstr "Nombre max. de factures à afficher"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Invoice Filter"
+msgstr "Filtre des factures"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "All"
+msgstr "Tout"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "This Month"
+msgstr "Ce mois"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Max activities to show"
+msgstr "Nombre max. d'activités à afficher"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Max pipeline stages shown"
+msgstr "Nombre max. d'étapes du pipeline affichées"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Max recent records"
+msgstr "Nombre max. d'enregistrements récents"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Pinned Menu Shortcuts"
+msgstr "Raccourcis du menu épinglés"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Layout Density"
+msgstr "Densité de la mise en page"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Comfortable"
+msgstr "Confortable"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Compact"
+msgstr "Compact"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Spacious"
+msgstr "Spacieux"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Dashboard Theme"
+msgstr "Thème du tableau de bord"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/webclient/theme_settings/theme_settings_dialog.js:0
+msgid "Aura"
+msgstr "Aura"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/webclient/theme_settings/theme_settings_dialog.js:0
+msgid "Minimalistic"
+msgstr "Minimaliste"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/webclient/theme_settings/theme_settings_dialog.js:0
+msgid "Colorful"
+msgstr "Coloré"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/webclient/theme_settings/theme_settings_dialog.js:0
+msgid "Classic"
+msgstr "Classique"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/webclient/theme_settings/theme_settings_dialog.js:0
+msgid "Ocean"
+msgstr "Océan"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/webclient/theme_settings/theme_settings_dialog.js:0
+msgid "Sunset"
+msgstr "Coucher de soleil"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/webclient/theme_settings/theme_settings_dialog.js:0
+msgid "Midnight"
+msgstr "Minuit"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Theme Mode"
+msgstr "Mode du thème"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Auto (follow Odoo appearance)"
+msgstr "Auto (suit l'apparence Odoo)"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Manual"
+msgstr "Manuel"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Stats to show"
+msgstr "Statistiques à afficher"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "A dashboard config already exists for this user."
+msgstr "Une configuration de tableau de bord existe déjà pour cet utilisateur."
+
+# ── Model: theme.home.widget — field strings ─────────────────────────────────
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Home Dashboard Widget Row"
+msgstr "Ligne de widget du tableau de bord principal"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Widget Key"
+msgstr "Clé du widget"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Position"
+msgstr "Position"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Width"
+msgstr "Largeur"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "1 column"
+msgstr "1 colonne"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "2 columns"
+msgstr "2 colonnes"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Full width"
+msgstr "Pleine largeur"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Widget Config (JSON)"
+msgstr "Configuration du widget (JSON)"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "This widget is already on the dashboard for this user."
+msgstr "Ce widget est déjà présent sur le tableau de bord de cet utilisateur."
+
+# ── hooks.py ─────────────────────────────────────────────────────────────────
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/hooks.py:0
+msgid ""
+"Cannot install Aura Backend Theme while Aura User Dashboard is installed. "
+"Uninstall Aura User Dashboard first."
+msgstr ""
+"Impossible d'installer Aura Backend Theme pendant qu'Aura User Dashboard est "
+"installé. Désinstallez d'abord Aura User Dashboard."
+
+# ── models/res_company.py — constraint labels ───────────────────────────────
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/models/res_company.py:0
+msgid "Brand color"
+msgstr "Couleur de marque"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/models/res_company.py:0
+msgid "Topbar background"
+msgstr "Arrière-plan de la barre supérieure"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/models/res_company.py:0
+msgid "Topbar text color"
+msgstr "Couleur du texte de la barre supérieure"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/models/res_company.py:0
+msgid "Content background"
+msgstr "Arrière-plan du contenu"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/models/res_company.py:0
+msgid "Card background"
+msgstr "Arrière-plan des fiches"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/models/res_company.py:0
+msgid "Loading text color"
+msgstr "Couleur du texte de chargement"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/models/res_company.py:0
+msgid "Dashboard card 1 color"
+msgstr "Couleur de la carte 1 du tableau de bord"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/models/res_company.py:0
+msgid "Dashboard card 2 color"
+msgstr "Couleur de la carte 2 du tableau de bord"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/models/res_company.py:0
+msgid "Dashboard card 3 color"
+msgstr "Couleur de la carte 3 du tableau de bord"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/models/res_company.py:0
+msgid "Dashboard card 4 color"
+msgstr "Couleur de la carte 4 du tableau de bord"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/models/res_company.py:0
+msgid "%(label)s must be a valid HEX value like #242424."
+msgstr "%(label)s doit être une valeur HEX valide (ex. : #242424)."
+
+# ── controllers/home_dashboard.py ───────────────────────────────────────────
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_dashboard.py:0
+msgid "%(n)d invoice"
+msgstr "%(n)d facture"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_dashboard.py:0
+msgid "%(n)d invoices"
+msgstr "%(n)d factures"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/js/home_dashboard.js:0
+msgid "Open Invoices"
+msgstr "Factures ouvertes"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_dashboard.py:0
+msgid "%(n)d bill"
+msgstr "%(n)d facture fournisseur"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_dashboard.py:0
+msgid "%(n)d bills"
+msgstr "%(n)d factures fournisseur"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/js/home_dashboard.js:0
+msgid "Overdue Bills"
+msgstr "Factures fournisseur en retard"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_dashboard.py:0
+msgid "Bank %(sym)s%(bal)d"
+msgstr "Banque %(sym)s%(bal)d"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/js/home_dashboard.js:0
+msgid "Cash Flow"
+msgstr "Flux de trésorerie"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_dashboard.py:0
+msgid "%(sym)s%(amt)d due"
+msgstr "%(sym)s%(amt)d dû"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/js/home_dashboard.js:0
+msgid "Aged Receivables"
+msgstr "Créances à terme"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_dashboard.py:0
+msgid "%(n)d overdue"
+msgstr "%(n)d en retard"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_dashboard.py:0
+msgid "%(n)d due today"
+msgstr "%(n)d dû aujourd'hui"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/js/home_dashboard.js:0
+msgid "My Activities"
+msgstr "Mes activités"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_dashboard.py:0
+msgid "%(delta)+.1f%% vs last month"
+msgstr "%(delta)+.1f%% vs mois dernier"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_dashboard.py:0
+msgid "No CRM data"
+msgstr "Pas de données CRM"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/js/home_dashboard.js:0
+msgid "Pipeline"
+msgstr "Pipeline"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_dashboard.py:0
+msgid "Products at or below minimum stock"
+msgstr "Produits au niveau du stock minimum ou en dessous"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/js/home_dashboard.js:0
+msgid "Reorder Alerts"
+msgstr "Alertes de réapprovisionnement"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_dashboard.py:0
+msgid "Products to Reorder"
+msgstr "Produits à réapprovisionner"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_dashboard.py:0
+msgid "Incoming shipments to receive"
+msgstr "Expéditions entrantes à réceptionner"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/js/home_dashboard.js:0
+msgid "Pending Receipts"
+msgstr "Réceptions en attente"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_dashboard.py:0
+msgid "Draft and sent quotations"
+msgstr "Devis en brouillon et envoyés"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/js/home_dashboard.js:0
+msgid "Quotations"
+msgstr "Devis"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_dashboard.py:0
+msgid "New Quotation"
+msgstr "Nouveau devis"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_dashboard.py:0
+msgid "Confirmed orders ready to invoice"
+msgstr "Commandes confirmées prêtes à facturer"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/js/home_dashboard.js:0
+msgid "Orders to Invoice"
+msgstr "Commandes à facturer"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_dashboard.py:0
+msgid "Open tasks assigned to you"
+msgstr "Tâches ouvertes qui vous sont assignées"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/js/home_dashboard.js:0
+msgid "My Tasks"
+msgstr "Mes tâches"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_dashboard.py:0
+msgid "Tasks due in the next 7 days"
+msgstr "Tâches dues dans les 7 prochains jours"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/js/home_dashboard.js:0
+msgid "Deadlines"
+msgstr "Échéances"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_dashboard.py:0
+msgid "Project Deadlines"
+msgstr "Échéances de projet"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_dashboard.py:0
+msgid "Leave requests pending review"
+msgstr "Demandes de congé en attente de validation"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/js/home_dashboard.js:0
+msgid "Leave Requests"
+msgstr "Demandes de congé"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_dashboard.py:0
+msgid "Attendance records today"
+msgstr "Enregistrements de présence aujourd'hui"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/js/home_dashboard.js:0
+msgid "Attendance Today"
+msgstr "Présences du jour"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_dashboard.py:0
+msgid "Confirmed production orders in progress"
+msgstr "Ordres de fabrication confirmés en cours"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/js/home_dashboard.js:0
+msgid "Production Orders"
+msgstr "Ordres de fabrication"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_dashboard.py:0
+msgid "Record"
+msgstr "Enregistrement"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_dashboard.py:0
+msgid "Invoice"
+msgstr "Facture"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_dashboard.py:0
+msgid "Opportunity"
+msgstr "Opportunité"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_dashboard.py:0
+msgid "Unknown"
+msgstr "Inconnu"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_dashboard.py:0
+msgid "%(n)d deal stuck without update for 7+ days"
+msgstr "%(n)d opportunité bloquée sans mise à jour depuis 7+ jours"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_dashboard.py:0
+msgid "%(n)d deals stuck without update for 7+ days"
+msgstr "%(n)d opportunités bloquées sans mise à jour depuis 7+ jours"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_dashboard.py:0
+msgid "Review Pipeline"
+msgstr "Examiner le pipeline"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_dashboard.py:0
+msgid "Stale Opportunities"
+msgstr "Opportunités manquées"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_dashboard.py:0
+msgid "%(n)d invoice overdue for 30+ days"
+msgstr "%(n)d facture en retard depuis 30+ jours"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_dashboard.py:0
+msgid "%(n)d invoices overdue for 30+ days"
+msgstr "%(n)d factures en retard depuis 30+ jours"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_dashboard.py:0
+msgid "Review Invoices"
+msgstr "Examiner les factures"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_dashboard.py:0
+msgid "Invoices Overdue 30+ Days"
+msgstr "Factures en retard 30+ jours"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_dashboard.py:0
+msgid "New Invoice"
+msgstr "Nouvelle facture"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_dashboard.py:0
+msgid "New Lead"
+msgstr "Nouveau prospect"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_dashboard.py:0
+msgid "New Sale Order"
+msgstr "Nouveau bon de commande"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_dashboard.py:0
+msgid "New Task"
+msgstr "Nouvelle tâche"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_dashboard.py:0
+msgid "My Pipeline"
+msgstr "Mon pipeline"
+
+# ── controllers/home_widgets.py ─────────────────────────────────────────────
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_widgets.py:0
+msgid "Quick Actions"
+msgstr "Actions rapides"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_widgets.py:0
+msgid "Fast shortcuts for common tasks"
+msgstr "Raccourcis rapides pour les tâches courantes"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_widgets.py:0
+msgid "Overview Stats"
+msgstr "Statistiques générales"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_widgets.py:0
+msgid "KPI metrics: invoices, activities, CRM"
+msgstr "Indicateurs KPI : factures, activités, CRM"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_widgets.py:0
+msgid "Scheduled tasks grouped by urgency"
+msgstr "Tâches planifiées regroupées par urgence"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_widgets.py:0
+msgid "Today's Focus"
+msgstr "Focus du jour"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_widgets.py:0
+msgid "Urgent items and contextual alerts"
+msgstr "Éléments urgents et alertes contextuelles"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_widgets.py:0
+msgid "Continue Working"
+msgstr "Continuer le travail"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_widgets.py:0
+msgid "Recently modified records across apps"
+msgstr "Enregistrements récemment modifiés dans toutes les applications"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_widgets.py:0
+msgid "My Activity Trend"
+msgstr "Tendance de mes activités"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_widgets.py:0
+msgid "Overdue, today, and upcoming activity mix"
+msgstr "Mix d'activités en retard, aujourd'hui et à venir"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_widgets.py:0
+msgid "Top Invoices"
+msgstr "Principales factures"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_widgets.py:0
+msgid "Open and overdue customer invoices"
+msgstr "Factures clients ouvertes et en retard"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_widgets.py:0
+msgid "CRM opportunities grouped by stage"
+msgstr "Opportunités CRM regroupées par étape"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_widgets.py:0
+msgid "Items at or below minimum stock level"
+msgstr "Articles au niveau du stock minimum ou en dessous"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_widgets.py:0
+msgid "Incoming shipments ready to receive"
+msgstr "Expéditions entrantes prêtes à réceptionner"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_widgets.py:0
+msgid "RFQs to Send"
+msgstr "Demandes de prix à envoyer"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_widgets.py:0
+msgid "Draft purchase orders awaiting confirmation"
+msgstr "Bons de commande fournisseur en brouillon en attente de confirmation"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_widgets.py:0
+msgid "Open Purchase Orders"
+msgstr "Bons de commande fournisseur ouverts"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_widgets.py:0
+msgid "Confirmed POs pending delivery"
+msgstr "Bons de commande fournisseur confirmés en attente de livraison"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_widgets.py:0
+msgid "Quotations to Send"
+msgstr "Devis à envoyer"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_widgets.py:0
+msgid "Confirmed orders ready for invoicing"
+msgstr "Commandes confirmées prêtes pour la facturation"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_widgets.py:0
+msgid "Sales Trend"
+msgstr "Tendance des ventes"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_widgets.py:0
+msgid "Monthly sales totals for the last 6 months"
+msgstr "Totaux de vente mensuels pour les 6 derniers mois"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_widgets.py:0
+msgid "Approved and pending leave requests"
+msgstr "Demandes de congé approuvées et en attente"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_widgets.py:0
+msgid "Today's check-ins and check-outs"
+msgstr "Pointages d'aujourd'hui"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_widgets.py:0
+msgid "Tasks assigned to you and still open"
+msgstr "Tâches qui vous sont assignées et encore ouvertes"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_widgets.py:0
+msgid "Cash Flow Summary"
+msgstr "Résumé des flux de trésorerie"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_widgets.py:0
+msgid "Bank balance and near-term cash movements"
+msgstr "Solde bancaire et flux de trésorerie à court terme"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_widgets.py:0
+msgid "Open customer invoices bucketed by age"
+msgstr "Factures clients ouvertes regroupées par ancienneté"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_widgets.py:0
+msgid "This widget is no longer available."
+msgstr "Ce widget n'est plus disponible."
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_widgets.py:0
+msgid "Custom Widget"
+msgstr "Widget personnalisé"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_widgets.py:0
+msgid "Product"
+msgstr "Produit"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_widgets.py:0
+msgid "Receipt"
+msgstr "Réception"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_widgets.py:0
+msgid "RFQ"
+msgstr "Demande de prix"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_widgets.py:0
+msgid "New RFQ"
+msgstr "Nouvelle demande de prix"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_widgets.py:0
+msgid "Purchase Order"
+msgstr "Bon de commande fournisseur"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_widgets.py:0
+msgid "Quotation"
+msgstr "Devis"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_widgets.py:0
+msgid "Sent"
+msgstr "Envoyé"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_widgets.py:0
+msgid "Draft"
+msgstr "Brouillon"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_widgets.py:0
+msgid "Sale Order"
+msgstr "Bon de commande client"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_widgets.py:0
+msgid "Leave Request"
+msgstr "Demande de congé"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_widgets.py:0
+msgid "Attendance"
+msgstr "Présence"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_widgets.py:0
+msgid "Task"
+msgstr "Tâche"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_widgets.py:0
+msgid "Production Order"
+msgstr "Ordre de fabrication"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_widgets.py:0
+msgid "Bill"
+msgstr "Facture fournisseur"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_widgets.py:0
+msgid "Sales Orders"
+msgstr "Bons de commande clients"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/js/home_dashboard.js:0
+msgid "Overdue"
+msgstr "En retard"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/js/home_dashboard.js:0
+msgid "Today"
+msgstr "Aujourd'hui"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/js/home_dashboard.js:0
+msgid "Upcoming"
+msgstr "À venir"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_widgets.py:0
+msgid "0-30 days"
+msgstr "0-30 jours"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_widgets.py:0
+msgid "31-60 days"
+msgstr "31-60 jours"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_widgets.py:0
+msgid "61-90 days"
+msgstr "61-90 jours"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_widgets.py:0
+msgid "90+ days"
+msgstr "90+ jours"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/controllers/home_widgets.py:0
+msgid "records"
+msgstr "enregistrements"
+
+# ── static/src/js/home_dashboard.js ─────────────────────────────────────────
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/js/home_dashboard.js:0
+msgid "Good morning"
+msgstr "Bonjour"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/js/home_dashboard.js:0
+msgid "Good afternoon"
+msgstr "Bon après-midi"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/js/home_dashboard.js:0
+msgid "Good evening"
+msgstr "Bonsoir"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/js/home_dashboard.js:0
+msgid "%(days)sd overdue"
+msgstr "%(days)sj de retard"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/js/home_dashboard.js:0
+msgid "in %(days)sd"
+msgstr "dans %(days)sj"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/js/home_dashboard.js:0
+msgid "%(mins)sm ago"
+msgstr "il y a %(mins)smin"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/js/home_dashboard.js:0
+msgid "%(hrs)sh ago"
+msgstr "il y a %(hrs)sh"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/js/home_dashboard.js:0
+msgid "%(days)sd ago"
+msgstr "il y a %(days)sj"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/js/home_dashboard.js:0
+msgid "Accounting"
+msgstr "Comptabilité"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/js/home_dashboard.js:0
+msgid "Inventory"
+msgstr "Inventaire"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/js/home_dashboard.js:0
+msgid "Sales"
+msgstr "Ventes"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/js/home_dashboard.js:0
+msgid "Project"
+msgstr "Projet"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/js/home_dashboard.js:0
+msgid "Manufacturing"
+msgstr "Fabrication"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/js/home_dashboard.js:0
+msgid "Human Resources"
+msgstr "Ressources humaines"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/js/home_dashboard.js:0
+msgid "General"
+msgstr "Général"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/js/home_dashboard.js:0
+msgid "Failed to load dashboard. Please refresh the page."
+msgstr "Impossible de charger le tableau de bord. Veuillez actualiser la page."
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/js/home_dashboard.js:0
+msgid "Could not mark activity as done."
+msgstr "Impossible de marquer l'activité comme terminée."
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/js/home_dashboard.js:0
+msgid "Could not save settings."
+msgstr "Impossible d'enregistrer les paramètres."
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/js/home_dashboard.js:0
+msgid "Enable edit mode to change widgets."
+msgstr "Activez le mode édition pour modifier les widgets."
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/js/home_dashboard.js:0
+msgid "Choose a model first."
+msgstr "Choisissez d'abord un modèle."
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/js/home_dashboard.js:0
+msgid "Give the widget a title."
+msgstr "Donnez un titre au widget."
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/js/home_dashboard.js:0
+msgid "Choose at least one table field."
+msgstr "Choisissez au moins un champ de tableau."
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/js/home_dashboard.js:0
+msgid "Could not add widget."
+msgstr "Impossible d'ajouter le widget."
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/js/home_dashboard.js:0
+msgid "Could not restore default widgets."
+msgstr "Impossible de restaurer les widgets par défaut."
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/js/home_dashboard.js:0
+msgid "Could not remove widget."
+msgstr "Impossible de supprimer le widget."
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/js/home_dashboard.js:0
+msgid "Could not resize widget."
+msgstr "Impossible de redimensionner le widget."
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/js/home_dashboard.js:0
+msgid "Configuration must be valid JSON."
+msgstr "La configuration doit être un JSON valide."
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/js/home_dashboard.js:0
+msgid "Could not save widget settings."
+msgstr "Impossible d'enregistrer les paramètres du widget."
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/js/home_dashboard.js:0
+msgid "Could not save order."
+msgstr "Impossible d'enregistrer l'ordre."
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/js/home_dashboard.js:0
+msgid "Could not load models."
+msgstr "Impossible de charger les modèles."
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/js/home_dashboard.js:0
+msgid "Could not load fields for this model."
+msgstr "Impossible de charger les champs pour ce modèle."
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/js/home_dashboard.js:0
+msgid "Could not create widget."
+msgstr "Impossible de créer le widget."
+
+# ── static/src/webclient/theme_settings/theme_settings_dialog.js ────────────
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/webclient/theme_settings/theme_settings_dialog.js:0
+msgid "Navy"
+msgstr "Marine"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/webclient/theme_settings/theme_settings_dialog.js:0
+msgid "Blue"
+msgstr "Bleu"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/webclient/theme_settings/theme_settings_dialog.js:0
+msgid "Indigo"
+msgstr "Indigo"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/webclient/theme_settings/theme_settings_dialog.js:0
+msgid "Teal"
+msgstr "Sarcelle"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/webclient/theme_settings/theme_settings_dialog.js:0
+msgid "Forest"
+msgstr "Forêt"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/webclient/theme_settings/theme_settings_dialog.js:0
+msgid "Crimson"
+msgstr "Cramoisi"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/webclient/theme_settings/theme_settings_dialog.js:0
+msgid "Custom"
+msgstr "Personnalisé"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/webclient/theme_settings/theme_settings_dialog.js:0
+msgid "Candy"
+msgstr "Bonbon"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/webclient/theme_settings/theme_settings_dialog.js:0
+msgid "Mono"
+msgstr "Mono"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/webclient/theme_settings/theme_settings_dialog.js:0
+msgid "Brand"
+msgstr "Marque"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/webclient/theme_settings/theme_settings_dialog.js:0
+msgid "Top Bar"
+msgstr "Barre supérieure"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/webclient/theme_settings/theme_settings_dialog.js:0
+msgid "Backgrounds"
+msgstr "Arrière-plans"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/webclient/theme_settings/theme_settings_dialog.js:0
+msgid "Dashboard"
+msgstr "Tableau de bord"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/webclient/theme_settings/theme_settings_dialog.js:0
+msgid "Login"
+msgstr "Connexion"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/webclient/theme_settings/theme_settings_dialog.js:0
+msgid "Loading"
+msgstr "Chargement"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/webclient/theme_settings/theme_settings_dialog.js:0
+msgid "Theme settings saved. Reloading…"
+msgstr "Paramètres du thème enregistrés. Rechargement…"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/webclient/theme_settings/theme_settings_dialog.js:0
+msgid "Failed to save settings."
+msgstr "Impossible d'enregistrer les paramètres."
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/webclient/theme_settings/theme_settings_dialog.js:0
+msgid "Please choose a valid image file."
+msgstr "Veuillez choisir un fichier image valide."
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/static/src/webclient/theme_settings/theme_settings_dialog.js:0
+msgid "Failed to read selected image."
+msgstr "Impossible de lire l'image sélectionnée."
+
+# ── views/res_config_settings_views.xml ──────────────────────────────────────
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Backend Theme"
+msgstr "Thème backend"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Brand Color"
+msgstr "Couleur de marque"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Reset to Default Blue"
+msgstr "Réinitialiser au bleu par défaut"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Use a hex color code, e.g. #242424."
+msgstr "Utilisez un code couleur hexadécimal, ex. : #242424."
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Toggle Dark Sidebar"
+msgstr "Basculer la barre latérale foncée"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Enable for a darker left navigation similar to the reference."
+msgstr "Activez pour une navigation gauche plus sombre, similaire à la référence."
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Topbar Colors"
+msgstr "Couleurs de la barre supérieure"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Background"
+msgstr "Arrière-plan"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Text"
+msgstr "Texte"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Content & Surface Colors"
+msgstr "Couleurs du contenu et des surfaces"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Card Surface"
+msgstr "Surface des fiches"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Dashboard Stat Card Colors"
+msgstr "Couleurs des cartes statistiques du tableau de bord"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Use solid card backgrounds"
+msgstr "Utiliser des fonds de cartes unis"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Card 1"
+msgstr "Carte 1"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Card 2"
+msgstr "Carte 2"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Card 3"
+msgstr "Carte 3"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Card 4"
+msgstr "Carte 4"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Reset Card Colors"
+msgstr "Réinitialiser les couleurs des cartes"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Login Page"
+msgstr "Page de connexion"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Enable the split layout with the brand panel on the login page."
+msgstr "Activez la mise en page fractionnée avec le panneau de marque sur la page de connexion."
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Login Logo (Global)"
+msgstr "Logo de connexion (global)"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid ""
+"Used on split login for all companies. Falls back to company logo if empty."
+msgstr ""
+"Utilisé sur la connexion fractionnée pour toutes les sociétés. Repli sur le "
+"logo de la société si vide."
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Left Panel Background Image"
+msgstr "Image d'arrière-plan du panneau gauche"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "If empty, the default gradient background is used."
+msgstr "Si vide, l'arrière-plan en dégradé par défaut est utilisé."
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Use uploaded image in split screen."
+msgstr "Utiliser l'image téléchargée en écran fractionné."
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Show circular pattern over image."
+msgstr "Afficher le motif circulaire sur l'image."
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Login Links"
+msgstr "Liens de connexion"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Show the create account link below the login button."
+msgstr "Afficher le lien de création de compte sous le bouton de connexion."
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Loading Indicator"
+msgstr "Indicateur de chargement"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Enable"
+msgstr "Activer"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Style"
+msgstr "Style"
+
+# ── views/login_templates.xml ───────────────────────────────────────────────
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Welcome Back!"
+msgstr "Bon retour !"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Don't have an account?"
+msgstr "Vous n'avez pas de compte ?"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "Create a new account now"
+msgstr "Créer un nouveau compte maintenant"
+
+#. module: aura_backend_theme
+#: code:addons/aura_backend_theme/__manifest__.py:0
+msgid "it's free and quick."
+msgstr "c'est gratuit et rapide."

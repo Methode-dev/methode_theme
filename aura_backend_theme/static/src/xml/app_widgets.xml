@@ -1,0 +1,708 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates xml:space="preserve">
+
+<!-- ── Inventory: Products to Reorder ─────────────────────────────────────── -->
+<t t-name="aura_backend_theme.InventoryReorderWidget">
+    <div class="hd-card aw-card">
+        <div class="hd-card-header">
+            <span class="hd-card-title">
+                <i class="fa fa-boxes"/> Products to Reorder
+                <t t-if="props.count > 0">
+                    <span class="aw-header-count aw-count-alert" t-esc="props.count"/>
+                </t>
+            </span>
+            <button class="hd-card-link hd-link-btn" t-on-click="() => this.navigate(props.viewAction or '/odoo/inventory/reordering-rules')">View all →</button>
+        </div>
+        <div class="hd-card-body">
+            <t t-if="!props.items.length">
+                <div class="hd-empty-cta">
+                    <i class="fa fa-check-circle hd-empty-icon"/>
+                    <p>All stock levels are healthy.</p>
+                </div>
+            </t>
+            <t t-foreach="props.items" t-as="item" t-key="item.id">
+                <div class="aw-row" t-on-click="() => this.navigate(item.action or item.record_url)">
+                    <div class="aw-row-icon aw-icon-orange">
+                        <i class="fa fa-cube"/>
+                    </div>
+                    <div class="aw-row-body">
+                        <span class="aw-row-name" t-esc="item.product_name"/>
+                        <span class="aw-row-sub" t-esc="item.warehouse"/>
+                    </div>
+                    <div class="aw-row-right">
+                        <span t-attf-class="#{stockClass(item.qty_on_hand)}">
+                            <t t-esc="item.qty_on_hand.toFixed(0)"/> / <t t-esc="item.product_min_qty.toFixed(0)"/>
+                            <t t-esc="item.uom"/>
+                        </span>
+                        <button class="aw-action-btn" t-on-click.stop="() => this.navigate('/odoo/purchase/new')">
+                            Order
+                        </button>
+                    </div>
+                </div>
+            </t>
+        </div>
+        <t t-if="props.count > props.items.length">
+            <div class="hd-card-footer">
+                <button class="hd-footer-link hd-link-btn" t-on-click="() => this.navigate(props.viewAction or '/odoo/inventory/reordering-rules')">
+                    + <t t-esc="props.count - props.items.length"/> more products need reordering
+                </button>
+            </div>
+        </t>
+    </div>
+</t>
+
+<!-- ── General: Activity Trend (mini chart) ─────────────────────────────── -->
+<t t-name="aura_backend_theme.ActivityTrendWidget">
+    <div class="hd-card aw-card aw-graph-widget">
+        <div class="hd-card-header">
+            <span class="hd-card-title">
+                <i class="fa fa-chart-pie"/> My Activity Trend
+                <t t-if="props.total > 0">
+                    <span class="aw-header-count" t-esc="props.total"/>
+                </t>
+            </span>
+            <button class="hd-card-link hd-link-btn" t-on-click="() => this.navigate(props.viewAction or '/odoo/todos')">View all →</button>
+        </div>
+        <div class="hd-card-body">
+            <t t-if="!props.points.length || props.total === 0">
+                <div class="hd-empty-cta">
+                    <i class="fa fa-chart-pie hd-empty-icon"/>
+                    <p>No activities yet.</p>
+                </div>
+            </t>
+            <t t-else="">
+                <div class="aw-graph-kpi">
+                    <div class="aw-graph-kpi-value" t-esc="props.total"/>
+                    <div class="aw-graph-kpi-label">total activities</div>
+                </div>
+                <div class="aw-chart-wrap aw-chart-wrap--activity">
+                    <t t-foreach="props.points" t-as="p" t-key="p.key">
+                        <div class="aw-chart-col">
+                            <div class="aw-chart-plot">
+                                <div t-attf-class="#{pointClass(p.color)}" t-att-style="'height:' + barHeight(p.value)"/>
+                            </div>
+                            <div class="aw-chart-value" t-esc="p.value"/>
+                            <div class="aw-chart-label" t-esc="p.label"/>
+                        </div>
+                    </t>
+                </div>
+            </t>
+        </div>
+    </div>
+</t>
+
+<!-- ── Sales: Monthly Trend (mini chart) ─────────────────────────────────── -->
+<t t-name="aura_backend_theme.SalesTrendWidget">
+    <div class="hd-card aw-card aw-graph-widget">
+        <div class="hd-card-header">
+            <span class="hd-card-title"><i class="fa fa-chart-column"/> Sales Trend (6 Months)</span>
+            <div class="hd-topbar-right">
+                <button class="hd-card-action-btn" t-on-click="() => this.navigate(props.createAction or '/odoo/sales/new')">
+                    <i class="fa fa-plus"/> New
+                </button>
+                <button class="hd-card-link hd-card-link--ml hd-link-btn" t-on-click="() => this.navigate(props.viewAction or '/odoo/sales')">All →</button>
+            </div>
+        </div>
+        <div class="hd-card-body">
+            <t t-if="!props.points.length">
+                <div class="hd-empty-cta">
+                    <i class="fa fa-chart-column hd-empty-icon"/>
+                    <p>No sales data available yet.</p>
+                </div>
+            </t>
+            <t t-else="">
+                <div class="aw-graph-kpi">
+                    <div class="aw-graph-kpi-value">
+                        <t t-esc="props.currencySymbol"/>
+                        <t t-esc="Math.round(props.totalAmount || 0).toLocaleString()"/>
+                    </div>
+                    <div class="aw-graph-kpi-label">6-month total • confirmed + done</div>
+                </div>
+                <div class="aw-chart-wrap aw-chart-wrap--sales">
+                    <t t-foreach="props.points" t-as="p" t-key="p.key">
+                        <div class="aw-chart-col">
+                            <div class="aw-chart-plot">
+                                <div class="aw-chart-bar aw-chart-bar--blue" t-att-style="'height:' + barHeight(p.amount)"/>
+                            </div>
+                            <div class="aw-chart-value" t-esc="Math.round(p.amount || 0).toLocaleString()"/>
+                            <div class="aw-chart-label" t-esc="p.label"/>
+                        </div>
+                    </t>
+                </div>
+            </t>
+        </div>
+    </div>
+</t>
+
+<!-- ── Inventory: Pending Receipts ────────────────────────────────────────── -->
+<t t-name="aura_backend_theme.InventoryReceiptsWidget">
+    <div class="hd-card aw-card">
+        <div class="hd-card-header">
+            <span class="hd-card-title">
+                <i class="fa fa-truck"/> Pending Receipts
+                <t t-if="props.count > 0">
+                    <span class="aw-header-count" t-esc="props.count"/>
+                </t>
+            </span>
+            <button class="hd-card-link hd-link-btn" t-on-click="() => this.navigate(props.viewAction or '/odoo/inventory/receipts')">View all →</button>
+        </div>
+        <div class="hd-card-body">
+            <t t-if="!props.items.length">
+                <div class="hd-empty-cta">
+                    <i class="fa fa-truck hd-empty-icon"/>
+                    <p>No receipts waiting to be processed.</p>
+                </div>
+            </t>
+            <t t-foreach="props.items" t-as="item" t-key="item.id">
+                <div class="aw-row" t-on-click="() => this.navigate(item.action or item.record_url)">
+                    <div class="aw-row-icon aw-icon-blue">
+                        <i class="fa fa-truck"/>
+                    </div>
+                    <div class="aw-row-body">
+                        <span class="aw-row-name" t-esc="item.name"/>
+                        <span class="aw-row-sub" t-esc="item.partner_name"/>
+                    </div>
+                    <div class="aw-row-right">
+                        <span t-attf-class="#{lateClass(item.days_late)}">
+                            <t t-if="item.days_late > 0"><t t-esc="item.days_late"/>d late</t>
+                            <t t-else="">Ready</t>
+                        </span>
+                        <span class="aw-row-meta" t-esc="item.product_count + ' items'"/>
+                    </div>
+                </div>
+            </t>
+        </div>
+    </div>
+</t>
+
+<!-- ── Purchase: RFQs to Send ─────────────────────────────────────────────── -->
+<t t-name="aura_backend_theme.PurchaseRFQWidget">
+    <div class="hd-card aw-card">
+        <div class="hd-card-header">
+            <span class="hd-card-title">
+                <i class="fa fa-paper-plane"/> RFQs to Send
+                <t t-if="props.count > 0">
+                    <span class="aw-header-count aw-count-alert" t-esc="props.count"/>
+                </t>
+            </span>
+            <div class="hd-topbar-right">
+                <button class="hd-card-action-btn" t-on-click="() => this.navigate(props.createAction or '/odoo/purchase/new')">
+                    <i class="fa fa-plus"/> New RFQ
+                </button>
+                <button class="hd-card-link hd-card-link--ml hd-link-btn" t-on-click="() => this.navigate(props.viewAction or '/odoo/purchase')">All →</button>
+            </div>
+        </div>
+        <div class="hd-card-body">
+            <t t-if="!props.items.length">
+                <div class="hd-empty-cta">
+                    <i class="fa fa-paper-plane hd-empty-icon"/>
+                    <p>No draft purchase orders.</p>
+                    <button class="hd-cta-btn" t-on-click="() => this.navigate(props.createAction or '/odoo/purchase/new')">
+                        Create RFQ
+                    </button>
+                </div>
+            </t>
+            <t t-foreach="props.items" t-as="item" t-key="item.id">
+                <div class="aw-row" t-on-click="() => this.navigate(item.action or item.record_url)">
+                    <div class="aw-row-icon aw-icon-purple">
+                        <i class="fa fa-paper-plane"/>
+                    </div>
+                    <div class="aw-row-body">
+                        <span class="aw-row-name" t-esc="item.name"/>
+                        <span class="aw-row-sub" t-esc="item.partner_name"/>
+                    </div>
+                    <div class="aw-row-right">
+                        <span class="aw-row-amount">
+                            <t t-esc="item.currency_symbol"/>
+                            <t t-esc="item.amount_total.toLocaleString(undefined, {minimumFractionDigits:0, maximumFractionDigits:0})"/>
+                        </span>
+                        <span class="aw-row-meta" t-esc="item.date_order"/>
+                    </div>
+                </div>
+            </t>
+        </div>
+        <t t-if="props.count > props.items.length">
+            <div class="hd-card-footer">
+                <button class="hd-footer-link hd-link-btn" t-on-click="() => this.navigate(props.viewAction or '/odoo/purchase')">
+                    + <t t-esc="props.count - props.items.length"/> more RFQs pending
+                </button>
+            </div>
+        </t>
+    </div>
+</t>
+
+<!-- ── Purchase: Open Purchase Orders ─────────────────────────────────────── -->
+<t t-name="aura_backend_theme.PurchaseOrdersWidget">
+    <div class="hd-card aw-card">
+        <div class="hd-card-header">
+            <span class="hd-card-title">
+                <i class="fa fa-shopping-cart"/> Open Purchase Orders
+                <t t-if="props.count > 0">
+                    <span class="aw-header-count" t-esc="props.count"/>
+                </t>
+            </span>
+            <button class="hd-card-link hd-link-btn" t-on-click="() => this.navigate(props.viewAction or '/odoo/purchase')">View all →</button>
+        </div>
+        <div class="hd-card-body">
+            <t t-if="!props.items.length">
+                <div class="hd-empty-cta">
+                    <i class="fa fa-shopping-cart hd-empty-icon"/>
+                    <p>No open purchase orders.</p>
+                </div>
+            </t>
+            <t t-foreach="props.items" t-as="item" t-key="item.id">
+                <div class="aw-row" t-on-click="() => this.navigate(item.action or item.record_url)">
+                    <div class="aw-row-icon aw-icon-green">
+                        <i class="fa fa-shopping-cart"/>
+                    </div>
+                    <div class="aw-row-body">
+                        <span class="aw-row-name" t-esc="item.name"/>
+                        <span class="aw-row-sub" t-esc="item.partner_name"/>
+                    </div>
+                    <div class="aw-row-right">
+                        <span class="aw-row-amount">
+                            <t t-esc="item.currency_symbol"/>
+                            <t t-esc="item.amount_total.toLocaleString(undefined, {minimumFractionDigits:0, maximumFractionDigits:0})"/>
+                        </span>
+                        <span t-attf-class="#{invoiceClass(item.invoice_status)}" t-esc="invoiceLabel(item.invoice_status)"/>
+                    </div>
+                </div>
+            </t>
+        </div>
+    </div>
+</t>
+
+<!-- ── Sales: Quotations to Send ──────────────────────────────────────────── -->
+<t t-name="aura_backend_theme.SaleQuotationsWidget">
+    <div class="hd-card aw-card">
+        <div class="hd-card-header">
+            <span class="hd-card-title">
+                <i class="fa fa-file-alt"/> Quotations to Send
+                <t t-if="props.count > 0">
+                    <span class="aw-header-count aw-count-alert" t-esc="props.count"/>
+                </t>
+            </span>
+            <div class="hd-topbar-right">
+                <button class="hd-card-action-btn" t-on-click="() => this.navigate(props.createAction or '/odoo/sales/new')">
+                    <i class="fa fa-plus"/> New
+                </button>
+                <button class="hd-card-link hd-card-link--ml hd-link-btn" t-on-click="() => this.navigate(props.viewAction or '/odoo/sales')">All →</button>
+            </div>
+        </div>
+        <div class="hd-card-body">
+            <t t-if="!props.items.length">
+                <div class="hd-empty-cta">
+                    <i class="fa fa-file-alt hd-empty-icon"/>
+                    <p>No open quotations.</p>
+                    <button class="hd-cta-btn" t-on-click="() => this.navigate(props.createAction or '/odoo/sales/new')">
+                        New Quotation
+                    </button>
+                </div>
+            </t>
+            <t t-foreach="props.items" t-as="item" t-key="item.id">
+                <div class="aw-row" t-on-click="() => this.navigate(item.action or item.record_url)">
+                    <div class="aw-row-icon aw-icon-blue">
+                        <i class="fa fa-file-alt"/>
+                    </div>
+                    <div class="aw-row-body">
+                        <span class="aw-row-name" t-esc="item.name"/>
+                        <span class="aw-row-sub" t-esc="item.partner_name"/>
+                    </div>
+                    <div class="aw-row-right">
+                        <span class="aw-row-amount">
+                            <t t-esc="item.currency_symbol"/>
+                            <t t-esc="item.amount_total.toLocaleString(undefined, {minimumFractionDigits:0, maximumFractionDigits:0})"/>
+                        </span>
+                        <span t-attf-class="#{stateClass(item.state)}" t-esc="item.state_label"/>
+                    </div>
+                </div>
+            </t>
+        </div>
+        <t t-if="props.count > props.items.length">
+            <div class="hd-card-footer">
+                <button class="hd-footer-link hd-link-btn" t-on-click="() => this.navigate(props.viewAction or '/odoo/sales')">
+                    + <t t-esc="props.count - props.items.length"/> more quotations
+                </button>
+            </div>
+        </t>
+    </div>
+</t>
+
+<!-- ── Sales: Orders to Invoice ───────────────────────────────────────────── -->
+<t t-name="aura_backend_theme.SaleToInvoiceWidget">
+    <div class="hd-card aw-card">
+        <div class="hd-card-header">
+            <span class="hd-card-title">
+                <i class="fa fa-file-invoice"/> Orders to Invoice
+                <t t-if="props.count > 0">
+                    <span class="aw-header-count aw-count-alert" t-esc="props.count"/>
+                </t>
+            </span>
+            <button class="hd-card-link hd-link-btn" t-on-click="() => this.navigate(props.viewAction or '/odoo/sales')">View all →</button>
+        </div>
+        <div class="hd-card-body">
+            <t t-if="!props.items.length">
+                <div class="hd-empty-cta">
+                    <i class="fa fa-file-invoice hd-empty-icon"/>
+                    <p>No orders awaiting invoicing.</p>
+                </div>
+            </t>
+            <t t-foreach="props.items" t-as="item" t-key="item.id">
+                <div class="aw-row" t-on-click="() => this.navigate(item.action or item.record_url)">
+                    <div class="aw-row-icon aw-icon-green">
+                        <i class="fa fa-file-invoice"/>
+                    </div>
+                    <div class="aw-row-body">
+                        <span class="aw-row-name" t-esc="item.name"/>
+                        <span class="aw-row-sub" t-esc="item.partner_name"/>
+                    </div>
+                    <div class="aw-row-right">
+                        <span class="aw-row-amount">
+                            <t t-esc="item.currency_symbol"/>
+                            <t t-esc="item.amount_total.toLocaleString(undefined, {minimumFractionDigits:0, maximumFractionDigits:0})"/>
+                        </span>
+                        <span class="hd-badge hd-badge-today">Invoice</span>
+                    </div>
+                </div>
+            </t>
+        </div>
+        <t t-if="props.count > props.items.length">
+            <div class="hd-card-footer">
+                <button class="hd-footer-link hd-link-btn" t-on-click="() => this.navigate(props.viewAction or '/odoo/sales')">
+                    + <t t-esc="props.count - props.items.length"/> more orders ready to invoice
+                </button>
+            </div>
+        </t>
+    </div>
+</t>
+
+<!-- ── HR: Leave Requests ─────────────────────────────────────────────────── -->
+<t t-name="aura_backend_theme.HRLeavesWidget">
+    <div class="hd-card aw-card">
+        <div class="hd-card-header">
+            <span class="hd-card-title">
+                <i class="fa fa-calendar-minus"/> Leave Requests
+                <t t-if="props.count > 0">
+                    <span class="aw-header-count aw-count-alert" t-esc="props.count"/>
+                </t>
+            </span>
+            <button class="hd-card-link hd-link-btn" t-on-click="() => this.navigate(props.viewAction or '/web#model=hr.leave&amp;view_type=list')">View all →</button>
+        </div>
+        <div class="hd-card-body">
+            <t t-if="!props.items.length">
+                <div class="hd-empty-cta">
+                    <i class="fa fa-calendar-minus hd-empty-icon"/>
+                    <p>No leave requests waiting for review.</p>
+                </div>
+            </t>
+            <t t-foreach="props.items" t-as="item" t-key="item.id">
+                <div class="aw-row" t-on-click="() => this.navigate(item.action or item.record_url)">
+                    <div class="aw-row-icon aw-icon-orange">
+                        <i class="fa fa-user-clock"/>
+                    </div>
+                    <div class="aw-row-body">
+                        <span class="aw-row-name" t-esc="item.employee_name"/>
+                        <span class="aw-row-sub" t-esc="item.leave_type"/>
+                    </div>
+                    <div class="aw-row-right">
+                        <span class="aw-row-meta" t-esc="dateRange(item)"/>
+                        <span class="hd-badge hd-badge-today">
+                            <t t-esc="item.days.toFixed(1)"/>d
+                        </span>
+                    </div>
+                </div>
+            </t>
+        </div>
+    </div>
+</t>
+
+<!-- ── HR: Attendance Today ───────────────────────────────────────────────── -->
+<t t-name="aura_backend_theme.HRAttendanceWidget">
+    <div class="hd-card aw-card">
+        <div class="hd-card-header">
+            <span class="hd-card-title">
+                <i class="fa fa-user-clock"/> Attendance Today
+                <t t-if="props.count > 0">
+                    <span class="aw-header-count" t-esc="props.count"/>
+                </t>
+            </span>
+            <button class="hd-card-link hd-link-btn" t-on-click="() => this.navigate(props.viewAction or '/web#model=hr.attendance&amp;view_type=list')">View all →</button>
+        </div>
+        <div class="hd-card-body">
+            <t t-if="!props.items.length">
+                <div class="hd-empty-cta">
+                    <i class="fa fa-user-clock hd-empty-icon"/>
+                    <p>No attendance records found for today.</p>
+                </div>
+            </t>
+            <t t-foreach="props.items" t-as="item" t-key="item.id">
+                <div class="aw-row" t-on-click="() => this.navigate(item.action or item.record_url)">
+                    <div class="aw-row-icon aw-icon-blue">
+                        <i class="fa fa-id-badge"/>
+                    </div>
+                    <div class="aw-row-body">
+                        <span class="aw-row-name" t-esc="item.employee_name"/>
+                        <span class="aw-row-sub">Check-in <t t-esc="item.check_in"/></span>
+                    </div>
+                    <div class="aw-row-right">
+                        <span class="aw-row-meta">Out <t t-esc="item.check_out or '—'"/></span>
+                        <span class="hd-badge hd-badge-soon"><t t-esc="item.worked_hours.toFixed(2)"/>h</span>
+                    </div>
+                </div>
+            </t>
+        </div>
+    </div>
+</t>
+
+<!-- ── Project: My Tasks ─────────────────────────────────────────────────── -->
+<t t-name="aura_backend_theme.ProjectTasksWidget">
+    <div class="hd-card aw-card">
+        <div class="hd-card-header">
+            <span class="hd-card-title">
+                <i class="fa fa-tasks"/> My Tasks
+                <t t-if="props.count > 0">
+                    <span class="aw-header-count" t-esc="props.count"/>
+                </t>
+            </span>
+            <button class="hd-card-link hd-link-btn" t-on-click="() => this.navigate(props.viewAction or '/web#model=project.task&amp;view_type=list')">View all →</button>
+        </div>
+        <div class="hd-card-body">
+            <t t-if="!props.items.length">
+                <div class="hd-empty-cta">
+                    <i class="fa fa-check-circle hd-empty-icon"/>
+                    <p>No open tasks are assigned to you.</p>
+                </div>
+            </t>
+            <t t-foreach="props.items" t-as="item" t-key="item.id">
+                <div class="aw-row" t-on-click="() => this.navigate(item.action or item.record_url)">
+                    <div class="aw-row-icon aw-icon-green">
+                        <i class="fa fa-clipboard-check"/>
+                    </div>
+                    <div class="aw-row-body">
+                        <span class="aw-row-name" t-esc="item.name"/>
+                        <span class="aw-row-sub" t-esc="item.project_name"/>
+                    </div>
+                    <div class="aw-row-right">
+                        <span class="aw-row-meta" t-esc="item.stage_name"/>
+                        <span t-attf-class="#{priorityClass(item.priority)}">
+                            <t t-esc="item.date_deadline or 'No deadline'"/>
+                        </span>
+                    </div>
+                </div>
+            </t>
+        </div>
+    </div>
+</t>
+
+<!-- ── Project: Deadlines ───────────────────────────────────────────────── -->
+<t t-name="aura_backend_theme.ProjectDeadlinesWidget">
+    <div class="hd-card aw-card">
+        <div class="hd-card-header">
+            <span class="hd-card-title">
+                <i class="fa fa-hourglass-half"/> Project Deadlines
+                <t t-if="props.count > 0">
+                    <span class="aw-header-count aw-count-alert" t-esc="props.count"/>
+                </t>
+            </span>
+            <button class="hd-card-link hd-link-btn" t-on-click="() => this.navigate(props.viewAction or '/web#model=project.task&amp;view_type=list')">View all →</button>
+        </div>
+        <div class="hd-card-body">
+            <t t-if="!props.items.length">
+                <div class="hd-empty-cta">
+                    <i class="fa fa-hourglass-half hd-empty-icon"/>
+                    <p>No tasks are due in the next 7 days.</p>
+                </div>
+            </t>
+            <t t-foreach="props.items" t-as="item" t-key="item.id">
+                <div class="aw-row" t-on-click="() => this.navigate(item.action or item.record_url)">
+                    <div class="aw-row-icon aw-icon-orange">
+                        <i class="fa fa-calendar-day"/>
+                    </div>
+                    <div class="aw-row-body">
+                        <span class="aw-row-name" t-esc="item.name"/>
+                        <span class="aw-row-sub" t-esc="item.project_name"/>
+                    </div>
+                    <div class="aw-row-right">
+                        <span class="aw-row-meta" t-esc="item.date_deadline"/>
+                        <span t-attf-class="#{deadlineClass(item.days_left)}">
+                            <t t-esc="item.days_left"/>d left
+                        </span>
+                    </div>
+                </div>
+            </t>
+        </div>
+    </div>
+</t>
+
+<!-- ── Manufacturing: Production Orders ─────────────────────────────────── -->
+<t t-name="aura_backend_theme.MRPProductionWidget">
+    <div class="hd-card aw-card">
+        <div class="hd-card-header">
+            <span class="hd-card-title">
+                <i class="fa fa-industry"/> Production Orders
+                <t t-if="props.count > 0">
+                    <span class="aw-header-count" t-esc="props.count"/>
+                </t>
+            </span>
+            <button class="hd-card-link hd-link-btn" t-on-click="() => this.navigate(props.viewAction or '/web#model=mrp.production&amp;view_type=list')">View all →</button>
+        </div>
+        <div class="hd-card-body">
+            <t t-if="!props.items.length">
+                <div class="hd-empty-cta">
+                    <i class="fa fa-industry hd-empty-icon"/>
+                    <p>No production orders are currently active.</p>
+                </div>
+            </t>
+            <t t-foreach="props.items" t-as="item" t-key="item.id">
+                <div class="aw-row" t-on-click="() => this.navigate(item.action or item.record_url)">
+                    <div class="aw-row-icon aw-icon-purple">
+                        <i class="fa fa-cogs"/>
+                    </div>
+                    <div class="aw-row-body">
+                        <span class="aw-row-name" t-esc="item.name"/>
+                        <span class="aw-row-sub">
+                            <t t-esc="item.product_name"/>
+                            <t t-if="item.origin"> · <t t-esc="item.origin"/></t>
+                        </span>
+                    </div>
+                    <div class="aw-row-right">
+                        <span class="aw-row-amount">
+                            <t t-esc="item.quantity.toFixed(0)"/> <t t-esc="item.unit"/>
+                        </span>
+                        <span t-attf-class="#{stateClass(item.state)}" t-esc="item.state"/>
+                    </div>
+                </div>
+            </t>
+        </div>
+    </div>
+</t>
+
+<!-- ── Accounting: Aged Receivables ─────────────────────────────────────── -->
+<t t-name="aura_backend_theme.AccountAgedReceivablesWidget">
+    <div class="hd-card aw-card">
+        <div class="hd-card-header">
+            <span class="hd-card-title">
+                <i class="fa fa-file-invoice-dollar"/> Aged Receivables
+                <t t-if="props.count > 0">
+                    <span class="aw-header-count aw-count-alert" t-esc="props.count"/>
+                </t>
+            </span>
+            <button class="hd-card-link hd-link-btn" t-on-click="() => this.navigate(props.viewAction or '/web#model=account.move&amp;view_type=list')">View all →</button>
+        </div>
+        <div class="hd-card-body">
+            <div class="aw-summary-grid">
+                <t t-foreach="props.buckets" t-as="bucket" t-key="bucket.key">
+                    <div t-attf-class="aw-summary-card #{bucketClass(bucket.key)}">
+                        <span class="aw-summary-label" t-esc="bucket.label"/>
+                        <span class="aw-summary-value">
+                            <t t-esc="props.currencySymbol"/>
+                            <t t-esc="bucket.amount.toLocaleString(undefined, {minimumFractionDigits:0, maximumFractionDigits:0})"/>
+                        </span>
+                        <span class="aw-summary-meta" t-esc="bucket.count + ' invoices'"/>
+                    </div>
+                </t>
+            </div>
+
+            <div class="aw-subsection-title">Top open invoices</div>
+            <t t-if="!props.items.length">
+                <div class="hd-empty-cta">
+                    <i class="fa fa-file-invoice hd-empty-icon"/>
+                    <p>No overdue customer invoices were found.</p>
+                </div>
+            </t>
+            <t t-foreach="props.items" t-as="item" t-key="item.id">
+                <div class="aw-row" t-on-click="() => this.navigate(item.action or item.record_url)">
+                    <div class="aw-row-icon aw-icon-red">
+                        <i class="fa fa-user-tie"/>
+                    </div>
+                    <div class="aw-row-body">
+                        <span class="aw-row-name" t-esc="item.name"/>
+                        <span class="aw-row-sub" t-esc="item.partner_name"/>
+                    </div>
+                    <div class="aw-row-right">
+                        <span class="aw-row-amount">
+                            <t t-esc="item.currency_symbol"/>
+                            <t t-esc="item.amount_residual.toLocaleString(undefined, {minimumFractionDigits:0, maximumFractionDigits:0})"/>
+                        </span>
+                        <span class="aw-row-meta"><t t-esc="item.age_days"/>d old</span>
+                    </div>
+                </div>
+            </t>
+        </div>
+    </div>
+</t>
+
+<!-- ── Accounting: Cash Flow Summary ─────────────────────────────────────── -->
+<t t-name="aura_backend_theme.AccountCashflowWidget">
+    <div class="hd-card aw-card aw-cashflow-widget">
+        <div class="hd-card-header">
+            <span class="hd-card-title">
+                <i class="fa fa-sack-dollar"/> Cash Flow Summary
+            </span>
+            <button class="hd-card-link hd-link-btn" t-on-click="() => this.navigate(props.viewAction or '/web#model=account.move&amp;view_type=list')">View all →</button>
+        </div>
+        <div class="hd-card-body">
+            <div class="aw-cashflow-summary">
+                <div class="aw-cashflow-net aw-summary-card--neutral">
+                    <span class="aw-summary-label">Projected net</span>
+                    <span class="aw-cashflow-net-value">
+                        <t t-esc="props.currencySymbol"/>
+                        <t t-esc="props.net.toLocaleString(undefined, {minimumFractionDigits:0, maximumFractionDigits:0})"/>
+                    </span>
+                    <span class="aw-summary-meta">Expected cash position after the next 30 days</span>
+                </div>
+                <div class="aw-cashflow-metrics">
+                <div class="aw-summary-card aw-summary-card--positive">
+                    <span class="aw-summary-label">Bank balance</span>
+                    <span class="aw-summary-value">
+                        <t t-esc="props.currencySymbol"/>
+                        <t t-esc="props.bankBalance.toLocaleString(undefined, {minimumFractionDigits:0, maximumFractionDigits:0})"/>
+                    </span>
+                </div>
+                <div class="aw-summary-card aw-summary-card--positive">
+                    <span class="aw-summary-label">Expected in</span>
+                    <span class="aw-summary-value">
+                        <t t-esc="props.currencySymbol"/>
+                        <t t-esc="props.expectedIn.toLocaleString(undefined, {minimumFractionDigits:0, maximumFractionDigits:0})"/>
+                    </span>
+                </div>
+                <div class="aw-summary-card aw-summary-card--warning">
+                    <span class="aw-summary-label">Expected out</span>
+                    <span class="aw-summary-value">
+                        <t t-esc="props.currencySymbol"/>
+                        <t t-esc="props.expectedOut.toLocaleString(undefined, {minimumFractionDigits:0, maximumFractionDigits:0})"/>
+                    </span>
+                </div>
+                </div>
+            </div>
+
+            <div class="aw-subsection-title">Next 30 days</div>
+            <t t-if="!props.items.length">
+                <div class="hd-empty-cta">
+                    <i class="fa fa-chart-line hd-empty-icon"/>
+                    <p>No incoming or outgoing invoices are due in the next 30 days.</p>
+                </div>
+            </t>
+            <t t-foreach="props.items" t-as="item" t-key="item.id">
+                <div class="aw-row aw-cashflow-row" t-on-click="() => this.navigate(item.action or item.record_url)">
+                    <div t-attf-class="aw-row-icon #{item.direction === 'in' ? 'aw-icon-green' : 'aw-icon-red'}">
+                        <i t-attf-class="fa #{item.direction === 'in' ? 'fa-arrow-down' : 'fa-arrow-up'}"/>
+                    </div>
+                    <div class="aw-row-body">
+                        <span class="aw-row-name" t-esc="item.name"/>
+                        <span class="aw-row-sub" t-esc="item.partner_name"/>
+                    </div>
+                    <div class="aw-row-right">
+                        <span class="aw-row-amount">
+                            <t t-esc="item.currency_symbol"/>
+                            <t t-esc="item.amount.toLocaleString(undefined, {minimumFractionDigits:0, maximumFractionDigits:0})"/>
+                        </span>
+                        <span class="aw-row-meta" t-esc="item.due_date"/>
+                    </div>
+                </div>
+            </t>
+        </div>
+    </div>
+</t>
+
+</templates>

@@ -1,0 +1,605 @@
+// ── Shared app widget styles ──────────────────────────────────────────────────
+
+.aw-card {
+    // inherits .hd-card — just a semantic alias
+}
+
+// Standard row layout used by all Phase 2 widgets
+.aw-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 14px 9px 11px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+    border-left: 3px solid transparent;
+    cursor: pointer;
+    transition: background 0.12s, border-left-color 0.15s;
+
+    &:last-child { border-bottom: none; }
+    &:hover {
+        background: rgba(24, 55, 254, 0.028);
+        border-left-color: var(--tbt-brand-color, #1837FE);
+    }
+}
+
+.o_home_dashboard.hd-mode-dark {
+    .aw-row {
+        border-bottom-color: rgba(148, 163, 184, 0.14);
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-left-color: var(--hd-accent, #7fa4ff);
+        }
+    }
+
+    .aw-row-name,
+    .aw-row-amount,
+    .aw-summary-value {
+        color: var(--hd-text, #f8fafc);
+    }
+
+    .aw-row-sub,
+    .aw-row-meta,
+    .aw-summary-label,
+    .aw-summary-meta,
+    .aw-subsection-title {
+        color: var(--hd-muted, #cbd5e1);
+    }
+
+    .aw-action-btn {
+        border-color: rgba(148, 163, 184, 0.22);
+        color: var(--hd-accent, #7fa4ff);
+
+        &:hover {
+            background: rgba(127, 164, 255, 0.12);
+        }
+    }
+
+    .aw-header-count,
+    .aw-stock,
+    .hd-badge {
+        color: var(--hd-text, #f8fafc);
+    }
+
+    .aw-header-count {
+        background: rgba(255, 255, 255, 0.08);
+
+        &.aw-count-alert {
+            background: rgba(226, 75, 74, 0.24);
+            color: #ffd2d2;
+        }
+    }
+
+    .aw-stock--empty,
+    .aw-stock--low {
+        background: rgba(226, 75, 74, 0.22);
+        color: #ffd2d2;
+    }
+
+    .aw-icon-orange { background: rgba(250, 238, 218, 0.12); color: #fbbf24; }
+    .aw-icon-blue   { background: rgba(127, 164, 255, 0.16); color: #9bb7ff; }
+    .aw-icon-green  { background: rgba(58, 109, 17, 0.20); color: #b6e38d; }
+    .aw-icon-red    { background: rgba(163, 45, 45, 0.20); color: #ffb5b5; }
+    .aw-icon-purple { background: rgba(91, 33, 182, 0.20); color: #d1b3ff; }
+    .aw-icon-gray   { background: rgba(148, 163, 184, 0.16); color: #d8e1ef; }
+
+    .aw-summary-card {
+        background: color-mix(in srgb, var(--hd-card-bg, #1e293b) 94%, #000000 6%);
+        border-color: rgba(148, 163, 184, 0.18);
+    }
+
+    .aw-cashflow-net {
+        background:
+            radial-gradient(circle at top right, color-mix(in srgb, var(--hd-accent, #9ab2f7) 22%, transparent), transparent 44%),
+            color-mix(in srgb, var(--hd-card-bg, #1e293b) 92%, #000000 8%);
+        border-color: rgba(148, 163, 184, 0.22);
+    }
+
+    .aw-cashflow-net-value {
+        color: var(--hd-text, #f8fafc);
+    }
+
+    .aw-summary-card--positive {
+        background: rgba(58, 109, 17, 0.14);
+        border-color: rgba(182, 227, 141, 0.20);
+    }
+
+    .aw-summary-card--warning {
+        background: rgba(133, 79, 11, 0.16);
+        border-color: rgba(255, 224, 173, 0.20);
+    }
+
+    .aw-summary-card--neutral {
+        background: rgba(127, 164, 255, 0.12);
+        border-color: rgba(127, 164, 255, 0.20);
+    }
+
+    .aw-subsection-title {
+        border-top-color: rgba(148, 163, 184, 0.14);
+    }
+
+    .aw-summary-card:hover {
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.24);
+    }
+
+    .aw-row-amount {
+        color: var(--hd-text, #f8fafc);
+    }
+}
+
+.aw-row-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+.aw-icon-orange { background: #FAEEDA; color: #854F0B; }
+.aw-icon-blue   { background: rgba(24, 55, 254, 0.10); color: var(--tbt-brand-color, #1837FE); }
+.aw-icon-green  { background: #EAF3DE; color: #3B6D11; }
+.aw-icon-red    { background: #FCEBEB; color: #A32D2D; }
+.aw-icon-purple { background: #f3eeff; color: #5b21b6; }
+.aw-icon-gray   { background: #f0f0ee; color: #777; }
+
+.aw-row-body {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.aw-row-name {
+    font-size: 14.5px;
+    font-weight: 500;
+    color: var(--bs-body-color, #222);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+}
+
+.aw-row-sub {
+    font-size: 12px;
+    color: var(--bs-secondary-color, #888);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+}
+
+.aw-row-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 3px;
+    flex-shrink: 0;
+}
+
+.aw-row-amount {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--bs-body-color, #222);
+}
+
+.aw-row-meta {
+    font-size: 12px;
+    color: var(--bs-secondary-color, #aaa);
+}
+
+// Header count badge
+.aw-header-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 6px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 700;
+    margin-left: 5px;
+    background: rgba(0, 0, 0, 0.08);
+    color: var(--bs-body-color, #555);
+
+    &.aw-count-alert {
+        background: #FCEBEB;
+        color: #A32D2D;
+    }
+}
+
+// Inventory stock levels
+.aw-stock {
+    font-size: 11px;
+    font-weight: 500;
+    padding: 2px 7px;
+    border-radius: 4px;
+    white-space: nowrap;
+
+    &.aw-stock--empty { background: #FCEBEB; color: #A32D2D; }
+    &.aw-stock--low   { background: #FAEEDA; color: #854F0B; }
+}
+
+// Inline "Order" button inside reorder rows
+.aw-action-btn {
+    background: none;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-size: 11px;
+    font-weight: 500;
+    cursor: pointer;
+    color: var(--tbt-brand-color, #1837FE);
+    transition: background 0.12s;
+
+    &:hover { background: rgba(24, 55, 254, 0.08); }
+}
+
+// Phase 3 widgets: summary cards and compact metrics
+
+.aw-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+    padding: 8px 14px 6px;
+}
+
+@media (max-width: 1100px) {
+    .aw-summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 640px) {
+    .aw-summary-grid { grid-template-columns: 1fr; }
+}
+
+.aw-summary-card {
+    border-radius: 12px;
+    padding: 12px 14px;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-top: 3px solid rgba(0, 0, 0, 0.12);
+    background: var(--tbt-card-bg-dynamic, #fff);
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    transition: box-shadow 0.15s;
+
+    &:hover { box-shadow: 0 3px 12px rgba(0, 0, 0, 0.07); }
+}
+
+.aw-summary-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--bs-secondary-color, #8a8e98);
+}
+
+.aw-summary-value {
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--bs-body-color, #222);
+    letter-spacing: -0.02em;
+}
+
+.aw-summary-meta {
+    font-size: 11px;
+    color: var(--bs-secondary-color, #8a8e98);
+}
+
+.aw-summary-card--positive {
+    background: rgba(58, 109, 17, 0.05);
+    border-color: rgba(58, 109, 17, 0.12);
+    border-top-color: #4a9c2a;
+}
+
+.aw-summary-card--warning {
+    background: rgba(133, 79, 11, 0.06);
+    border-color: rgba(133, 79, 11, 0.12);
+    border-top-color: #d97706;
+}
+
+.aw-summary-card--neutral {
+    background: rgba(24, 55, 254, 0.05);
+    border-color: rgba(24, 55, 254, 0.12);
+    border-top-color: var(--tbt-brand-color, #1837FE);
+}
+
+// Colored top border for aged receivables buckets used as summary cards
+.aw-summary-card.aw-icon-green  { border-top-color: #3B6D11; }
+.aw-summary-card.aw-icon-blue   { border-top-color: var(--tbt-brand-color, #1837FE); }
+.aw-summary-card.aw-icon-orange { border-top-color: #854F0B; }
+.aw-summary-card.aw-icon-red    { border-top-color: #A32D2D; }
+
+.aw-cashflow-widget {
+    .hd-card-header {
+        align-items: flex-start;
+    }
+
+    .hd-card-title {
+        max-width: 190px;
+        line-height: 1.22;
+    }
+}
+
+.aw-cashflow-summary {
+    display: grid;
+    grid-template-columns: minmax(140px, 0.9fr) minmax(0, 1.6fr);
+    gap: 10px;
+    padding: 12px 14px 8px;
+}
+
+.aw-cashflow-net {
+    min-width: 0;
+    border-radius: 14px;
+    padding: 14px;
+    border: 1px solid rgba(24, 55, 254, 0.13);
+    border-top: 3px solid var(--tbt-brand-color, #1837FE);
+    background:
+        radial-gradient(circle at top right, rgba(24, 55, 254, 0.13), transparent 42%),
+        rgba(24, 55, 254, 0.045);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+}
+
+.aw-cashflow-net-value {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--bs-body-color, #1f2937);
+    font-size: clamp(24px, 4vw, 34px);
+    line-height: 1;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+}
+
+.aw-cashflow-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(92px, 1fr));
+    gap: 8px;
+    min-width: 0;
+
+    .aw-summary-card {
+        min-width: 0;
+        padding: 10px 11px;
+        gap: 5px;
+        border-radius: 12px;
+    }
+
+    .aw-summary-label {
+        white-space: normal;
+        line-height: 1.25;
+    }
+
+    .aw-summary-value {
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: clamp(16px, 2.6vw, 21px);
+    }
+}
+
+.aw-cashflow-row {
+    .aw-row-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+    }
+
+    .aw-row-name {
+        font-size: 15px;
+        font-weight: 650;
+    }
+
+    .aw-row-right {
+        min-width: 94px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .aw-cashflow-summary {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 520px) {
+    .aw-cashflow-metrics {
+        grid-template-columns: 1fr;
+    }
+}
+
+.aw-subsection-title {
+    padding: 12px 14px 5px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--bs-secondary-color, #8a8e98);
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    margin-top: 4px;
+}
+
+.aw-row .hd-badge {
+    white-space: nowrap;
+}
+
+// ── Mini chart widgets ───────────────────────────────────────────────────────
+
+.aw-graph-widget {
+    .hd-card-body {
+        padding: 0 0 10px;
+    }
+}
+
+.aw-graph-kpi {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 10px 14px 2px;
+}
+
+.aw-graph-kpi-value {
+    font-size: 24px;
+    line-height: 1.1;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--bs-body-color, #1f2937);
+}
+
+.aw-graph-kpi-label {
+    font-size: 11px;
+    color: var(--bs-secondary-color, #7b8594);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 700;
+}
+
+.aw-chart-wrap {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(88px, 1fr));
+    gap: 8px;
+    padding: 10px 14px 14px;
+    align-items: end;
+}
+
+.aw-chart-wrap--activity {
+    margin: 8px 14px 4px;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 14px;
+    background:
+        linear-gradient(to top, rgba(0, 0, 0, 0.045) 1px, transparent 1px) 0 0/100% 20px,
+        linear-gradient(180deg, rgba(0, 0, 0, 0.03), rgba(0, 0, 0, 0.01));
+    padding: 10px 10px 14px;
+}
+
+.aw-chart-wrap--sales {
+    grid-template-columns: repeat(6, minmax(64px, 1fr));
+    margin: 8px 14px 4px;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 14px;
+    background:
+        linear-gradient(to top, rgba(0, 0, 0, 0.045) 1px, transparent 1px) 0 0/100% 20px,
+        linear-gradient(180deg, rgba(0, 0, 0, 0.03), rgba(0, 0, 0, 0.01));
+    padding: 10px 10px 14px;
+}
+
+@media (max-width: 700px) {
+    .aw-chart-wrap--sales {
+        display: flex;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        scroll-snap-type: x proximity;
+    }
+
+    .aw-chart-wrap--sales .aw-chart-col {
+        flex: 0 0 70px;
+        scroll-snap-align: start;
+    }
+}
+
+.aw-chart-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.aw-chart-plot {
+    width: 100%;
+    height: 118px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    border-radius: 0;
+    background: transparent;
+    border: none;
+    padding: 9px 6px;
+}
+
+.aw-chart-bar {
+    width: 26px;
+    min-height: 12px;
+    border-radius: 10px 10px 5px 5px;
+    box-shadow:
+        inset 0 -1px 0 rgba(255, 255, 255, 0.26),
+        0 3px 9px rgba(0, 0, 0, 0.14);
+}
+
+.aw-chart-bar--blue { background: linear-gradient(180deg, #86a8ff 0%, #3659c9 100%); }
+.aw-chart-bar--green { background: linear-gradient(180deg, #99d67e 0%, #3b6d11 100%); }
+.aw-chart-bar--orange { background: linear-gradient(180deg, #f7c57e 0%, #9b5e11 100%); }
+.aw-chart-bar--red { background: linear-gradient(180deg, #f19a9a 0%, #a32d2d 100%); }
+.aw-chart-bar--gray { background: linear-gradient(180deg, #c4cad3 0%, #78808c 100%); }
+
+.aw-chart-value {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--bs-body-color, #2c3442);
+    line-height: 1;
+}
+
+.aw-chart-label {
+    font-size: 10px;
+    color: var(--bs-secondary-color, #7f8896);
+    text-align: center;
+    white-space: nowrap;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 700;
+}
+
+.aw-sales-summary-grid {
+    grid-template-columns: 1fr;
+    padding-bottom: 2px;
+}
+
+.o_home_dashboard.hd-mode-dark {
+    .aw-graph-kpi-value {
+        color: var(--hd-text, #f8fafc);
+    }
+
+    .aw-graph-kpi-label {
+        color: color-mix(in srgb, var(--hd-muted, #cbd5e1) 88%, #ffffff 12%);
+    }
+
+    .aw-chart-plot {
+        background: transparent;
+        border-color: transparent;
+    }
+
+    .aw-chart-wrap--sales {
+        border-color: rgba(148, 163, 184, 0.22);
+        background:
+            linear-gradient(to top, rgba(148, 163, 184, 0.14) 1px, transparent 1px) 0 0/100% 20px,
+            linear-gradient(180deg, rgba(148, 163, 184, 0.13), rgba(148, 163, 184, 0.05));
+    }
+
+    .aw-chart-wrap--activity {
+        border-color: rgba(148, 163, 184, 0.22);
+        background:
+            linear-gradient(to top, rgba(148, 163, 184, 0.14) 1px, transparent 1px) 0 0/100% 20px,
+            linear-gradient(180deg, rgba(148, 163, 184, 0.13), rgba(148, 163, 184, 0.05));
+    }
+
+    .aw-chart-value {
+        color: var(--hd-text, #f8fafc);
+    }
+
+    .aw-chart-label {
+        color: color-mix(in srgb, var(--hd-muted, #cbd5e1) 92%, #ffffff 8%);
+    }
+
+    .aw-chart-bar--blue { background: linear-gradient(180deg, #b6c8ff 0%, #5877d8 100%); }
+    .aw-chart-bar--green { background: linear-gradient(180deg, #b6e38d 0%, #4d7f1f 100%); }
+    .aw-chart-bar--orange { background: linear-gradient(180deg, #ffd8a3 0%, #b67721 100%); }
+    .aw-chart-bar--red { background: linear-gradient(180deg, #ffbaba 0%, #bb4747 100%); }
+    .aw-chart-bar--gray { background: linear-gradient(180deg, #d8e1ef 0%, #8a95a5 100%); }
+}

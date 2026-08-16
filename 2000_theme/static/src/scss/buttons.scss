@@ -1,0 +1,115 @@
+// Buttons - Consistent padding, no rounded corners
+// =================================================
+
+// All buttons - remove border radius and apply consistent padding
+.btn {
+    border-radius: 0 !important;
+
+    // Primary button
+    &.btn-primary {
+        border-radius: 0 !important;
+    }
+
+    // Secondary button
+    &.btn-secondary {
+        border-radius: 0 !important;
+    }
+
+    // Outline variants
+    &.btn-outline-primary,
+    &.btn-outline-secondary {
+        border-radius: 0 !important;
+    }
+
+    // Link style buttons
+    &.btn-link {
+        border-radius: 0 !important;
+    }
+
+    // Small buttons
+    &.btn-sm {
+        border-radius: 0 !important;
+    }
+
+    // Large buttons
+    &.btn-lg {
+        border-radius: 0 !important;
+    }
+}
+
+// Odoo specific button classes
+.o_form_view {
+    .btn,
+    .o_button {
+        border-radius: 0 !important;
+    }
+
+    // Status bar buttons
+    .o_statusbar_buttons {
+        .btn {
+            border-radius: 0 !important;
+        }
+    }
+
+    // Action buttons in form
+    .oe_button_box {
+        .oe_stat_button {
+            border-radius: 0 !important;
+        }
+    }
+}
+
+// Control panel buttons
+.o_control_panel {
+    .btn {
+        border-radius: 0 !important;
+    }
+
+    // Dropdown toggle buttons
+    .dropdown-toggle {
+        border-radius: 0 !important;
+    }
+}
+
+// Modal/dialog buttons
+.modal {
+    .btn {
+        border-radius: 0 !important;
+    }
+
+    .modal-footer {
+        .btn {
+            border-radius: 0 !important;
+        }
+    }
+}
+
+// Button groups - ensure no rounded corners
+.btn-group {
+    .btn {
+        border-radius: 0 !important;
+
+        &:first-child {
+            border-radius: 0 !important;
+        }
+
+        &:last-child {
+            border-radius: 0 !important;
+        }
+    }
+}
+
+// Dropdown menus and items
+.dropdown-menu {
+    border-radius: 0 !important;
+
+    .dropdown-item {
+        border-radius: 0 !important;
+    }
+}
+
+// Icon buttons (keep square)
+.btn-icon,
+.o_icon_button {
+    border-radius: 0 !important;
+}

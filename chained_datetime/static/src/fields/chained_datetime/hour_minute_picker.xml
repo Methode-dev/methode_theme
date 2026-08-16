@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="chained_datetime.HourMinutePicker">
+        <Dropdown
+            state="dropdown"
+            menuRef="menuRef"
+            manual="true"
+            focusToggleOnClosed="false"
+            position="'bottom-start'"
+            menuClass="'o_chained_hm_menu p-0'"
+            onOpened.bind="onOpened"
+        >
+            <input
+                type="text"
+                t-ref="input"
+                class="o_input o_chained_time_input text-center cursor-pointer"
+                t-att-class="inputClass"
+                t-att-size="inputSize"
+                t-model="state.text"
+                t-on-input="onInput"
+                t-on-focus="ensureOpen"
+                t-on-click="ensureOpen"
+                t-on-change="onChange"
+                t-on-keydown="onKeydown"
+                autocomplete="off"
+            />
+            <t t-set-slot="content">
+                <div class="o_chained_hm d-flex">
+                    <div class="o_chained_hm_col" aria-label="Hours">
+                        <div
+                            t-foreach="hours"
+                            t-as="hour"
+                            t-key="hour.value"
+                            class="o_chained_hm_option dropdown-item"
+                            t-att-class="{ active: hour.value === state.time.hour }"
+                            t-on-click.stop="() => this.pick('hour', hour.value)"
+                            t-esc="hour.label"
+                        />
+                    </div>
+                    <div class="o_chained_hm_col" aria-label="Minutes">
+                        <div
+                            t-foreach="minutes"
+                            t-as="minute"
+                            t-key="minute.value"
+                            class="o_chained_hm_option dropdown-item"
+                            t-att-class="{ active: minute.value === state.time.minute }"
+                            t-on-click.stop="() => this.pick('minute', minute.value)"
+                            t-esc="minute.label"
+                        />
+                    </div>
+                </div>
+            </t>
+        </Dropdown>
+    </t>
+</templates>

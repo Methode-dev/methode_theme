@@ -1,0 +1,170 @@
+///
+/// Aura Backend Theme - Community Edition — Status Bar
+///
+/// Targets .tbt_statusbar_root (.o_statusbar_status patched by status_bar.xml).
+///
+/// Odoo renders inline buttons in REVERSED DOM order + flex-flow:row-reverse.
+/// JS (status_bar.js) adds:
+///   .tbt-step-done   — steps visually before the current one (completed)
+///   .tbt-step-future — steps visually after  the current one (upcoming)
+///
+/// Separator ›  uses ::after on every non-.o_first button:
+///   .o_first  = DOM-first = visual-LAST  → no separator needed after it
+///   All others sit to the left of another step → need a right-side separator
+///
+
+.o_statusbar_status {
+    flex-flow: row-reverse wrap !important;
+    gap: 0.9rem !important;
+    margin-left: auto;
+    align-items: center !important;
+
+    > .o_arrow_button:not(.d-none) {
+        // ── Reset all Odoo clip-path arrow styles ──────────────────────────
+        clip-path: none !important;
+        margin-left: 0 !important;
+        border: none !important;
+        border-radius: 999px !important;
+        padding: 0.28rem 0.9rem !important;
+        font-size: 0.78rem !important;
+        font-weight: 500 !important;
+        line-height: 1.5 !important;
+        white-space: nowrap;
+        position: relative;
+        overflow: visible !important;
+        transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+
+        // Odoo uses ::before for the polygon "border" effect — remove it
+        &::before {
+            content: none !important;
+            display: none !important;
+            background: none !important;
+            clip-path: none !important;
+        }
+
+        // ── Default: upcoming / future step ───────────────────────────────
+        background: #f1f2f4 !important;
+        color: #9ca3af !important;
+
+        &:disabled {
+            cursor: default !important;
+            opacity: 1 !important;
+        }
+
+        &:not(:disabled):hover,
+        &:not(:disabled):focus {
+            background: #e5e7eb !important;
+            color: #6b7280 !important;
+            box-shadow: 0 2px 6px rgba(16, 24, 40, 0.08) !important;
+            outline: none !important;
+        }
+
+        // ── Completed step ─────────────────────────────────────────────────
+        &.tbt-step-done {
+            background: rgba(var(--tbt-brand-color-rgb, 24, 55, 254), 0.1) !important;
+            color: var(--tbt-brand-color, #242424) !important;
+
+            // Re-enable ::before for the ✓ checkmark
+            &::before {
+                content: "\2713\00a0" !important; // ✓ + non-breaking space
+                display: inline !important;
+                background: none !important;
+                clip-path: none !important;
+                position: static !important;
+                inset: auto !important;
+                font-size: 0.78em;
+                font-weight: 700;
+                opacity: 0.85;
+            }
+        }
+
+        // ── Active / current step ──────────────────────────────────────────
+        &.o_arrow_button_current {
+            background: var(--tbt-brand-color, #242424) !important;
+            color: #fff !important;
+            font-weight: 600 !important;
+            box-shadow: 0 2px 10px rgba(var(--tbt-brand-color-rgb, 24, 55, 254), 0.28) !important;
+        }
+
+        // ── Step separator › ──────────────────────────────────────────────
+        // Placed after every button that is NOT the visual-last (.o_first in DOM).
+        // With flex-row-reverse, ::after at right:-Xpx lands in the gap between
+        // this button and the next visual button to its right.
+        &:not(.dropdown-toggle):not(.o_first)::after {
+            content: "\203A"; // ›
+            position: absolute;
+            right: -0.58rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #d1d5db;
+            font-size: 1rem;
+            font-weight: 300;
+            line-height: 1;
+            pointer-events: none;
+            background: none !important;
+            clip-path: none !important;
+            z-index: 10;
+        }
+
+        // ── Overflow arrow-button dropdowns (…  triggers) ─────────────────
+        &.dropdown-toggle {
+            background: #f1f2f4 !important;
+            color: #6b7280 !important;
+            font-size: 0.72rem !important;
+            padding: 0.28rem 0.7rem !important;
+
+            &::after { display: none !important; }
+        }
+    }
+
+    // ── Single "current label" dropdown (mobile / all-items-overflow) ──────
+    // This button has .dropdown-toggle but NOT .o_arrow_button.
+    // It shows the active step label and opens a full list dropdown.
+    > .dropdown-toggle:not(.o_arrow_button):not(.d-none) {
+        clip-path: none !important;
+        border: none !important;
+        border-radius: 999px !important;
+        padding: 0.28rem 1rem !important;
+        font-size: 0.78rem !important;
+        font-weight: 600 !important;
+        background: var(--tbt-brand-color, #242424) !important;
+        color: #fff !important;
+        box-shadow: 0 2px 10px rgba(var(--tbt-brand-color-rgb, 24, 55, 254), 0.28) !important;
+        transition: opacity 0.15s ease !important;
+
+        &::after { display: none !important; } // hide Bootstrap caret
+        &::before { content: none !important; display: none !important; }
+
+        &:hover { opacity: 0.88 !important; }
+    }
+}
+
+// ── Dropdown panel items (all statusbar dropdowns) ─────────────────────────
+.o_field_statusbar .dropdown-menu {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(16, 24, 40, 0.1), 0 1px 4px rgba(16, 24, 40, 0.06);
+    padding: 0.35rem;
+    min-width: 9rem;
+
+    .o-dropdown-item {
+        border-radius: 8px;
+        font-size: 0.82rem;
+        font-weight: 500;
+        color: #374151;
+        padding: 0.42rem 0.75rem;
+        transition: background 0.12s ease, color 0.12s ease;
+
+        &:hover, &:focus {
+            background: rgba(var(--tbt-brand-color-rgb, 24, 55, 254), 0.07);
+            color: var(--tbt-brand-color, #242424);
+        }
+
+        &.active, &.disabled {
+            background: rgba(var(--tbt-brand-color-rgb, 24, 55, 254), 0.1);
+            color: var(--tbt-brand-color, #242424);
+            font-weight: 600;
+            cursor: default;
+        }
+    }
+}

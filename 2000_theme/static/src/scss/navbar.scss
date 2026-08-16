@@ -1,0 +1,62 @@
+// Navbar - Clean white background
+// ================================
+/*
+.o_main_navbar {
+    --o-navbar-height: 46px;
+    height: var(--o-navbar-height);
+    border-bottom: none;
+    background: #ffffff !important;
+    box-shadow: none;
+
+    .o_menu_brand {
+        color: #212529 !important;
+    }
+
+    .dropdown-toggle,
+    .o_menu_sections a,
+    .o_menu_sections .dropdown > a,
+    .o_menu_sections .dropdown-toggle {
+        color: #212529 !important;
+        background: transparent !important;
+        border: none !important;
+
+        &:hover {
+            color: #212529 !important;
+            background: rgba(0, 0, 0, 0.05) !important;
+        }
+
+        &.active,
+        &:active,
+        &:focus {
+            color: #212529 !important;
+            background: #e9ecef !important;
+        }
+    }
+}
+
+// Systray badges
+.o_main_navbar .o_menu_systray {
+    .badge {
+        color: var(--o-navbar-badge-color, #FFF) !important;
+        background-color: var(--o-navbar-badge-bg, #dc3545);
+        font-size: 11px;
+    }
+
+    .o_notification_counter {
+        background: #dc3545 !important;
+        color: #ffffff !important;
+    }
+}
+
+// Badge colors
+.badge-danger,
+.bg-danger {
+    background-color: #dc3545 !important;
+    color: #ffffff !important;
+}
+
+.text-bg-danger {
+    color: #FFF !important;
+    background-color: RGBA(var(--danger-rgb), var(--bg-opacity, 1)) !important;
+}
+*/

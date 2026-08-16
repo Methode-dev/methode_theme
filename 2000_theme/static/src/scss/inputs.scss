@@ -1,0 +1,111 @@
+// Input Fields - Bottom border only with primary color on focus
+// =============================================================
+// Note: Dropdown fields (Many2one, Selection) are in dropdowns.scss
+
+.o_form_view {
+    // Text inputs and textareas
+    .o_field_widget {
+        input.o_input:not([type="checkbox"]),
+        textarea.o_input {
+            border: none;
+            border-bottom: 1px solid $theme-border-color;
+            border-radius: 0;
+            background-color: transparent;
+            transition: border-color 0.2s ease-in-out;
+
+            &:focus {
+                border-bottom-color: $theme-primary;
+                box-shadow: none;
+                outline: none;
+            }
+
+            &:hover:not(:focus):not(:disabled):not([readonly]) {
+                border-bottom-color: darken($theme-border-color, 10%);
+            }
+
+            &[readonly],
+            &.o_readonly {
+                border-bottom-style: dashed;
+            }
+
+            &:disabled {
+                border-bottom-style: dotted;
+                opacity: 0.6;
+            }
+        }
+    }
+
+    // Char fields
+    .o_field_char,
+    .o_field_text,
+    .o_field_integer,
+    .o_field_float {
+        input.o_input,
+        textarea.o_input {
+            border: none;
+            border-bottom: 1px solid $theme-border-color;
+            border-radius: 0;
+
+            &:focus {
+                border-bottom-color: $theme-primary;
+                box-shadow: none;
+            }
+        }
+    }
+
+    // Date/datetime picker
+    .o_field_date,
+    .o_field_datetime {
+        .o_datepicker input.o_input {
+            border-bottom: 1px solid $theme-border-color;
+            border-radius: 0;
+
+            &:focus {
+                border-bottom-color: $theme-primary;
+                box-shadow: none;
+            }
+        }
+    }
+
+    // Monetary fields
+    .o_field_monetary {
+        input.o_input {
+            border: none;
+            border-bottom: 1px solid $theme-border-color;
+            border-radius: 0;
+
+            &:focus {
+                border-bottom-color: $theme-primary;
+                box-shadow: none;
+            }
+        }
+    }
+}
+
+// Modal/dialog inputs
+.modal .o_field_widget {
+    input.o_input:not([type="checkbox"]),
+    textarea.o_input {
+        border: none;
+        border-bottom: 1px solid $theme-border-color;
+        border-radius: 0;
+
+        &:focus {
+            border-bottom-color: $theme-primary;
+            box-shadow: none;
+        }
+    }
+}
+
+.o_required_modifier {
+    .o_input {
+        border-bottom: 2px solid #666666;
+        background-color: transparent !important;
+    }
+}
+
+button {
+    .o_input {
+        border-bottom: 1px solid $theme-border-color;
+    }
+}

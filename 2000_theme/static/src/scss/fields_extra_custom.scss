@@ -1,0 +1,50 @@
+// Extra Field Customizations
+// ==========================
+// Miscellaneous styles not covered by other files
+
+// Tables
+.table {
+    thead th {
+        vertical-align: bottom;
+        border-bottom: none;
+        padding-left: 0px;
+    }
+
+    td {
+        padding: 0.35rem;
+        vertical-align: top;
+        height: 10px;
+    }
+}
+
+// Tabs
+.nav-tabs {
+    .nav-link {
+        color: #666666;
+        background-color: white;
+        border-color: #ced4da;
+        border-bottom: none;
+
+        &:hover {
+            color: #008784;
+        }
+
+        &.active {
+            color: #212529;
+            background-color: white;
+            border-top: 2px solid #875A7B !important
+        }
+    }
+
+    .nav-item.show .nav-link {
+        color: #008784;
+    }
+}
+
+.o_field_many2one_selection .o_dropdown_button {
+    visibility: visible !important;
+}
+
+.o_select_menu .o_select_menu_caret {
+    visibility: visible !important;
+}

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+  <!--
+    HOOK - a single `expr="."` replace.
+
+    Template inheritance is resolved client-side and lazily
+    (web/static/src/core/templates.js::_getTemplate). A non-matching xpath throws
+    from core/template_inheritance.js, and because this template is reached from
+    web.NavBar, that means a blank backend rather than a build error.
+
+    `expr="."` is the only operation that structurally cannot fail: getNode does
+    doc.evaluate(".", root), which always returns root, and replace() handles the
+    no-parentElement case by promoting our first element child and copying t-name
+    across. Worst case is "last writer wins".
+
+    Two things keep the upstream-drift cost near zero:
+      1. the env.isSmall and isScopedApp branches are re-emitted VERBATIM,
+         including the t-call to web.NavBar.AppsMenu.Sidebar, so mobile stays
+         100% stock and keeps receiving upstream fixes;
+      2. the stock skeleton is preserved -
+             div.o_navbar_apps_menu > Dropdown > button[data-hotkey=h]
+                                               + t[t-set-slot=content]
+         so third-party xpaths targeting it still match.
+
+    SOURCE OF TRUTH: web/static/src/webclient/navbar/navbar.xml, t-name="web.NavBar.AppsMenu".
+    Re-diff this block on every Odoo minor upgrade.
+  -->
+  <t t-name="methode_apps_dropdown.NavBar.AppsMenu"
+     t-inherit="web.NavBar.AppsMenu"
+     t-inherit-mode="extension">
+    <xpath expr="." position="replace">
+      <t>
+        <!-- ===== small screens: untouched stock ===== -->
+        <t t-if="env.isSmall">
+          <a href="/odoo" class="o_menu_toggle border-0"
+             t-att-class="{'hasImage': currentApp?.webIconData}"
+             accesskey="h" t-ref="menuApps" t-on-click.prevent="_openAppMenuSidebar">
+            <t t-call="web.NavBar.AppsMenu.Sidebar"/>
+          </a>
+        </t>
+
+        <!-- ===== desktop: tiled launcher ===== -->
+        <t t-else="">
+          <div t-if="!isScopedApp" class="o_navbar_apps_menu">
+            <Dropdown
+              menuClass="'o_mad_launcher'"
+              bottomSheet="false"
+              navigationOptions="appsLauncherNavigation">
+              <button data-hotkey="h" title="Home Menu">
+                <i class="oi oi-apps"/>
+              </button>
+              <t t-set-slot="content">
+                <!-- getMenuItemHref is passed down rather than re-implemented so
+                     tiles produce the exact same URL as the app brand and the
+                     breadcrumbs, and survive a change to the URL scheme. -->
+                <AppsLauncher apps="apps" getMenuItemHref.bind="getMenuItemHref"/>
+              </t>
+            </Dropdown>
+          </div>
+          <div t-else="" class="mx-2"/>
+        </t>
+      </t>
+    </xpath>
+  </t>
+
+</templates>

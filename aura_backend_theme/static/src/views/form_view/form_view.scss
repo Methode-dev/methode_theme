@@ -1,0 +1,1575 @@
+///
+/// Aura Backend Theme - Community Edition — Form View
+///
+/// Targets (from web/static/src/views/form/):
+///   .o_form_view                       — root container
+///   .o_form_sheet_bg / .o_form_sheet   — white content card
+///   .oe_button_box / .o_form_buttonbox — smart stat buttons
+///   .o_statusbar_status                — pipeline status bar
+///   .o_form_label / .o_wrap_label      — field labels (Label-SM token)
+///   .o_group / .o_inner_group / .o_cell — field groups (no dividers)
+///   .o_notebook / .o_notebook_headers  — tabbed sections (pill style)
+///   .o_horizontal_separator            — section overline separator
+///   .o_field_widget                    — minimalist baseline inputs
+///   .o_mail_thread / .o_composer       — chatter area
+///
+/// Design rules applied (DESIGN.md §2, §3, §4, §5):
+///   • No-line rule: no 1px solid borders for sectioning
+///   • Label-SM token: 0.6875rem / 600 / 0.05em tracking
+///   • Minimalist Baseline inputs: bottom-border only (#acadad → #242424 on focus)
+///   • Ambient shadow for floating elements (0 0 60px rgba(brand,.06))
+///
+
+.o_form_view {
+  background: var(--tbt-bg, #f6f6f6);
+
+  // .o_form_renderer is the d-flex flex-nowrap row that holds the form sheet
+  // and the chatter side by side. Make it fill the whole view height and
+  // stretch to the available width.
+  .o_form_renderer {
+    flex: 1 1 auto;
+    min-width: 0;
+    align-items: stretch;
+  }
+
+  // ════════════════════════════════════════════════════════════════════════════
+  // 0. CONTROL PANEL PAGER  — match list view pager styling
+  // ════════════════════════════════════════════════════════════════════════════
+
+  .o_control_panel_navigation {
+    align-items: center;
+
+    .o_cp_pager.tbt_cp_pager_wrap {
+      .o_pager.tbt_pager {
+        background: #fff;
+        border: 1px solid var(--tbt-list-border, rgba(114, 129, 144, 0.14));
+        border-radius: 10px;
+        padding: 0.22rem 0.28rem 0.22rem 0.62rem;
+        gap: 0.55rem;
+
+        .o_pager_counter {
+          color: var(--tbt-list-muted, #6b7280);
+          font-size: 0.82rem;
+
+          .o_pager_value,
+          .o_pager_limit {
+            color: var(--tbt-list-text, #101828);
+            font-weight: 600;
+            border-bottom: 0 !important;
+          }
+        }
+
+        .o_pager_previous,
+        .o_pager_next {
+          border: 1px solid var(--tbt-list-border, rgba(114, 129, 144, 0.14));
+          background: #fff;
+          color: #667085;
+          min-width: 30px;
+          min-height: 30px;
+          border-radius: 8px !important;
+          padding: 0;
+
+          &:hover:not(:disabled) {
+            border-color: rgba(var(--tbt-brand-color-rgb, 24, 55, 254), 0.28);
+            background: rgba(var(--tbt-brand-color-rgb, 24, 55, 254), 0.08);
+            color: var(--tbt-brand-color, #242424);
+          }
+
+          &:disabled {
+            opacity: 0.45;
+          }
+        }
+
+        .tbt_pager_pages {
+          gap: 0.28rem;
+          padding-left: 0.2rem;
+
+          .tbt_pager_page,
+          .tbt_pager_dots {
+            min-width: 28px;
+            height: 28px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 7px;
+            font-size: 0.76rem;
+            font-weight: 600;
+            color: #667085;
+          }
+
+          .tbt_pager_page {
+            border: 1px solid transparent;
+            background: transparent;
+
+            &.is-active {
+              color: var(--tbt-brand-color, #242424);
+              background: rgba(var(--tbt-brand-color-rgb, 24, 55, 254), 0.1);
+              border-color: rgba(var(--tbt-brand-color-rgb, 24, 55, 254), 0.2);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // ════════════════════════════════════════════════════════════════════════════
+  // 1. SHEET  — white card that holds form content
+  // ════════════════════════════════════════════════════════════════════════════
+
+  .o_form_sheet_bg {
+    flex: 1 1 auto;
+    min-width: 0;
+    background: var(--tbt-bg, #f6f6f6);
+  }
+
+  .o_form_sheet {
+    background: var(--tbt-surface-card, #ffffff);
+    border-radius: 0.5rem;
+    box-shadow: none;
+    border: none;
+    margin-top: 1.25rem;
+    margin-bottom: 1.25rem;
+    padding: 1.25rem;
+  }
+
+  // ════════════════════════════════════════════════════════════════════════════
+  // 2. STAT BUTTONS  (.oe_button_box)
+  // ════════════════════════════════════════════════════════════════════════════
+
+  .oe_button_box,
+  .o-form-buttonbox,
+  .o_form_buttonbox {
+    --o-stat-button-color: var(--tbt-brand-color, #242424);
+    --o-stat-text-color: var(--tbt-brand-color, #242424);
+    --o-stat-button-border-color: rgba(
+      var(--tbt-brand-color-rgb, 24, 55, 254),
+      0.2
+    );
+    gap: 0.75rem;
+    border: none;
+
+    .oe_stat_button {
+      border: 1px solid var(--tbt-outline-ghost, rgba(171, 173, 175, 0.15));
+      border-radius: 8px;
+      background: var(--tbt-surface-low, #f1f2f4);
+      padding: 0.375rem 0.75rem;
+      font-size: 0.5rem !important;
+      line-height: 1.15 !important;
+      transition:
+        background-color 0.15s ease,
+        border-color 0.15s ease,
+        box-shadow 0.15s ease;
+
+      .o_button_icon {
+        // font-size: 1.15em !important;
+        color: var(--tbt-brand-color, #242424) !important;
+        font-size: 2em !important;
+      }
+
+      &:hover {
+        background: var(--tbt-primary-container, #edf1ff);
+        border-color: rgba(var(--tbt-brand-color-rgb, 24, 55, 254), 0.2);
+        box-shadow: none;
+
+        .o_field_widget,
+        .o_stat_info {
+          color: var(--tbt-secondary, #242424);
+        }
+      }
+
+      .o_stat_info,
+      > span,
+      .o_field_statinfo {
+        font-size: 0.75rem !important;
+        line-height: 1.15 !important;
+      }
+
+      .o_stat_info .o_stat_text,
+      .o_field_statinfo .o_stat_text,
+      > span .o_stat_text {
+        font-size: 0.56rem !important;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--tbt-on-surface-variant, #5a5c5c);
+      }
+
+      .o_stat_value,
+      .o_field_statinfo .o_stat_value,
+      > span .o_stat_value {
+        font-size: 0.82rem !important;
+        font-weight: 700;
+        color: var(--tbt-brand-color, #242424);
+      }
+    }
+  }
+
+  // ════════════════════════════════════════════════════════════════════════════
+  // 3. STATUS BAR  — pipeline progress strip at the top of the sheet
+  // ════════════════════════════════════════════════════════════════════════════
+
+  // Keep action buttons and state bar aligned without awkward wraps.
+  .o_form_statusbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 0.6rem 0.9rem;
+
+    .o_statusbar_buttons {
+      flex: 1 1 28rem;
+      min-width: 18rem;
+      row-gap: 0.45rem !important;
+    }
+
+    .o_field_statusbar {
+      flex: 0 1 auto;
+      margin-left: auto;
+      min-width: unquote("min(100%, 24rem)");
+    }
+  }
+
+  @media (max-width: 1200px) {
+    .o_form_statusbar {
+      .o_statusbar_buttons,
+      .o_field_statusbar {
+        flex-basis: 100%;
+        min-width: 0;
+      }
+
+      .o_field_statusbar {
+        margin-left: 0;
+      }
+    }
+  }
+
+  .o_statusbar_status {
+    background: var(--tbt-surface-low, #f1f2f4);
+    border-bottom: none;
+
+    .o_statusbar_status button {
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--tbt-on-surface-variant, #5a5c5c);
+      border-right: none;
+      padding: 0 1rem;
+      transition:
+        color 0.12s ease,
+        background-color 0.12s ease;
+
+      &:hover {
+        background: var(--tbt-primary-container, #edf1ff);
+        color: var(--tbt-secondary, #242424);
+      }
+
+      &.o_arrow_button_current {
+        color: var(--tbt-secondary, #242424);
+        font-weight: 700;
+        background: var(--tbt-primary-container, #edf1ff);
+
+        &::before {
+          border-left-color: var(--tbt-primary-container, #edf1ff) !important;
+        }
+      }
+    }
+  }
+
+  // ════════════════════════════════════════════════════════════════════════════
+  // 4. FIELD LABELS  (.o_form_label, .o_wrap_label label)
+  //    Label-SM token from DESIGN.md §3
+  // ════════════════════════════════════════════════════════════════════════════
+
+  .o_form_label,
+  .o_wrap_label > label,
+  .o_field_widget > label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    // letter-spacing: 1em;
+    color: var(--tbt-on-surface-variant, #5a5c5c);
+    text-transform: none;
+    margin-bottom: 0.25rem;
+    line-height: 1.4;
+  }
+
+  // ════════════════════════════════════════════════════════════════════════════
+  // 5. FORM GROUPS  (.o_group, .o_inner_group, .o_cell)
+  //    No divider lines — use vertical spacing only (No-line rule §2)
+  // ════════════════════════════════════════════════════════════════════════════
+
+  .o_group {
+    margin-bottom: 1.25rem; // 5× base unit — "editorial breathability"
+
+    > .o_wrap_field {
+      border: none !important;
+    }
+  }
+
+  .o_inner_group {
+    gap: 0.35rem 1rem;
+    border: none !important;
+    align-items: center;
+
+    // Grid groups in forms: tighten spacing and improve row alignment.
+    &.grid {
+      row-gap: 0.3rem;
+      column-gap: 0.9rem;
+      align-items: center;
+
+      .o_cell {
+        display: flex;
+        align-items: center;
+        min-width: 0;
+      }
+
+      .o_wrap_label,
+      .o_wrap_label > label,
+      .o_wrap_label .o_form_label {
+        margin-bottom: 0;
+        line-height: 1.2;
+      }
+
+      .o_wrap_input {
+        width: 100%;
+        min-width: 0;
+      }
+
+      .o_wrap_input .o_field_widget:not(.o_field_radio) {
+        width: 100%;
+      }
+
+      .o_wrap_input
+        .o_field_widget:not(.o_field_boolean):not(.o_field_radio)
+        .o_input,
+      .o_wrap_input
+        .o_field_widget:not(.o_field_boolean):not(.o_field_radio)
+        input,
+      .o_wrap_input
+        .o_field_widget:not(.o_field_boolean):not(.o_field_radio)
+        select,
+      .o_wrap_input
+        .o_field_widget:not(.o_field_boolean):not(.o_field_radio)
+        textarea,
+      .o_wrap_input
+        .o_field_widget:not(.o_field_boolean):not(.o_field_radio)
+        .o_input_dropdown,
+      .o_wrap_input
+        .o_field_widget:not(.o_field_boolean):not(.o_field_radio)
+        .o_tags_input,
+      .o_wrap_input
+        .o_field_widget:not(.o_field_boolean):not(.o_field_radio)
+        .o_many2one,
+      .o_wrap_input
+        .o_field_widget:not(.o_field_boolean):not(.o_field_radio)
+        .o_field_many2one_selection {
+        width: 100%;
+        max-width: 100%;
+      }
+
+      // Restore baseline-style bottom border for many2one autocomplete fields
+      // (e.g. CRM Contact / partner_id) inside form groups.
+      .o_wrap_input .o_field_widget[class*="many2one"] {
+        .o_input_dropdown {
+          border: none !important;
+          border-radius: 0 !important;
+          background: transparent !important;
+          box-shadow: none !important;
+          padding: 0 !important;
+        }
+
+        .o-autocomplete--input.o_input {
+          border: var(--border-width, 1px) solid
+            var(--o-input-border-color, #aeb5c2) !important;
+          border-width: 0 0 var(--border-width, 1px) 0 !important;
+          border-radius: 0 !important;
+          background-color: transparent !important;
+          box-shadow: none !important;
+          padding: 2px 4px !important;
+        }
+
+        .o-autocomplete--input.o_input:focus,
+        .o-autocomplete--input.o_input:focus-visible {
+          --o-input-border-color: var(--tbt-brand-color, #242424);
+        }
+      }
+    }
+  }
+
+  .o_cell {
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
+    border: none !important;
+  }
+
+  .o_wrap_field {
+    border-top: none !important;
+  }
+
+  // ════════════════════════════════════════════════════════════════════════════
+  // 6. NOTEBOOK TABS  (.o_notebook_headers .nav-link)
+  //    Replace Bootstrap underline with brand-color pill (No-line rule)
+  // ════════════════════════════════════════════════════════════════════════════
+
+  .o_notebook {
+    margin-top: 1.25rem;
+  }
+
+  // Tab content pane — no Bootstrap card-border, just a top gap
+  .o_notebook > .o_notebook_content {
+    border: none !important;
+    padding: 1rem 0 0;
+  }
+
+  .o_notebook_headers {
+    // Kill Bootstrap .nav-tabs border AND our own border — use a single
+    // 1px ghost line rendered via ::after so there's no double-line.
+    border-bottom: none !important;
+    margin-bottom: 0;
+    position: relative;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 1px;
+      background: rgba(171, 173, 173, 0.14); // single ghost separator
+      pointer-events: none;
+    }
+
+    // Bootstrap adds border-bottom to .nav-tabs itself — kill it
+    .nav,
+    .nav-tabs {
+      border-bottom: none !important;
+      gap: 0.25rem;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      scrollbar-width: none;
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+
+    .nav-link {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--tbt-on-surface-variant, #5a5c5c);
+      // Remove ALL Bootstrap tab borders (top, sides, bottom-flush trick)
+      border: none !important;
+      border-radius: 999px !important;
+      padding: 0.4rem 1rem;
+      margin-bottom: 4px; // lift pill above the ghost line — no bleed-through
+      background: transparent;
+      white-space: nowrap;
+      outline: none !important; // no focus ring circle on click
+      transition:
+        color 0.12s ease,
+        background-color 0.12s ease;
+
+      &:hover {
+        color: var(--tbt-brand-color, #242424);
+        background: var(--tbt-brand-color-soft, #edf1ff);
+      }
+
+      &.active,
+      &:focus,
+      &:focus-visible {
+        color: var(--tbt-brand-color, #242424);
+        background: var(--tbt-brand-color-soft, #edf1ff);
+        font-weight: 700;
+        outline: none !important;
+        box-shadow: none !important;
+      }
+    }
+  }
+
+  // ════════════════════════════════════════════════════════════════════════════
+  // 7. SECTION SEPARATOR  (.o_horizontal_separator)
+  //    Uppercase overline typography — no border, pure spacing (No-line rule)
+  // ════════════════════════════════════════════════════════════════════════════
+
+  .o_horizontal_separator {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--tbt-on-surface-variant, #5a5c5c);
+    margin: 1.5rem 0 0.75rem;
+    padding: 0;
+    border: none !important;
+  }
+
+  // ════════════════════════════════════════════════════════════════════════════
+  // 8. FIELDS — OUTLINED STATES
+  //
+  //   Matches the requested input states:
+  //     Default, Hover, Active/Typing, Disabled, Error
+  // ════════════════════════════════════════════════════════════════════════════
+
+  .o_field_widget {
+    --tbt-input-border: transparent;
+    --tbt-input-border-hover: transparent;
+    --tbt-input-border-active: transparent;
+    --tbt-input-bg: #edf1f5;
+    --tbt-input-bg-hover: #e7edf3;
+    --tbt-input-bg-disabled: #eef1f5;
+    --tbt-input-radius: 8px;
+    --tbt-input-height: 2.65rem;
+
+    // ── Text / number / date inputs ──────────────────────────────────────
+    &.o_field_char,
+    &.o_field_integer,
+    &.o_field_float,
+    &.o_field_monetary,
+    &.o_field_number,
+    &.o_field_email,
+    &.o_field_phone,
+    &.o_field_url,
+    &.o_field_date,
+    &.o_field_datetime,
+    &.o_field_text {
+      input,
+      textarea {
+        border: none;
+        border-radius: var(--tbt-input-radius);
+        background: var(--tbt-input-bg);
+        outline: none;
+        color: var(--tbt-on-surface, #0c0f0f);
+        font-size: 0.875rem;
+        min-height: var(--tbt-input-height);
+        padding: 0.58rem 0.92rem;
+        transition:
+          border-color 0.15s ease,
+          box-shadow 0.15s ease,
+          background-color 0.15s ease,
+          transform 0.15s ease;
+        box-shadow: 0 1px 0 rgba(255, 255, 255, 0.9) inset;
+
+        &:focus {
+          box-shadow:
+            0 0 0 3px rgba(var(--tbt-brand-color-rgb, 24, 55, 254), 0.12),
+            0 1px 0 rgba(255, 255, 255, 0.95) inset;
+          background: var(--tbt-input-bg-hover);
+          outline: none;
+        }
+
+        &:hover:not(:focus) {
+          background: var(--tbt-input-bg-hover);
+        }
+
+        &:disabled {
+          background: var(--tbt-input-bg-disabled);
+          border-color: #e1e6ed;
+          color: #9aa1ad;
+          cursor: not-allowed;
+          box-shadow: none;
+        }
+
+        &::placeholder {
+          color: #8b93a0;
+        }
+      }
+
+      textarea {
+        min-height: 5.5rem;
+        resize: vertical;
+      }
+    }
+
+    // ── Monetary field — border lives on the wrapper div, not the input ────
+    // Odoo's template places the currency symbol in an absolutely-positioned
+    // overlay span BEFORE the input in the flex row.  If the input has its
+    // own border the symbol ends up visually outside the box.  Solution:
+    // give the wrapper div the border/radius and strip it from the input.
+    &.o_field_monetary {
+      > div {
+        display: inline-flex;
+        align-items: center !important; // baseline breaks symbol alignment
+        min-height: var(--tbt-input-height);
+        border: none;
+        border-radius: var(--tbt-input-radius);
+        background: var(--tbt-input-bg);
+        padding: 0 0.92rem;
+        gap: 0.25rem;
+        box-shadow: 0 1px 0 rgba(255, 255, 255, 0.9) inset;
+        transition:
+          border-color 0.15s ease,
+          box-shadow 0.15s ease,
+          background-color 0.15s ease;
+
+        &:hover {
+          background: var(--tbt-input-bg-hover);
+        }
+
+        &:focus-within {
+          box-shadow:
+            0 0 0 3px rgba(var(--tbt-brand-color-rgb, 24, 55, 254), 0.12),
+            0 1px 0 rgba(255, 255, 255, 0.95) inset;
+          background: var(--tbt-input-bg-hover);
+        }
+      }
+
+      // Odoo 19 monetary markup: an absolutely-positioned overlay (.o_input)
+      // contains an INVISIBLE "ghost" value (.o_monetary_ghost_value — it only
+      // measures the number's width so the symbol can sit right after it),
+      // followed by the visible currency symbol. It must stay invisible:
+      // forcing it visible duplicates the value behind the input (the "old
+      // smaller text under the bold one" bug).
+      .o_monetary_ghost_value {
+        opacity: 0 !important;
+      }
+
+      // Currency symbol = the overlay span that is NOT the ghost value.
+      .o_input.position-absolute > span:not(.o_monetary_ghost_value) {
+        font-weight: 600;
+        color: var(--tbt-sidebar-text, #555b70);
+        opacity: 1;
+        line-height: 1;
+        flex-shrink: 0;
+      }
+
+      // Strip border/bg from the actual <input> — the wrapper is the box
+      input.o_input {
+        border: none !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        min-height: unset !important;
+        padding: 0 !important;
+        outline: none !important;
+      }
+    }
+
+    // ── Selection / Many2one / Many2many ──────────────────────────────────
+    &.o_field_many2one,
+    &.o_field_many2many,
+    &.o_field_selection {
+      .o_input_dropdown {
+        display: flex;
+        align-items: center;
+        // justify-content: center;
+        min-height: var(--tbt-input-height);
+        border: none;
+        border-radius: var(--tbt-input-radius);
+        background: var(--tbt-input-bg);
+        padding: 0 0.82rem;
+        transition:
+          border-color 0.15s ease,
+          box-shadow 0.15s ease,
+          background-color 0.15s ease;
+        box-shadow: 0 1px 0 rgba(255, 255, 255, 0.9) inset;
+
+        &:hover {
+          background: var(--tbt-input-bg-hover);
+        }
+
+        &:focus-within {
+          box-shadow:
+            0 0 0 3px rgba(var(--tbt-brand-color-rgb, 24, 55, 254), 0.12),
+            0 1px 0 rgba(255, 255, 255, 0.95) inset;
+          background: var(--tbt-input-bg-hover);
+        }
+
+        .o_dropdown_button {
+          color: #6d7787;
+          opacity: 1;
+        }
+      }
+
+      .o_input,
+      input,
+      select {
+        border: none;
+        border-radius: 0;
+        background: transparent;
+        outline: none;
+        color: var(--tbt-on-surface, #0c0f0f);
+        font-size: 0.875rem;
+        min-width: 20px;
+        min-height: calc(var(--tbt-input-height) - 0.25rem);
+        padding: 0.35rem 0;
+        transition: color 0.15s ease;
+
+        &:focus {
+          box-shadow: none !important;
+          background: transparent;
+          outline: none;
+        }
+
+        &:disabled {
+          color: #9aa1ad;
+        }
+      }
+
+      .o_external_button {
+        background: transparent;
+        border: none;
+        color: #6b7280;
+        opacity: 0.85;
+
+        &:hover {
+          color: var(--tbt-input-border-active);
+          opacity: 1;
+        }
+      }
+    }
+
+    &.o_field_many2many_tags {
+      .o_tags_input {
+        border: none;
+        border-radius: var(--tbt-input-radius);
+        background: var(--tbt-input-bg);
+        min-height: var(--tbt-input-height);
+        padding: 0.28rem 0.58rem;
+        transition:
+          border-color 0.15s ease,
+          box-shadow 0.15s ease;
+        box-shadow: 0 1px 0 rgba(255, 255, 255, 0.9) inset;
+
+        &:hover {
+          background: var(--tbt-input-bg-hover);
+        }
+
+        &:focus-within {
+          border-color: var(--tbt-input-border-active);
+          box-shadow:
+            0 0 0 3px rgba(var(--tbt-brand-color-rgb, 24, 55, 254), 0.12),
+            0 1px 0 rgba(255, 255, 255, 0.95) inset;
+        }
+      }
+    }
+  }
+
+  // Invalid — outlined error state
+  .o_field_widget.o_field_invalid {
+    input,
+    textarea,
+    select,
+    .o_input {
+      border-color: var(--tbt-error, #b3261e) !important;
+      background: #ffffff !important;
+      box-shadow: 0 0 0 3px rgba(179, 38, 30, 0.14) !important;
+    }
+
+    .o_input_dropdown,
+    .o_tags_input {
+      border: none !important;
+      background: #ffffff !important;
+      box-shadow: 0 0 0 3px rgba(179, 38, 30, 0.14) !important;
+    }
+  }
+
+  // Required — keep subtle hint without forcing active/error appearance.
+  .o_required_modifier {
+    input,
+    textarea,
+    select,
+    .o_input {
+      border-color: #c4cad6;
+      background: var(--tbt-input-bg) !important;
+    }
+
+    .o_input_dropdown,
+    .o_tags_input {
+      border: none;
+      background: var(--tbt-input-bg) !important;
+    }
+  }
+
+  // ════════════════════════════════════════════════════════════════════════════
+  // 9. BOOLEAN / CHECKBOX  (.o_field_boolean)
+  //
+  //   Replaces the browser-native checkbox with a custom branded control:
+  //     Unchecked  — white fill, outline_variant border (#acadad)
+  //     Checked    — brand-color fill (#242424), white SVG checkmark
+  //     Focus      — brand-color ring (3px, 18% opacity)
+  //     Read-only  — locked-icon style, 60% opacity
+  // ════════════════════════════════════════════════════════════════════════════
+
+  .o_field_widget.o_field_boolean {
+    // Outer widget — flex row so checkbox + label share one baseline
+    display: inline-flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-right: 0.25rem; // visually balance the extra space on the left of the checkbox
+
+    // Bootstrap wraps the checkbox in .form-check; reset its layout so
+    // our flex container takes full control.
+    .form-check {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin: 0;
+      padding: 0;
+      min-height: unset; // Bootstrap sets min-height that shifts things
+    }
+
+    .form-check-label {
+      cursor: pointer;
+      font-size: 0.875rem;
+      color: var(--tbt-on-surface, #0c0f0f);
+      line-height: 1;
+      margin: 0;
+      padding: 0;
+    }
+
+    input[type="checkbox"],
+    .form-check-input {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 1.125rem; // 18px
+      height: 1.125rem;
+      border-radius: 4px;
+      border: 1.5px solid #acadad; // outline_variant — matches text inputs
+      background: #ffffff;
+      cursor: pointer;
+      flex-shrink: 0;
+      // Let the parent flex align-items: center handle vertical position —
+      // do NOT set vertical-align: middle here (conflicts with flex).
+      vertical-align: unset;
+      // Reset Bootstrap's float + margin that displace .form-check-input
+      float: none !important;
+      margin: 0 !important;
+      position: relative;
+      transition:
+        background-color 0.15s ease,
+        border-color 0.15s ease,
+        box-shadow 0.15s ease;
+
+      // Checked state — brand-color fill + white SVG tick
+      &:checked {
+        background-color: var(--tbt-brand-color, #242424);
+        border-color: var(--tbt-brand-color, #242424);
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.5' d='m5 10 3.5 3.5 6.5-7'/%3e%3c/svg%3e");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 0.7rem;
+      }
+
+      // Indeterminate state (three-state checkboxes in list views)
+      &:indeterminate {
+        background-color: var(--tbt-brand-color-soft, #edf1ff);
+        border-color: var(--tbt-brand-color, #242424);
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%231837fe' stroke-linecap='round' stroke-width='2.5' d='M5 10h10'/%3e%3c/svg%3e");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 0.7rem;
+      }
+
+      // Hover — brand-tinted border when unchecked
+      &:hover:not(:checked):not(:disabled) {
+        border-color: rgba(var(--tbt-brand-color-rgb, 24, 55, 254), 0.55);
+        background-color: rgba(var(--tbt-brand-color-rgb, 24, 55, 254), 0.04);
+      }
+
+      // Focus ring — brand-tinted, no default outline
+      &:focus,
+      &:focus-visible {
+        outline: none !important;
+        border-color: var(--tbt-brand-color, #242424);
+        box-shadow: 0 0 0 3px
+          rgba(var(--tbt-brand-color-rgb, 24, 55, 254), 0.18);
+      }
+
+      // Disabled / read-only
+      &:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+      }
+    }
+
+    // Read-only display value (Odoo renders a span in read mode)
+    &.o_readonly {
+      opacity: 0.65;
+      pointer-events: none;
+    }
+  }
+
+  // ════════════════════════════════════════════════════════════════════════════
+  // 10. RADIO BUTTONS  (.o_field_radio › .o_radio_item.form-check)
+  //
+  //   Odoo 19 structure (both classes on the same div):
+  //     div.form-check.o_radio_item
+  //       input[type="radio"].form-check-input.o_radio_input
+  //       label.form-check-label.o_form_label
+  //
+  //   Design:
+  //     Unchecked  — white fill, #acadad border 1.5px, circular
+  //     Checked    — white fill, brand-color border 2px, brand-color center dot
+  //     Hover      — border shifts to brand-color at 55% opacity
+  //     Focus      — brand-color ring (3px, 18% opacity), no default outline
+  //     Checked label — brand-color text, weight 600
+  // ════════════════════════════════════════════════════════════════════════════
+
+  .o_field_widget.o_field_radio {
+    // Use block so the inner .o_vertical/.o_horizontal div owns its own
+    // flex context. Using flex here causes .o_vertical to become a
+    // zero-width flex item which squeezes labels to single-char columns
+    // and distorts the radio circle into an ellipse.
+    display: block;
+    width: auto !important; // do NOT stretch to 100% like text inputs
+
+    // .o_vertical / .o_horizontal are the actual list containers
+    .o_vertical {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .o_horizontal {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 0.5rem 2rem;
+    }
+
+    // .o_radio_item IS .form-check (same div) — reset Bootstrap defaults
+    .o_radio_item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem; // space between circle and label text
+      margin: 0;
+      padding: 0; // kill Bootstrap's padding-left on .form-check
+      min-height: unset; // kill Bootstrap's min-height on .form-check
+      cursor: pointer;
+    }
+
+    // ── Radio circle ─────────────────────────────────────────────────────
+    input[type="radio"],
+    .form-check-input.o_radio_input {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 1.125rem;
+      height: 1.125rem;
+      border-radius: 50%;
+      border: 1.5px solid #acadad; // outline_variant — matches text inputs
+      background: #ffffff;
+      cursor: pointer;
+      flex-shrink: 0;
+      float: none !important; // Bootstrap sets float: left
+      margin: 0 !important; // Bootstrap sets margin-top
+      vertical-align: unset; // let parent flex handle alignment
+      transition:
+        border-color 0.15s ease,
+        box-shadow 0.15s ease,
+        background-color 0.15s ease;
+
+      // Checked — filled circle with white inset ring (classic radio look)
+      &:checked {
+        background-color: var(--tbt-brand-color, #242424) !important;
+        border-color: var(--tbt-brand-color, #242424) !important;
+        border-width: 1px !important;
+        box-shadow: inset 0 0 0 1px #ffffff !important;
+        background-image: none !important;
+      }
+
+      // Hover (unchecked only) — brand-tinted border
+      &:hover:not(:checked):not(:disabled) {
+        border-color: rgba(var(--tbt-brand-color-rgb, 24, 55, 254), 0.55);
+        // background-color: rgba(var(--tbt-brand-color-rgb, 24, 55, 254), .04);
+      }
+
+      // Focus ring — brand-tinted, no browser outline
+      &:focus,
+      &:focus-visible {
+        outline: none !important;
+        border-color: var(--tbt-brand-color, #242424);
+        box-shadow: 0 0 0 3px
+          rgba(var(--tbt-brand-color-rgb, 24, 55, 254), 0.18);
+      }
+
+      &:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+      }
+    }
+
+    // ── Option label ──────────────────────────────────────────────────────
+    // .o_form_label already sets font-size/weight globally; override here
+    // so radio labels read as body text, not field-header labels.
+    .form-check-label,
+    label.o_form_label {
+      cursor: pointer;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--tbt-on-surface, #0c0f0f);
+      letter-spacing: 0;
+      margin: 0;
+      padding: 0;
+      line-height: 1;
+      transition:
+        color 0.12s ease,
+        font-weight 0.12s ease;
+    }
+
+    // Checked option label — brand-color + semi-bold weight
+    input[type="radio"]:checked + label,
+    .form-check-input:checked + .form-check-label {
+      color: var(--tbt-brand-color, #242424);
+      font-weight: 600;
+    }
+
+    // Read-only / disabled whole field
+    &.o_readonly {
+      opacity: 0.65;
+      pointer-events: none;
+    }
+  }
+
+  // ════════════════════════════════════════════════════════════════════════════
+  // 11. CHATTER  (.o_mail_thread, .o_Message, .o_composer)
+
+  // ════════════════════════════════════════════════════════════════════════════
+
+  .o_mail_thread {
+    background: var(--tbt-surface-low, #f1f2f4);
+    border-top: none;
+    border-radius: 0 0 12px 12px;
+  }
+
+  .o_Message {
+    border-radius: 8px;
+    border: none;
+    background: var(--tbt-surface-card, #ffffff);
+
+    &:hover {
+      background: #fbfcfd;
+    }
+  }
+
+  .o_composer {
+    background: var(--tbt-surface-card, #ffffff);
+    border: 1px solid var(--tbt-outline-ghost, rgba(171, 173, 175, 0.15));
+    border-radius: 0.5rem;
+    transition:
+      border-color 0.15s ease,
+      box-shadow 0.15s ease;
+
+    &:focus-within {
+      border-color: rgba(var(--tbt-brand-color-rgb, 24, 55, 254), 0.3);
+      box-shadow: 0 0 0 2px rgba(var(--tbt-brand-color-rgb, 24, 55, 254), 0.14);
+    }
+  }
+} // end .o_form_view
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Breadcrumbs, pager, and view switcher are shared across all views — put them here
+// ══════════════════════════════════════════════════════════════════════════
+
+.breadcrumb {
+  background: transparent;
+}
+
+.o_form_view .o_field_widget.o_field_radio input[type="radio"],
+.o_form_view .o_field_widget.o_field_radio .form-check-input.o_radio_input {
+  width: 1rem;
+  height: 1rem;
+  background-size: 0.35rem;
+}
+
+.o_form_view .o_field_widget[name="qty_producing"] .o_input {
+  min-width: 40px;
+  padding: 0.7rem !important;
+}
+
+// "Generate Leads" wizard: the lead count field uses Odoo's `o_input_3ch`
+// utility, which is too narrow for this theme/layout.
+.o_dialog .o_form_view .o_field_widget[name="lead_number"] .o_input,
+.o_dialog .o_form_view .o_field_widget[name="lead_number"].o_input_3ch .o_input {
+  width: clamp(4.5rem, 8vw, 7rem) !important;
+  min-width: 4.5rem;
+}
+
+.o_dialog .o_form_view .o_field_widget[name="contact_number"] .o_input,
+.o_dialog .o_form_view .o_field_widget[name="contact_number"].o_input_2ch .o_input {
+  width: clamp(4rem, 7vw, 6rem) !important;
+  min-width: 4rem;
+}
+
+// Same lead wizard can open as full form (not only in modal); keep numeric
+// counters readable there too.
+.o_form_view .o_field_widget[name="lead_number"] .o_input,
+.o_form_view .o_field_widget[name="lead_number"].o_input_3ch .o_input {
+  width: clamp(4.5rem, 8vw, 7rem) !important;
+  min-width: 4.5rem;
+}
+
+.o_form_view .o_field_widget[name="contact_number"] .o_input,
+.o_form_view .o_field_widget[name="contact_number"].o_input_2ch .o_input {
+  width: clamp(4rem, 7vw, 6rem) !important;
+  min-width: 4rem;
+}
+
+.o_form_view .o_form_editable .o_row > .o_field_widget,
+.o_form_view .o_form_editable .o_row > div {
+  // border: 1px solid var(--tbt-outline-ghost, rgba(171, 173, 175, .15));
+  // border-radius: 0.5rem;
+  width: unset !important;
+
+  .o_form_view .o_row > .btn {
+    padding: 0.35rem 0.75rem;
+    border-radius: 0.5rem;
+    border: 1px solid rgba(var(--tbt-brand-color-rgb, 24, 55, 254), 0.22);
+    background: var(
+      --tbt-secondary-container,
+      rgba(var(--tbt-brand-color-rgb, 24, 55, 254), 0.14)
+    );
+    color: var(--tbt-secondary, var(--tbt-brand-color, #242424));
+    font-weight: 600;
+    line-height: 1.2;
+    transition:
+      background-color 0.15s ease,
+      border-color 0.15s ease,
+      color 0.15s ease;
+
+    &:hover,
+    &:focus,
+    &:focus-visible {
+      background: var(
+        --tbt-primary-container,
+        rgba(var(--tbt-brand-color-rgb, 24, 55, 254), 0.2)
+      );
+      border-color: rgba(var(--tbt-brand-color-rgb, 24, 55, 254), 0.38);
+      color: var(--tbt-secondary, var(--tbt-brand-color, #242424));
+      outline: none;
+      box-shadow: none;
+    }
+  }
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// 12. GLOBAL FORM REDESIGN POLISH
+//    Applies to all forms to match the theme's visual language.
+// ════════════════════════════════════════════════════════════════════════════
+
+.o_form_view {
+  .o_form_sheet {
+    position: relative;
+    // Keep visible so many2one autocomplete menus are not clipped.
+    overflow: visible;
+    border: 1px solid var(--tbt-outline-ghost, rgba(171, 173, 175, 0.15));
+    box-shadow:
+      0 10px 30px rgba(12, 15, 15, 0.04),
+      0 1px 0 rgba(255, 255, 255, 0.9) inset;
+    margin: 20px;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      // background: linear-gradient(
+      //     90deg,
+      //     rgba(var(--tbt-brand-color-rgb, 24, 55, 254), .7) 0%,
+      //     rgba(var(--tbt-brand-color-rgb, 24, 55, 254), .22) 55%,
+      //     rgba(var(--tbt-brand-color-rgb, 24, 55, 254), 0) 100%
+      // );
+      // background: var(--tbt-brand-color, #242424);
+      pointer-events: none;
+    }
+  }
+
+  // Preserve compact sheets on small devices.
+  @media (max-width: 991.98px) {
+    .o_form_sheet {
+      padding: 1rem;
+      margin-top: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+  }
+
+  // Shared headline rhythm for records that use <h1>, <h2>, <h5> wrappers.
+  .oe_title {
+    h1,
+    h2 {
+      margin-bottom: 0.5rem;
+      line-height: 1.1;
+      color: var(--tbt-on-surface, #0c0f0f);
+    }
+
+    h5 {
+      margin-bottom: 0.375rem;
+      color: var(--tbt-on-surface-variant, #5a5c5c);
+
+      i.fa,
+      i.oi {
+        color: var(--tbt-brand-color, #242424) !important;
+        opacity: 0.9;
+      }
+    }
+
+    // Heading fields should look like title lines: bottom border only.
+    h1,
+    h2,
+    h3,
+    h4 {
+      .o_field_widget.o_field_char input,
+      .o_field_widget.o_field_email input,
+      .o_field_widget.o_field_phone input,
+      .o_field_widget.o_field_url input,
+      .o_field_widget.o_field_text textarea,
+      .o_field_widget.o_field_many2one .o_input,
+      .o_field_widget.o_field_many2one .o-autocomplete--input,
+      .o_field_widget.o_field_many2many .o_input,
+      .o_field_widget.o_field_selection .o_input,
+      .o_field_widget .o_input {
+        border: none !important;
+        border-radius: 8px !important;
+        background: #edf1f5 !important;
+        box-shadow: none !important;
+        min-height: auto;
+        padding: 0.28rem 0.65rem 0.22rem;
+
+        &:hover {
+          background: #e7edf3 !important;
+        }
+
+        &:focus,
+        &:focus-visible {
+          background: #e7edf3 !important;
+          box-shadow: none !important;
+          outline: none !important;
+        }
+      }
+
+      .o_field_widget.o_field_many2one .o_input_dropdown,
+      .o_field_widget.o_field_many2many .o_input_dropdown,
+      .o_field_widget.o_field_selection .o_input_dropdown,
+      .o_field_widget.o_field_many2many_tags .o_tags_input {
+        border: none !important;
+        border-radius: 8px !important;
+        background: #edf1f5 !important;
+        box-shadow: none !important;
+        min-height: auto;
+        padding: 0.05rem 0.65rem !important;
+
+        &:hover {
+          background: #e7edf3 !important;
+        }
+
+        &:focus-within {
+          box-shadow: none !important;
+          background: #e7edf3 !important;
+        }
+      }
+    }
+
+    // CRM Expected Revenue (monetary widget): keep only this field transparent.
+    [name="expected_revenue"],
+    .o_field_widget[name="expected_revenue"] {
+      .o_input,
+      input.o_input,
+      .o_input_dropdown,
+      .o-autocomplete--input,
+      input[id^="expected_revenue_"] {
+        background: transparent !important;
+      }
+
+      // Monetary prefix overlay ($) must stay vertically centered with value.
+      .text-nowrap.d-inline-flex {
+        align-items: center !important;
+      }
+
+      > div > span.o_input.position-absolute {
+        top: 50%;
+        transform: translateY(-50%);
+        align-items: center !important;
+      }
+    }
+
+    h1 .o_field_widget .o_input,
+    h1 .o_field_widget input,
+    h1 .o_field_widget .o-autocomplete--input {
+      font-size: clamp(1.65rem, 2.5vw, 2.45rem);
+      font-weight: 650;
+      line-height: 1.12;
+    }
+
+    h2 .o_field_widget .o_input,
+    h2 .o_field_widget input,
+    h2 .o_field_widget .o-autocomplete--input {
+      font-size: clamp(1.35rem, 2vw, 1.85rem);
+      font-weight: 620;
+      line-height: 1.2;
+    }
+
+    h3 .o_field_widget .o_input,
+    h3 .o_field_widget input,
+    h3 .o_field_widget .o-autocomplete--input {
+      font-size: clamp(1.2rem, 1.5vw, 1.45rem);
+      font-weight: 600;
+      line-height: 1.24;
+    }
+
+    h4 .o_field_widget .o_input,
+    h4 .o_field_widget input,
+    h4 .o_field_widget .o-autocomplete--input {
+      font-size: 1.08rem;
+      font-weight: 600;
+      line-height: 1.28;
+    }
+
+    // h5/h6 in oe_title are often metadata rows (email/phone/etc),
+    // so they keep the regular field style.
+  }
+
+  // Give top profile/identity blocks cleaner spacing in HR, Contacts, etc.
+  .o_employee_avatar,
+  .oe_avatar,
+  .o_kanban_image {
+    .o_field_image,
+    img {
+      border-radius: 0.8rem;
+    }
+
+    .o_image_uploader_container {
+      border-radius: 0 0 0.8rem 0.8rem;
+      background: linear-gradient(
+        180deg,
+        rgba(12, 15, 15, 0) 0%,
+        rgba(12, 15, 15, 0.22) 100%
+      );
+    }
+  }
+
+  // Input state behavior is centralized in section 8 to keep one consistent model.
+
+  // Many2many tags: chip style aligned with pills used in tabs and status.
+  .o_field_many2many_tags {
+    .o_tag,
+    .badge {
+      border-radius: 999px;
+      border: 1px solid rgba(var(--tbt-brand-color-rgb, 24, 55, 254), 0.2);
+      background: rgba(var(--tbt-brand-color-rgb, 24, 55, 254), 0.08);
+      color: var(--tbt-brand-color, #242424);
+      font-weight: 600;
+      font-size: 0.75rem;
+      letter-spacing: 0.02em;
+      padding: 0.2rem 0.5rem;
+    }
+
+    .o-autocomplete--input {
+      min-height: 2rem;
+    }
+  }
+
+  // More breathable row spacing when fields are stacked with o_row/o_row_readonly.
+  .o_row,
+  .o_row_readonly {
+    gap: 0.6rem;
+    align-items: center;
+  }
+
+  // Embedded one2many/many2many lists inside forms.
+  // No outer border: it wrapped the whole field and left an awkward gap
+  // between the frame and the table edge. Keep the rounded corners + clipped
+  // overflow so the header background still follows a clean radius.
+  .o_field_x2many {
+    border: none;
+    border-radius: 0.75rem;
+    background: var(--tbt-surface-card, #ffffff);
+    overflow: hidden;
+
+    // Odoo core pulls the embedded list up by margin-top:-16px when it is the
+    // FIRST child of a notebook tab (to hug the tab bar in the stock theme —
+    // selector `.o_notebook > .tab-content > .tab-pane > :first-child:not(.o_group)
+    // ... .o_list_renderer`). Here the list is a bordered rounded card with
+    // overflow:hidden, so that pull-up yanks the table 16px above the card's
+    // top edge: the header row gets clipped and the whole card looks shifted
+    // up / unfinished. Neutralise it so the header sits flush inside the card.
+    .o_list_renderer {
+      margin-top: 0 !important;
+    }
+
+    .o_list_renderer .o_list_table {
+      margin-bottom: 0;
+
+      // Round the embedded table's header corners to the panel radius so the
+      // header background follows the rounded container (no clipped "notch").
+      thead > tr:first-child > th:first-child {
+        border-top-left-radius: 0.75rem;
+      }
+      thead > tr:first-child > th:last-child {
+        border-top-right-radius: 0.75rem;
+      }
+    }
+
+    .o_list_renderer .o_data_row:hover > .o_data_cell {
+      background: rgba(var(--tbt-brand-color-rgb, 24, 55, 254), 0.03);
+    }
+
+    .o_field_x2many_list_row_add > a,
+    .o_field_x2many_list_row_add > button {
+      color: var(--tbt-brand-color, #242424);
+      font-weight: 600;
+    }
+  }
+
+  // Notebook sections feel more intentional with inner panel spacing.
+  .o_notebook > .o_notebook_content > .tab-content > .tab-pane,
+  .o_notebook > .o_notebook_content > .tab-pane {
+    padding-top: 0.5rem;
+    animation: tbt-form-tab-fade 0.18s ease-out;
+  }
+
+  // Presence/status pills and small chip buttons.
+  .o_presence_status_pill_wrapper .btn,
+  .o_presence_status_pill_wrapper [class*="rounded-pill"] {
+    border-color: rgba(var(--tbt-brand-color-rgb, 24, 55, 254), 0.2) !important;
+    background: rgba(var(--tbt-brand-color-rgb, 24, 55, 254), 0.08) !important;
+    color: var(--tbt-brand-color, #242424) !important;
+    font-weight: 600;
+  }
+
+  // Restore native many2one autocomplete behavior in forms:
+  // dropdown first, "Search more..." opens the modal when explicitly chosen.
+  .o_field_widget.o_field_many2one,
+  .o_field_widget.o_field_many2one_avatar,
+  .o_field_widget.o_field_many2one_avatar_user,
+  .o_field_widget.o_field_many2one_avatar_employee {
+    .o_input_dropdown,
+    .o-autocomplete {
+      position: relative;
+    }
+
+    .o-autocomplete--dropdown-menu {
+      z-index: 1082;
+      max-height: 320px;
+      overflow-y: auto;
+    }
+
+    .o_external_button {
+      position: static;
+      flex: 0 0 auto;
+    }
+  }
+
+  // Version timeline statusbar only (name="version_id").
+  // Keep this scoped so other statusbars stay unchanged.
+  [name="version_id"].o_field_versions_timeline {
+    .o_statusbar_status {
+      background: transparent;
+      gap: 0.45rem !important;
+
+      // Remove the two side overflow wrappers that render as dark pills.
+      > .o_arrow_button_wrapper.o-dropdown {
+        display: none !important;
+      }
+
+      .o_arrow_button {
+        clip-path: none !important;
+        border: none !important;
+        box-shadow: none !important;
+      }
+
+      .o_arrow_button.o_arrow_button_current {
+        background: var(--tbt-brand-color, #242424) !important;
+        color: #ffffff !important;
+        border-radius: 0.28rem !important;
+        padding: 0.45rem 1rem !important;
+        font-weight: 700 !important;
+        opacity: 1 !important;
+
+        &::before,
+        &::after {
+          content: none !important;
+          display: none !important;
+        }
+      }
+    }
+  }
+}
+
+@keyframes tbt-form-tab-fade {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// :not(.dropstart) > .dropdown-item.active:not(.dropdown-item_active_noarrow)::before, :not(.dropstart) > .dropdown-item.selected:not(.dropdown-item_active_noarrow)::before {
+//     transform: translate(-50%) !important;
+// }
+
+// .o-dropdown--menu .dropdown-item:not(.disabled):not(:disabled), .o-dropdown--menu .dropdown-item:not(.disabled):not(:disabled) label
+// {
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+// }
+
+.o_field_res_user_group_ids_privilege .o-checkbox {
+  width: 2.5rem !important;
+  height: 2.5rem !important;
+}
+// Keep form statusbar below dropdown layers (settings/app menus).
+.o_form_view .o_form_statusbar {
+  z-index: 1 !important;
+}
+
+.o_form_view .o_notebook .nav-item {
+  position: relative;
+  z-index: 0;
+}
+
+// Accessibility mode: restore visible field borders for stronger contrast.
+html.tbt-high-contrast {
+  .o_form_view {
+    // Broad restore for any form input-like control.
+    .o_wrap_input {
+      .o_input,
+      input:not([type="checkbox"]):not([type="radio"]),
+      textarea,
+      select,
+      .o_input_dropdown,
+      .o_tags_input,
+      .o_field_many2one_selection,
+      .o_many2one {
+        border: 1px solid #c4cad6 !important;
+        background: #f6f8fb !important;
+      }
+
+      .o_input_dropdown:focus-within,
+      .o_tags_input:focus-within,
+      .o_many2one:focus-within,
+      .o_field_many2one_selection:focus-within {
+        border-color: var(--tbt-brand-color, #242424) !important;
+      }
+    }
+
+    .o_field_widget {
+      &.o_field_char,
+      &.o_field_integer,
+      &.o_field_float,
+      &.o_field_monetary,
+      &.o_field_number,
+      &.o_field_email,
+      &.o_field_phone,
+      &.o_field_url,
+      &.o_field_date,
+      &.o_field_datetime,
+      &.o_field_text {
+        input,
+        textarea {
+          border: 1px solid #c4cad6 !important;
+          background: #f6f8fb !important;
+        }
+      }
+
+      &.o_field_monetary > div,
+      &.o_field_many2one .o_input_dropdown,
+      &.o_field_many2many .o_input_dropdown,
+      &.o_field_selection .o_input_dropdown,
+      &.o_field_many2many_tags .o_tags_input {
+        border: 1px solid #c4cad6 !important;
+        background: #f6f8fb !important;
+      }
+    }
+  }
+}
