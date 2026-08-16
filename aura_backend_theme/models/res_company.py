@@ -15,13 +15,30 @@ HEX_COLOR_RE = re.compile(r"^#[0-9A-Fa-f]{6}$")
 #
 # Keep in lockstep with the fallbacks in models/ir_http.py and
 # views/web_assets.xml; all three restate these values independently.
-DEFAULT_BRAND = "#FAA140"           # $m-accent
+# Brand/primary is BLACK, not the orange accent.  The brand assets are
+# unambiguous about this: 02-display-title is a black plate with white text and
+# 03-card's action affordance is a black circular button — orange appears only
+# inside the illustration.  So black carries primary actions and the orange is
+# reserved for accents and emphasis (§5.1 $m-accent).
+DEFAULT_BRAND = "#000000"           # $m-text — drives --bs-primary, links, focus
+METHODE_ACCENT = "#FAA140"          # $m-accent — emphasis, NOT --bs-primary
 METHODE_BG_PRIMARY = "#FDFAF6"      # $m-bg-primary — page / app background
-METHODE_BG_SECONDARY = "#E9DBCA"    # $m-bg-secondary — raised surfaces
+METHODE_BG_SECONDARY = "#E9DBCA"    # $m-bg-secondary — raised surfaces, group
+                                    # headers, hovers. Not the navbar: see below.
 METHODE_TEXT = "#000000"            # $m-text
-# Card / form-sheet surface stays white pending the §14 open question; it is
-# the one value brand_variables.scss still marks provisional.  Revisit in P5.
-METHODE_CARD_BG = "#FFFFFF"
+# The navbar renders as a black plate, matching 02-display-title.png.  That is
+# not a free choice: Odoo's stock navbar takes its background from
+# $o-brand-odoo, which brand_variables.scss sets to $m-text.  These fields
+# record the value the UI actually produces — a stored setting that disagrees
+# with what renders is a bug, and nothing has consumed tbt_topbar_* since
+# Aura's navbar.scss was deleted (§3.1).  P6 wires them up for real.
+METHODE_TOPBAR_BG = "#000000"
+METHODE_TOPBAR_TEXT = "#FFFFFF"
+# Card / form-sheet surface — §14 open question 3, resolved in P5.
+# #F2F2F2 is measured from 03-card.png, so sheets and .m-card share one surface.
+# White was the interim value; the owner rejected it because a white sheet on
+# the warm #FDFAF6 page reads as an unfinished gap rather than a surface.
+METHODE_CARD_BG = "#F2F2F2"
 DEFAULT_DASHBOARD_CARD_1 = "#2F6BFF"
 DEFAULT_DASHBOARD_CARD_2 = "#EF4444"
 DEFAULT_DASHBOARD_CARD_3 = "#F59E0B"
@@ -95,15 +112,12 @@ class ResCompany(models.Model):
 
     tbt_topbar_bg = fields.Char(
         string="Topbar Background",
-        # Raised-surface token, so the navbar separates from the page by
-        # background contrast rather than a border (§8).  P6 owns the navbar
-        # and may revisit this.
-        default=METHODE_BG_SECONDARY,
+        default=METHODE_TOPBAR_BG,
         help="Background colour of the top navigation bar.",
     )
     tbt_topbar_text = fields.Char(
         string="Topbar Text Color",
-        default=METHODE_TEXT,
+        default=METHODE_TOPBAR_TEXT,
         help="Text and icon colour used inside the top bar.",
     )
 

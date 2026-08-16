@@ -1,0 +1,75 @@
+// ---------------------------------------------------------------------------
+// Forms — inputs, placeholders, labels (THEME_PLAN §6, asset 04)
+//
+// Measured from 04-form-inputs.png (2x export, halved):
+//   * input: white fill, 1px #191A22 border, radius 12px, height ~40px
+//   * placeholder: mid grey
+//   * submit: black plate (confirmed by the owner)
+//
+// ⚠ §4 and §6 both call these "pill inputs".  They are not — measured radius is
+//   12px on a 40px-tall input, i.e. a rounded rect.  A true pill would be 20px.
+//   Radius comes from $o-border-radius (10px) and is not restated here.
+//
+// ⚠ DENSITY IS A DELIBERATE DEPARTURE FROM THE ASSET.  Odoo ships
+//   $o-input-bg: transparent with 2px/4px padding because a backend form view
+//   carries 20-40 fields; the asset is a marketing contact form with four.
+//   Reproducing its 40px-tall generous inputs would multiply every form's
+//   height and break §8's 1280x800 budget outright.
+//   So: the brand's OUTLINE and RADIUS are adopted (§4 — "brand wins"), and
+//   Odoo's PADDING is kept.  Verify at 1280x800 in P7.
+// ---------------------------------------------------------------------------
+
+// Rest state uses #898989 — the measured border of asset 01's button — rather
+// than the full-strength #191A22 of the asset's inputs.  At backend density,
+// dozens of full-ink outlines read as noise; this keeps the outlined character
+// while letting focus be the strong signal.  Both greys are measured brand
+// values, so neither is invented.
+.o_form_view .o_field_widget {
+    .o_input,
+    input.o_input,
+    textarea.o_input,
+    .o_input_dropdown > input {
+        border: 1px solid #898989;
+        border-radius: var(--m-radius-control);
+        background-color: #FFFFFF;
+        transition: border-color 90ms ease-out;
+
+        &:hover { border-color: var(--m-ink-border); }
+
+        &:focus,
+        &:focus-visible {
+            border-color: var(--m-ink-border);
+            // Hard 1px ring, not Bootstrap's soft blur — the brand's shadow
+            // language has no blur anywhere, and a fuzzy focus ring next to a
+            // hard button shadow reads as a different design system.
+            box-shadow: 0 0 0 1px var(--m-ink-border);
+            outline: none;
+        }
+    }
+
+    // Required fields: re-expressed from 2000_theme's marker (§4) in brand
+    // colours.  Accent is legitimate here — it is a border, not text.
+    &.o_required_modifier .o_input {
+        border-color: var(--m-accent-border);
+        &:focus { border-color: var(--m-accent); }
+    }
+
+    // Validation. --m-danger is the derived semantic red (README), never the
+    // orange accent — §5.1 is explicit that danger must stay unambiguous.
+    &.o_field_invalid .o_input {
+        border-color: var(--m-danger);
+        &:focus { box-shadow: 0 0 0 1px var(--m-danger); }
+    }
+}
+
+::placeholder {
+    color: var(--m-text-secondary);
+    opacity: 1;   // Firefox dims placeholders by default; --m-text-secondary is
+                  // already the intended muted value, so don't fade it twice.
+}
+
+// Labels: 600 is the semibold of the brand assets' field labels.
+.o_form_view .o_form_label {
+    font-weight: 600;
+    color: var(--m-text);
+}

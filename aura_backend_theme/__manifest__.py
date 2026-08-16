@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Aura Backend Theme - Community Edition',
-    'version': '19.0.1.1.0',
+    'version': '19.0.1.5.0',
     'category': 'Themes/Backend',
     'summary': 'Premium backend theme for Odoo 19 Community',
     'description': """
@@ -33,6 +33,9 @@ Covers:
         # theme_bootstrap.js runs.  Dropped by mistake alongside the login and
         # dashboard templates; THEME_PLAN §3.2 keeps it.
         'views/web_assets.xml',
+        # Theme Settings block on Settings > General Settings. Replaces the
+        # systray + ThemeSettingsDialog entry point (§9.7).
+        'views/res_config_settings_views.xml',
     ],
     'assets': {
         'web.assets_backend': [

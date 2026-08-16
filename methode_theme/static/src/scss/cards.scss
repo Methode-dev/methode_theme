@@ -1,0 +1,121 @@
+// ---------------------------------------------------------------------------
+// Surfaces — cards, kanban records, the display plate (THEME_PLAN §6, assets
+// 02 + 03)
+//
+// Measured from 03-card.png (2x export, halved):
+//   surface #F2F2F2 · 1px #191A22 outline · radius 34.5px · shadow `0 5px 0` #000
+//   Shadow is straight down (dx=0) and has ZERO blur — the right edge of the
+//   card shows outline only, no shadow beyond it.
+//
+// The display plate lives here rather than in typography.scss (where §5.4
+// sketched it) because what makes it a *plate* is material, not type: it shares
+// the offset-shadow language with the card and the button.  Its font is already
+// handled by the Bootstrap cascade.
+// ---------------------------------------------------------------------------
+
+// The brand's card material.  §8's "one elevation" means one *kind* of shadow —
+// the hard zero-blur offset — not one component that may use it.  Surfaces and
+// buttons share it; only its scale changes.
+%m-surface {
+    background-color: #F2F2F2;
+    border: 1px solid var(--m-ink-border);
+}
+
+// Full marketing-weight card — the literal asset.  Used for dashboard tiles in
+// P8 and anywhere a standalone content card is wanted.  §6 is explicit that
+// cards are the ONE place more padding is correct, so this is the exception to
+// §8, not a violation of it.
+.m-card {
+    @extend %m-surface;
+    border-radius: var(--m-radius-card);
+    padding: var(--m-space-6);
+    // The one place the hard offset shadow survives.  Cards are few, large and
+    // marketing-weight, which is the scale the asset was drawn at.
+    box-shadow: var(--m-shadow-hard-lg);
+}
+
+// Kanban records take the same material at their own scale.  Only the radius
+// changes: the measured 34px belongs to a ~598x470 marketing card and reads
+// bulbous on a ~300x150 record.  Surface, outline and shadow are identical,
+// which is what keeps them one family with .m-card.
+//
+// ⚠ BOTH `:not()` GUARDS ARE LOAD-BEARING — copy them onto any rule added here.
+//
+//   .o_kanban_ghost      kanban_renderer.xml:115 emits SEVEN empty divs
+//                        (`t-foreach="[,,,,,,]"`) to space the final row.  They
+//                        carry .o_kanban_record but have no content, so giving
+//                        them a border and background renders each as a
+//                        collapsed bordered box — a heavy dark line across the
+//                        bottom of the view, stepped where the columns break.
+//                        It reads as a rendering artifact rather than a CSS
+//                        bug, which is what makes it expensive to find.
+//   .o-kanban-button-new the "New" affordance is also an .o_kanban_record; it
+//                        is a button, not a card, and must not get card skin.
+//
+// Odoo guards its own padding/border/background the same way
+// (kanban_record.scss:31) — this mirrors upstream rather than inventing a fix.
+//
+// This is deliberately NOT Aura's floating white card (Rule 1, §7): no
+// `margin: 0.875rem`, no `border-radius: 12px`, no `0 12px 30px` ambient blur.
+.o_kanban_renderer .o_kanban_record:not(.o_kanban_ghost):not(.o-kanban-button-new) {
+    @extend %m-surface;
+    border-radius: var(--m-radius-lg);
+    // Control-scale shadow, not the card's 5px: these sit between a button and
+    // a marketing card in size.
+    box-shadow: var(--m-shadow-hard);
+}
+
+// Form sheets share the card surface — §14 open question 3, resolved by the
+// owner in P5.  White read as an unfinished gap against the warm #FDFAF6 page.
+//
+// The compile-time half of this is $o-view-background-color (#F2F2F2), which
+// Odoo's own sheet rule already consumes.  This rule exists for the OTHER half:
+// reading --tbt-card-bg-dynamic keeps the surface live-configurable from the
+// Theme Settings dialog, which is the whole point of D3 (§9.2).  Deleting it
+// would leave the setting present but inert.
+//
+// No border-radius here: Odoo gives the sheet a top/bottom-only border
+// (`1px 0 1px 0`), and rounding corners on a partial border looks broken.
+.o_form_view .o_form_sheet {
+    background-color: var(--m-bg-card);
+}
+
+// --- Display plate (asset 02) ----------------------------------------------
+// ⚠ The plate's "shadow" is NOT a solid offset shadow.  Measured: the plate
+// ends at y=164, then SIX pixels of white, then a 2px black line at y=171-172.
+// A solid `0 4px 0 #000` under a black plate would be invisible — it would just
+// look 4px taller.  The brand instead offsets a hairline OUTLINE, which is what
+// produces the detached underline.  Reproduced here with a pseudo-element,
+// since box-shadow cannot draw an outline-only offset.
+.m-display-title {
+    position: relative;
+    display: inline-block;
+    background-color: var(--m-text);
+    color: #FFFFFF;
+    border-radius: var(--m-radius-control);
+    padding: var(--m-space-3) var(--m-space-6);
+    font-weight: 700;
+
+    &::after {
+        content: "";
+        position: absolute;
+        inset: 4px -1px -4px;   // same box, pushed 4px down
+        border: 1px solid var(--m-text);
+        border-radius: inherit;
+        z-index: -1;
+    }
+}
+
+// --- Circular action affordance (asset 03) ---------------------------------
+// The black circle carrying the arrow next to "En savoir plus".
+.m-cta-circle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--m-radius-pill);
+    background-color: var(--m-text);
+    color: #FFFFFF;
+    flex: 0 0 auto;
+}

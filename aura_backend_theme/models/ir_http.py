@@ -6,9 +6,9 @@ from odoo.http import request
 from .res_company import (
     DEFAULT_BRAND,
     METHODE_BG_PRIMARY,
-    METHODE_BG_SECONDARY,
     METHODE_CARD_BG,
-    METHODE_TEXT,
+    METHODE_TOPBAR_BG,
+    METHODE_TOPBAR_TEXT,
 )
 
 
@@ -26,8 +26,8 @@ class IrHttp(models.AbstractModel):
                 'brand': brand,
                 'brand_rgb': brand_rgb,
                 'brand_dark': brand_dark,
-                'topbar_bg': company.tbt_topbar_bg or METHODE_BG_SECONDARY,
-                'topbar_text': company.tbt_topbar_text or METHODE_TEXT,
+                'topbar_bg': company.tbt_topbar_bg or METHODE_TOPBAR_BG,
+                'topbar_text': company.tbt_topbar_text or METHODE_TOPBAR_TEXT,
                 'content_bg': company.tbt_content_bg or METHODE_BG_PRIMARY,
                 'card_bg': company.tbt_card_bg or METHODE_CARD_BG,
                 'dashboard_card_1': company.tbt_dashboard_card_1_color or '#2F6BFF',

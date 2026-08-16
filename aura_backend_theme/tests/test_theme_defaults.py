@@ -17,10 +17,12 @@ from odoo.tests.common import TransactionCase
 
 from odoo.addons.aura_backend_theme.models.res_company import (
     DEFAULT_BRAND,
+    METHODE_ACCENT,
     METHODE_BG_PRIMARY,
-    METHODE_BG_SECONDARY,
     METHODE_CARD_BG,
     METHODE_TEXT,
+    METHODE_TOPBAR_BG,
+    METHODE_TOPBAR_TEXT,
 )
 
 WEB_ASSETS_XML = os.path.join(
@@ -31,8 +33,8 @@ WEB_ASSETS_XML = os.path.join(
 # field name -> the constant its XML fallback must restate
 XML_FALLBACKS = {
     'tbt_brand_color': DEFAULT_BRAND,
-    'tbt_topbar_bg': METHODE_BG_SECONDARY,
-    'tbt_topbar_text': METHODE_TEXT,
+    'tbt_topbar_bg': METHODE_TOPBAR_BG,
+    'tbt_topbar_text': METHODE_TOPBAR_TEXT,
     'tbt_content_bg': METHODE_BG_PRIMARY,
     'tbt_card_bg': METHODE_CARD_BG,
 }
@@ -71,19 +73,37 @@ class TestThemeDefaults(TransactionCase):
         returns.
         """
         stale_by_field = {
-            'tbt_brand_color': '#242424',
-            'tbt_brand_color_rgb': '36,36,36',
-            'tbt_topbar_bg': '#ffffff',
-            'tbt_topbar_text': '#0c0f0f',
-            'tbt_content_bg': '#f6f6f6',
+            # '#FAA140'/'250,161,64' are the short-lived orange primary, not
+            # Aura's — kept here so the accent cannot creep back into --bs-primary.
+            'tbt_brand_color': ('#242424', '#FAA140'),
+            'tbt_brand_color_rgb': ('36,36,36', '250,161,64'),
+            # '#E9DBCA' = the short-lived warm navbar, before it became clear
+            # Odoo's stock bar renders black from $o-brand-odoo regardless.
+            'tbt_topbar_bg': ('#ffffff', '#E9DBCA'),
+            # Black topbar text was unreadable once the bar itself went black.
+            'tbt_topbar_text': ('#0c0f0f', '#000000'),
+            'tbt_content_bg': ('#f6f6f6',),
         }
-        for fname, stale in stale_by_field.items():
-            self.assertNotIn(
-                "tbt_company.%s or '%s'" % (fname, stale),
-                self.web_assets_source,
-                "Aura's default %s is still the fallback for %s in "
-                "web_assets.xml" % (stale, fname),
-            )
+        for fname, stale_values in stale_by_field.items():
+            for stale in stale_values:
+                self.assertNotIn(
+                    "tbt_company.%s or '%s'" % (fname, stale),
+                    self.web_assets_source,
+                    "Superseded default %s is still the fallback for %s in "
+                    "web_assets.xml" % (stale, fname),
+                )
+
+    def test_accent_is_not_the_brand_primary(self):
+        """The orange accent must never drive --bs-primary.
+
+        Primary is black (02-display-title.png, 03-card.png); orange is applied
+        per-component for emphasis. Wiring the accent into the brand colour
+        would tint every button, link and focus ring in the backend.
+        """
+        self.assertNotEqual(DEFAULT_BRAND, METHODE_ACCENT)
+        self.assertEqual(DEFAULT_BRAND, METHODE_TEXT)
+        company = self.env['res.company'].create({'name': 'Accent Probe'})
+        self.assertNotEqual(company.tbt_brand_color, METHODE_ACCENT)
 
     def test_web_assets_template_is_installed(self):
         """The :root block and the FA6 <link> tags actually load.

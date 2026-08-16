@@ -1,15 +1,117 @@
-$m-bg-primary:     #FDFAF6;
-$m-bg-secondary:   #E9DBCA;
-$m-text:           #000000;
-$m-text-secondary: #6D6D6D;
-$m-accent:         #FAA140;
+// ---------------------------------------------------------------------------
+// Méthode brand tokens — SCSS variables consumed at COMPILE time
+// Loaded into web._assets_primary_variables, before web's primary_variables.
+//
+// Only put things here that Odoo/Bootstrap read as SCSS ($-vars).  Runtime
+// values belong in css_tokens.scss as CSS custom properties — see THEME_PLAN
+// §5.3, which is explicit that using the wrong injection point silently does
+// nothing.
+// ---------------------------------------------------------------------------
 
+// --- Core palette (THEME_PLAN §5.1) ----------------------------------------
+$m-bg-primary:     #FDFAF6;  // page / app background
+$m-bg-secondary:   #E9DBCA;  // raised surfaces, group headers, hovers
+$m-text:           #000000;  // default text
+$m-text-secondary: #6D6D6D;  // labels, placeholders, muted metadata
+$m-accent:         #FAA140;  // accent + hover
+
+// ⚠ $m-accent is 1.97:1 against $m-bg-primary — far below the 4.5:1 needed for
+// text.  It is a FILL colour: borders, underlines, active indicators, icon
+// chips, illustration.  Never set it as a text colour on the page background.
+// Where an "orange" text treatment is wanted, use $m-warning instead.
+
+// --- Semantic colours (THEME_PLAN §5.1 / §14 open question 2) --------------
+// The brand defines no success/warning/danger, but Odoo needs them for alerts,
+// statusbars and validation.  Odoo's stock values are unusable here: they were
+// drawn for a white page and measure 3.01 / 2.93 / 1.81 / 4.35 : 1 against
+// $m-bg-primary — stock $o-warning (#ffac00) is both illegible AND a near-twin
+// of $m-accent (ΔE 19).
+//
+// Derived instead at a matched lightness (L* 40-47, spread 7.6) so the four
+// read as one system, each clearing 4.5:1 both as text on $m-bg-primary and
+// with white text on top:
+//
+//   role      hex       L*    on page   white on it   ΔE vs accent
+//   success   #3E7C4F   47.0   4.80:1      5.00:1        75.5
+//   info      #2E6B8A   42.7   5.63:1      5.86:1        96.4
+//   warning   #9A6510   47.3   4.76:1      4.95:1        30.3
+//   danger    #B3261E   39.7   6.28:1      6.54:1        49.8
+//
+// $m-warning stays in the accent's hue family — that is deliberate and normal
+// for a warm brand — but is darkened until it separates from $m-accent (ΔE 30)
+// and, more importantly, from $m-danger (ΔE 42).  Per §5.1, danger stays
+// unambiguously red and never borrows the orange accent.
+$m-success: #3E7C4F;
+$m-info:    #2E6B8A;
+$m-warning: #9A6510;
+$m-danger:  #B3261E;
+
+// --- Corner radius (measured, THEME_PLAN §6) -------------------------------
+// Odoo ships 4px/3px/6px, which is far squarer than the brand.  These three
+// feed Bootstrap's whole $border-radius family
+// (bootstrap_overridden.scss:99-101), so setting them here rounds buttons,
+// inputs, dropdowns, alerts, modals and popovers in one move — rather than
+// chasing each component with its own rule.
+//
+// Measured off the assets (2x exports, so halved): button 10.5px, input 12px,
+// display plate 12.5px.  10px is the honest centre of that cluster.
+// §4 is explicit that 2000_theme's `border-radius: 0` must NOT be ported —
+// the brand is heavily rounded and erring round is correct.
+$o-border-radius:    10px;
+$o-border-radius-sm:  6px;
+$o-border-radius-lg: 14px;
+
+// --- Odoo surface variables ------------------------------------------------
 $o-webclient-background-color: $m-bg-primary;
-$o-view-background-color:      #FFFFFF;   // provisional — see open question §13.3
+// Measured from 03-card.png (§14 q3, resolved in P5).  Sheets and .m-card share
+// one surface; white read as an unfinished gap on the warm #FDFAF6 page.
+$o-view-background-color:      #F2F2F2;
 $o-main-text-color:            $m-text;
-$o-brand-primary:              $m-accent;
-$o-brand-odoo:                 $m-accent;
 
-// Inert until the woff2 files land in P4; falls back to system sans until then.
+// Primary is BLACK, not the orange accent — 02-display-title.png is a black
+// plate and 03-card.png's action button is a black circle.  $m-accent is for
+// emphasis and secondary primary-actions, applied per-component in P5.
+$o-brand-primary:              $m-text;
+$o-brand-odoo:                 $m-text;
+
+$o-success: $m-success;
+$o-info:    $m-info;
+$o-warning: $m-warning;
+$o-danger:  $m-danger;
+
+// --- Typography (THEME_PLAN §5.2) ------------------------------------------
+// Nunito is vendored at static/lib/nunito/ and @font-face'd in typography.scss.
+// Confirmed against 02-display-title.png by rendering the asset's own string in
+// both candidate faces: the plate is Nunito 700, not Outfit.  (Outfit is the
+// *marketing* title face and lives in methode_demo_tour; it is deliberately not
+// used in the backend.)
+//
+// $o-system-fonts is THE lever.  Odoo derives the whole chain from it:
+//
+//   $o-system-fonts
+//     └→ $o-font-family-sans-serif      (primary_variables.scss:114)
+//          └→ $font-family-sans-serif   (bootstrap_overridden.scss:117)
+//               └→ Bootstrap's body/`$font-family-base` and every component
+//
+// Setting it here — before primary_variables.scss, whose declarations are all
+// `!default` — means Nunito arrives through Bootstrap's own cascade instead of
+// being bolted on with override rules.  Do NOT also set font-family on `body`
+// in assets_backend; that re-implements what this line already does, and only
+// for the selectors someone remembered to list.
 $o-system-fonts: ("Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI",
                 Roboto, "Helvetica Neue", Arial, sans-serif);
+
+// ⚠ Odoo's default is `("SF Pro Display", $o-system-fonts)` — that prefix is
+// hardcoded, so on macOS every heading would resolve to SF Pro Display and
+// silently ignore Nunito.  Re-derive it from the stack alone.
+//
+// o-add-unicode-support-font() (utils.scss:211) appends Odoo's unicode-coverage
+// font.  It is safe to call here: primary_variables.scss:114 calls it three
+// lines after this file is parsed, so it is necessarily already in scope.
+$o-headings-font-family: o-add-unicode-support-font($o-system-fonts);
+
+// Bootstrap maps `$font-weight-bold` to `$o-font-weight-medium`
+// (bootstrap_overridden.scss:115), so this is what <strong>, .fw-bold and
+// every "bold" label actually render at.  Odoo's 500 reads weak in Nunito,
+// whose 600 is the semibold of the brand assets' labels.
+$o-font-weight-medium: 600;
