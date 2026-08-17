@@ -1,48 +1,12 @@
-// ---------------------------------------------------------------------------
-// Buttons (THEME_PLAN §6, assets 01 + 04)
-//
-// Buttons are RAISED — hard offset shadow, zero blur, exactly asset 01 — and
-// they PRESS DOWN ON HOVER.  Every variant, including the black primary.
-//
-// ⚠ The shadow COLOUR is a token (--m-shadow-color), not a constant, and
-// .btn-primary overrides it to grey.  This is load-bearing: the primary is
-// black and so is the default shadow, so black-on-black renders as nothing —
-// the button would look 3px taller and, because the shadow is what makes the
-// press legible, would appear not to respond to hover at all.
-//
-// Shadow and press are ONE gesture.  Do not give a button the transform without
-// a visible shadow to press into; the motion reads as drift rather than a
-// press.  If you add a variant on a dark fill, override --m-shadow-color too.
-//
-// Radius, padding and font-weight are NOT set here — they come from
-// $o-border-radius and $input-btn-padding-* via Bootstrap.  This file sets only
-// colour and press behaviour.
-//
-// Two mechanics worth knowing before editing:
-//   * Odoo generates Bootstrap buttons through `--btn-*` custom properties (NOT
-//     `--bs-btn-*`).  Overriding those is what works; setting `background-color`
-//     directly loses to `.btn { background: var(--btn-bg) }`.
-//   * Values come from the `--m-*` CSS tokens, never from the `$m-*` SCSS
-//     variables.  Those live in the primary-variables bundle and this file is
-//     in assets_backend; see the same note in typography.scss.
-// ---------------------------------------------------------------------------
-
-// Bootstrap's default pressed state is `inset 0 3px 5px rgba(0,0,0,.125)` — a
-// 5px BLUR.  Nothing in this design system has blur (§6.1), and this is the one
-// place Bootstrap sneaks it back in, on every button in the product.
 .btn {
     --btn-active-shadow: none;
     --btn-box-shadow: none;
 }
 
-// The raised material of asset 01: hard offset shadow, ZERO blur, straight
-// down.  Hover presses the button into the page — the travel distance is the
-// same 3px as the shadow offset, so the button lands exactly where its shadow
-// was.  That equality is what makes it read as physical rather than as a
-// wobble; if you change one, change the other.
 %m-raised {
     box-shadow: var(--m-shadow-hard);
-    // Only transform and box-shadow animate, so this never touches layout.
+    border-bottom-color: var(--m-shadow-color);
+
     transition: transform 90ms ease-out, box-shadow 90ms ease-out;
 
     &:hover,
@@ -79,10 +43,6 @@
     @extend %m-raised;
 }
 
-// Primary stays the black plate of asset 04, confirmed by the owner.
-// $o-brand-primary is likewise black, which keeps links and focus rings
-// legible — see the .btn-info note for why that matters.
-//
 // ⚠ It needs a GREY shadow, not the default black one.  Black-on-black renders
 // as nothing — the button would simply look 3px taller, and because the press
 // animation is what the shadow makes legible, it would also appear not to
@@ -104,8 +64,6 @@
     --btn-active-color: #FFFFFF;
 }
 
-// Asset 01 rendered literally, minus the shadow: white fill, hairline grey
-// border.  #898989 is measured from that asset.
 .btn-secondary {
     --btn-bg: #FFFFFF;
     --btn-border-color: #898989;
@@ -122,16 +80,6 @@
 // Owner decision: .btn-info carries the Méthode orange instead of Odoo's blue.
 // .btn-accent is the same thing under a name that states intent, so new code
 // need not borrow Bootstrap's "info" slot to get an orange button.
-//
-// ⚠ TEXT MUST BE BLACK.  Odoo ships `--btn-color: #FFFFFF` on .btn-info, and
-// white on #FAA140 measures 2.05:1 — well below AA.  Black on the same orange
-// is 10.3:1.  This is not a style preference; flipping it back breaks
-// legibility.
-//
-// ⚠ Deliberately scoped to the BUTTON only.  $o-info stays #2E6B8A for
-// .alert-info, info text and badges, because the accent is 1.97:1 on the page
-// background and is unreadable as text (§5.1).  Orange is a fill colour, and
-// this is the fill.
 .btn-info,
 .btn-accent {
     --btn-bg: var(--m-accent);
@@ -152,63 +100,6 @@
     text-underline-offset: 2px;
 }
 
-// --- Segmented controls: the GROUP is raised, its buttons are not -----------
-// A .btn-group is one control made of several buttons — the pager's prev/next
-// pair, the view switcher. The raised treatment above is per-button, which
-// breaks down here in two ways:
-//
-//   * every button draws its own offset shadow, so shadow appears *inside* the
-//     group at each internal seam, as though the segments were separate objects;
-//   * hover presses only the hovered segment, so one part of a single control
-//     sinks 3px while the rest stays put.
-//
-// ⚠ The first attempt at this simply flattened the group, and that was wrong:
-// it stripped the brand shadow off the view switcher, which is exactly the kind
-// of prominent control that should carry it. The shadow was never the problem —
-// its *subdivision* was.
-//
-// So the elevation moves up one level: the group carries a single shadow around
-// its whole outline, and the segments inside are flat. One object, one shadow.
-//
-// The radius is required, not decorative: box-shadow follows the element's own
-// border-radius, and .btn-group has none of its own (the children carry
-// rounded-start / rounded-end). Without it the shadow renders as a
-// square-cornered bar under a rounded control.
-.btn-group {
-    box-shadow: var(--m-shadow-hard);
-    border-radius: var(--m-radius-control);
-}
-
-// Deliberately static — no press. The travel gesture says "this whole object
-// is being pushed", which is true of a button and false of a segment inside a
-// group; a segmented control's segments are usually toggles rather than
-// actions. Hover feedback still arrives through --btn-hover-bg.
-//
-// States are listed explicitly because %m-raised sets them on :hover, :active
-// and .active, and each needs beating at equal-or-better specificity.
-.btn-group > .btn,
-.btn-group > .btn:hover,
-.btn-group > .btn:active,
-.btn-group > .btn.active {
-    box-shadow: none;
-    transform: none;
-}
-
-// --- Discuss call button: white-on-white glyph ------------------------------
-// mail/…/action_list.scss:48 hardcodes `color: white !important` on this icon,
-// and :54 paints its chip with `background: var(--btn-bg)`.  That pairing is
-// only safe while --btn-bg is a saturated colour.  We set .btn-secondary's
-// --btn-bg to #FFFFFF (asset 01), so the chip turned white under a white
-// glyph and the icon vanished.  This is our regression, not an Odoo bug.
-//
-// Resolved by following the button's own foreground rather than forcing a
-// single colour: --btn-color is already correct per variant (black on our white
-// secondary, white on success/danger), so contrast stays right in every case —
-// where a flat `black` would have put a black glyph on a green call button.
-// Falls back to --m-text if no variant is in play.
-//
-// !important is required to beat Odoo's own !important. Budget: §8 allows <30;
-// this is 1 of 1.
 .o-mail-ActionList button.o-tag-JOIN_LEAVE_CALL i {
     color: var(--btn-color, var(--m-text)) !important;
 }

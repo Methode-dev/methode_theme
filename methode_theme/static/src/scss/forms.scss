@@ -58,9 +58,24 @@
     }
 
     // Required fields: re-expressed from 2000_theme's marker (§4) in brand
-    // colours.  Accent is legitimate here — it is a border, not text.
+    // colours.  Accent is legitimate here — it is a fill and a border, not text.
+    //
+    // The wash is the owner's ask: "a warning, but not an error".  --m-danger is
+    // reserved for .o_field_invalid below, so an empty required field must not
+    // borrow it — the field is incomplete, not wrong, and the two states have to
+    // stay tellable apart at a glance.  --m-accent-soft is the accent at 14%,
+    // which is the "≈15%" that was asked for and is already a token; a second
+    // near-identical alpha would be a duplicate, not a distinction.
+    //
+    // It composites over the form sheet rather than over white, since it is a
+    // translucent fill replacing the opaque `background-color: #FFFFFF` set
+    // above.  That is the intent — the wash is a tint on the field, not a new
+    // opaque surface — and the shift is ~4% because the sheet is #F2F2F2.
+    //
+    // Beats the white above on specificity: (0,4,0) vs (0,3,0).
     &.o_required_modifier .o_input {
-        border-color: var(--m-accent-border);
+        background-color: var(--m-accent-soft);
+        border-color: white;
         &:focus { border-color: var(--m-accent); }
     }
 

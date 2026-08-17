@@ -54,7 +54,8 @@
 
     // ⚠ --m-accent is 1.97:1 on --m-bg-primary.  Fills, borders and active
     // indicators only — never text.  Use --m-warning for "orange" text.
-    --m-accent-soft:    rgba(250, 161, 64, 0.14);   // hover wash, icon chips
+    // hover wash, icon chips, required-field fill, selected settings tab
+    --m-accent-soft:    rgba(250, 161, 64, 0.1);
     --m-accent-border:  rgba(250, 161, 64, 0.45);
 
     // --- Semantics (derived in brand_variables.scss; see the table there) ----

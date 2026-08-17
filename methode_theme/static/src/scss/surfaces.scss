@@ -53,3 +53,42 @@
 .o-dropdown--menu {
     box-shadow: var(--m-shadow-hard);
 }
+
+// --- Notification toasts ----------------------------------------------------
+// Odoo states the notification's type TWICE.  notification.xml renders both:
+//
+//   <span class="o_notification_bar bg-{{type}} rounded-start"/>   ← 0.5rem bar
+//   <div  class="o_notification_progress ... bg-{{type}}"/>        ← 3px, bottom
+//
+// Owner call: one is enough, and the bottom one is the one that carries
+// information — notification.js animates its width down to zero as the autoclose
+// timer runs, so it is a countdown as well as a colour.  The left bar only
+// repeats what it already says.
+//
+// ⚠ The bar is COLLAPSED, not `display: none`d, and the toast grows a
+// `border-left` to replace it.  Both halves are required, for reasons that are
+// only visible in the markup:
+//
+//   * the body div next to the bar is `border border-start-0 rounded-end`, so it
+//     deliberately draws no left edge — the bar was the left edge.  Remove the
+//     bar without putting one back and the toast is an open-sided box.
+//   * `border-start-0` is a Bootstrap utility, i.e. `border-left: 0 !important`.
+//     Closing the box on the body itself would cost an !important; closing it on
+//     the parent costs none.  Same tactic as login.scss:146.
+//
+// `overflow: hidden` then lets the wrapper's own `rounded` class clip the
+// children, so the body's now-wrong square left corners round themselves —
+// rather than overriding `rounded-end`/`rounded-start` one corner at a time.
+//
+// NOT addressed here: the toast is also markup'd `shadow-lg`, a blurred ambient
+// shadow, which is the one thing §6 forbids everywhere.  It is a Bootstrap
+// utility (!important), so unlike everything above it cannot be fixed for free —
+// left for a deliberate decision rather than smuggled in with this change.
+.o_notification_manager .o_notification {
+    overflow: hidden;
+    border-left: 1px solid var(--m-ink-border);
+
+    .o_notification_bar {
+        width: 0;
+    }
+}

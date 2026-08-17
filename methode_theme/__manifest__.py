@@ -40,6 +40,7 @@
             'methode_theme/static/src/scss/views/form_view.scss',
             'methode_theme/static/src/scss/views/kanban_view.scss',
             'methode_theme/static/src/scss/views/status_bar.scss',
+            'methode_theme/static/src/scss/views/settings_view.scss',
             # Theme settings live on the Settings page, not in a systray popup —
             # see aura_backend_theme/views/res_config_settings_views.xml.
         ],
