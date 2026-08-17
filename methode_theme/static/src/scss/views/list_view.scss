@@ -1,0 +1,43 @@
+// ---------------------------------------------------------------------------
+// List views — THEME_PLAN Rule 1 (§7): 2000_theme's lineage, NOT Aura's.
+//
+// ⚠ What this file must NOT become.  Aura rendered lists as a floating white
+// card — `margin: 0.875rem` + `border-radius: 12px` + `box-shadow: 0 12px 30px`
+// — which wastes horizontal space on a laptop and reintroduces the ambient blur
+// §6 forbids.  Rule 1 is explicit: a plain table with a subtle header
+// separator.  If a border-radius or a margin appears on .o_list_view here,
+// someone has re-created the thing this plan deleted.
+//
+// 2000_theme drew the header separator with `box-shadow: $theme-shadow-subtle`
+// (a blurred shadow).  Re-expressed, not ported: the brand has ZERO blur
+// anywhere (§6.1), so the same "lift the header off the rows" job is done by a
+// hairline.  The concept survives; the blur does not.
+//
+// Odoo already gives thead the page colour
+// (`--ListRenderer-thead-bg-color: $o-webclient-background-color`), so the
+// header is on-brand without a background rule here.
+// ---------------------------------------------------------------------------
+
+.o_list_renderer {
+    // Hairline under the header, in place of 2000_theme's blurred shadow.
+    // This also covers the sticky case: Odoo makes thead `position: sticky` on
+    // desktop (list_renderer.scss:19), and a border travels with it, where the
+    // old box-shadow needed a separate z-index rule to stay visible.
+    .o_list_table > thead > tr > th {
+        border-bottom: 1px solid var(--m-ink-border);
+        font-weight: 600;
+    }
+
+    // Group headers: separated by BACKGROUND CONTRAST, not another border.
+    // §8 is explicit that borders are the exception and contrast is the
+    // default — and $m-bg-secondary is the palette's designated "group header"
+    // role (§5.1), so this is the token doing the job it was defined for.
+    .o_list_table > tbody > tr.o_group_header {
+        background-color: var(--m-bg-secondary);
+
+        > th,
+        > td {
+            font-weight: 600;
+        }
+    }
+}

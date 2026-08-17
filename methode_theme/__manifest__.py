@@ -28,6 +28,13 @@
             'methode_theme/static/src/scss/buttons.scss',
             'methode_theme/static/src/scss/forms.scss',
             'methode_theme/static/src/scss/cards.scss',
+            'methode_theme/static/src/scss/surfaces.scss',
+            # Views come after components: they tune what the component sheets
+            # above establish, so they must be able to win at equal specificity.
+            'methode_theme/static/src/scss/views/list_view.scss',
+            'methode_theme/static/src/scss/views/form_view.scss',
+            'methode_theme/static/src/scss/views/kanban_view.scss',
+            'methode_theme/static/src/scss/views/status_bar.scss',
             # Theme settings live on the Settings page, not in a systray popup —
             # see aura_backend_theme/views/res_config_settings_views.xml.
         ],

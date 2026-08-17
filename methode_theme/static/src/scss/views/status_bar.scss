@@ -1,0 +1,22 @@
+// ---------------------------------------------------------------------------
+// Status bar — THEME_PLAN Rule 1 (§7)
+//
+// ⚠ Rule 1 and D1 together: keep Odoo's NATIVE arrow/clip-path statusbar and
+// only colour it.  Do NOT rebuild it as pills — that was Aura's status_bar.js
+// (plus .tbt-step-done / .tbt-step-future), deliberately abandoned per D1.
+//
+// Odoo drives the whole widget from custom properties declared on the field
+// (views/fields/statusbar/statusbar_field.scss:13-20), so colouring it is a
+// handful of property overrides rather than any clip-path work.  The arrow
+// geometry is Odoo's and stays Odoo's.
+// ---------------------------------------------------------------------------
+
+.o_field_statusbar {
+    // The accent marks the CURRENT step.  Legitimate use: this is a border and
+    // a fill, never text (§5.1).  Odoo's default here is the btn-secondary
+    // design map's active-border, i.e. a neutral grey.
+    --o-statusbar-border-active: var(--m-accent);
+    --o-statusbar-background-active: var(--m-accent-soft);
+
+    --o-statusbar-background-hover: var(--m-bg-secondary);
+}

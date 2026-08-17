@@ -1,0 +1,43 @@
+// ---------------------------------------------------------------------------
+// Form views — notebook tabs, groups, button box (THEME_PLAN Rule 1, §7 + §8)
+//
+// The sheet surface itself is in cards.scss (it is card material, not form
+// layout).  This file is structure and the notebook.
+// ---------------------------------------------------------------------------
+
+// --- Notebook tabs (Rule 1: "Odoo native tabs", accent on active) ----------
+// 2000_theme did this with `border-top: 2px solid #875A7B !important` on
+// .nav-tabs .nav-link.active.  Odoo 19 makes that unnecessary: the notebook
+// declares its own custom properties (core/notebook/notebook.scss:1-7) and the
+// active tab's top border is already a separate hook from its other three
+// edges.  So the accent lands by SETTING A VARIABLE — no !important, no
+// selector fight, and it keeps working if Odoo restructures the markup.
+//
+// The accent is legitimate here: it is a 2px border, not text (§5.1).
+.o_notebook {
+    --Notebook__link-border-color--active: var(--m-ink-border);
+    --Notebook__link-border-top-color--active: var(--m-accent);
+    --Notebook__link-border-color--hover: var(--m-accent-border);
+
+    // The active tab reads as the selected one through weight as well as
+    // colour — the 2px accent alone is easy to miss on a dense form.
+    .nav-link.active {
+        font-weight: 600;
+    }
+}
+
+// --- Groups ----------------------------------------------------------------
+// Group titles carry the brand's semibold, matching field labels (forms.scss).
+.o_form_view .o_horizontal_separator {
+    font-weight: 600;
+    color: var(--m-text);
+}
+
+// --- Button box ------------------------------------------------------------
+// 2000_theme squared these off (`border-radius: 0 !important`).  §4 is explicit
+// that this must NOT be ported — the brand is heavily rounded, and radius comes
+// from $o-border-radius through Bootstrap.  Only the hover wash is kept, and it
+// is re-expressed as the brand's accent wash rather than a neutral black alpha.
+.o_form_view .oe_button_box .oe_stat_button:hover {
+    background-color: var(--m-accent-soft);
+}

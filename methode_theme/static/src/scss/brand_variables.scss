@@ -46,6 +46,12 @@ $m-info:    #2E6B8A;
 $m-warning: #9A6510;
 $m-danger:  #B3261E;
 
+// Outlines in the assets are #191A22, a very dark navy — NOT pure black, which
+// reads harsher.  Pure black stays for fills and shadows.  Restated here from
+// css_tokens.scss's --m-ink-border because the two bundles cannot see each
+// other (§5.3); keep them in lockstep.
+$m-ink-border: #191A22;
+
 // --- Corner radius (measured, THEME_PLAN §6) -------------------------------
 // Odoo ships 4px/3px/6px, which is far squarer than the brand.  These three
 // feed Bootstrap's whole $border-radius family
@@ -78,6 +84,37 @@ $o-success: $m-success;
 $o-info:    $m-info;
 $o-warning: $m-warning;
 $o-danger:  $m-danger;
+
+// --- Surfaces Odoo drives from SCSS variables (THEME_PLAN §9.2) ------------
+// §9.2 lists these as CSS rules to override.  They are not: each is a `!default`
+// SCSS variable, and `web/static/src/**/*.variables.scss` is globbed into
+// web._assets_primary_variables AFTER primary_variables.scss — which is exactly
+// where this file is injected `('before', …)`.  So setting them here wins by
+// construction, and no override rule is needed.  Configure, don't override.
+//
+// Verified definitions (Odoo 19):
+//   search/control_panel/control_panel.variables.scss:1
+//       $o-control-panel-background-color: $o-view-background-color !default;
+//   views/kanban/kanban.variables.scss:1
+//       $o-kanban-background: $o-gray-100 !default;
+//   scss/bootstrap_overridden.scss:241
+//       $popover-bg: $white !default;
+//
+// All three become the PAGE colour, not the card colour.  The owner's §9.2
+// annotations name "the theme" for each, and "the theme" throughout that
+// section is --tbt-content-bg-dynamic / #FDFAF6.  The result is one warm sheet
+// from the topbar down, with #F2F2F2 reserved for genuinely raised content —
+// form sheets and kanban records (cards.scss).  Two surfaces, not five.
+$o-control-panel-background-color: $m-bg-primary;
+$o-kanban-background:              $m-bg-primary;
+
+// ⚠ THIS is the white panel behind the apps launcher, not $dropdown-bg.
+// Bootstrap's $dropdown-bg is already `var(--bs-body-bg)`, which our
+// $o-webclient-background-color drives — so the dropdown itself was on-brand.
+// Odoo renders dropdown menus inside a .popover, and the popover paints
+// $popover-bg over it.  Chasing $dropdown-bg would have changed nothing.
+$popover-bg:           $m-bg-primary;
+$popover-border-color: $m-ink-border;
 
 // --- Typography (THEME_PLAN §5.2) ------------------------------------------
 // Nunito is vendored at static/lib/nunito/ and @font-face'd in typography.scss.

@@ -1,0 +1,26 @@
+// ---------------------------------------------------------------------------
+// Kanban views (THEME_PLAN §7, §9.8)
+//
+// The RECORD skin lives in cards.scss — it is card material, shared with
+// .m-card, and keeping it there is what stops the two drifting apart.  This
+// file is the board around the records.
+//
+// The board background needs no rule: --Kanban-background reads
+// $o-kanban-background, now set to the page colour in brand_variables.scss.
+// §9.2 listed it as a rule to write; it is a variable.  Do not add one here.
+//
+// ⚠ Any rule added to this file that touches .o_kanban_record MUST carry
+// `:not(.o_kanban_ghost):not(.o-kanban-button-new)` — see the long note in
+// cards.scss and §9.8.  Odoo emits seven empty ghost divs to space the last
+// row; skinning them draws a heavy dark line across the bottom of the view.
+// ---------------------------------------------------------------------------
+
+// Column headers separate by background contrast, matching list group headers
+// (views/list_view.scss) — the two are the same idea in different views, and
+// §8 prefers contrast over yet another border.
+.o_kanban_renderer.o_kanban_grouped .o_kanban_group .o_kanban_header {
+    .o_kanban_header_title {
+        font-weight: 600;
+        color: var(--m-text);
+    }
+}
