@@ -1,0 +1,43 @@
+// ---------------------------------------------------------------------------
+// Top navbar — THEME_PLAN §5.4, Rule 2 (§7)
+//
+// ⚠ This file RESTYLES the stock navbar. It must never replace it.
+// Aura's navbar.js/xml did a full `<xpath position="replace">` of
+// `web.NavBar`, and that is precisely what broke the apps dropdown (§9.3):
+// `methode_apps_dropdown` patches the stock header and cannot find it if the
+// header is gone. Rule 2 makes the launcher ascendant. Nothing here may add a
+// template override — CSS only.
+// ---------------------------------------------------------------------------
+
+// --- Dropdown affordance on app sub-menus (owner-directed) ------------------
+// The section entries that open a menu looked identical to the ones that just
+// navigate, so nothing signalled which were dropdowns until you clicked.
+//
+// Scoped to `.o_menu_sections` on purpose. `.dropdown-toggle` also matches the
+// apps-menu button (navbar.scss:196 upstream) and the systray toggles, which
+// have their own affordances and must not sprout a second one.
+// `.o_nav_entry` — the plain, non-dropdown entries — is untouched by this
+// selector, which is exactly the distinction being drawn.
+.o_main_navbar .o_menu_sections .dropdown-toggle::after {
+    // A chevron, not Bootstrap's filled triangle: two borders on a rotated
+    // square. It scales with the text (em units), inherits the navbar's colour
+    // via currentColor, and needs no icon font — so it cannot break if Odoo
+    // changes which icon set the navbar loads.
+    content: "";
+    display: inline-block;
+    width: 0.38em;
+    height: 0.38em;
+
+    // Explicitly zeroed: Bootstrap's own ::after builds its caret out of
+    // border-top/right/left, so without these the triangle and the chevron
+    // would both render, on top of each other.
+    border: 0;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+
+    margin-left: var(--m-space-1);
+    // The rotated square's visual centre sits low; nudge it back onto the
+    // text baseline.
+    transform: translateY(-0.15em) rotate(45deg);
+    vertical-align: middle;
+}

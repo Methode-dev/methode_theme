@@ -18,7 +18,18 @@ $m-accent:         #FAA140;  // accent + hover
 // ⚠ $m-accent is 1.97:1 against $m-bg-primary — far below the 4.5:1 needed for
 // text.  It is a FILL colour: borders, underlines, active indicators, icon
 // chips, illustration.  Never set it as a text colour on the page background.
-// Where an "orange" text treatment is wanted, use $m-warning instead.
+// Where an "orange" text treatment is wanted, use $m-accent-text instead.
+
+// The accent's TEXT counterpart — same hue family, darkened until it clears AA
+// (4.76:1 on $m-bg-primary).  This exists because the brand genuinely wants
+// orange links (§15.3) while $m-accent is unreadable as text; the brand still
+// reads orange and the accent keeps its fill-only role.
+//
+// ⚠ Deliberately NOT `$m-accent-text: $m-warning`, though the values are equal
+// today.  They are two different ROLES that happen to have met at the same hex:
+// one is brand identity, the other is status semantics.  Aliasing them would
+// mean a future tweak to warning silently repaints every link in the product.
+$m-accent-text:    #9A6510;
 
 // --- Semantic colours (THEME_PLAN §5.1 / §14 open question 2) --------------
 // The brand defines no success/warning/danger, but Odoo needs them for alerts,
@@ -63,9 +74,21 @@ $m-ink-border: #191A22;
 // display plate 12.5px.  10px is the honest centre of that cluster.
 // §4 is explicit that 2000_theme's `border-radius: 0` must NOT be ported —
 // the brand is heavily rounded and erring round is correct.
-$o-border-radius:    10px;
-$o-border-radius-sm:  6px;
-$o-border-radius-lg: 14px;
+// ⚠ OWNER OVERRIDE — these are deliberately BELOW the measured values.
+// Measured gives 10.5-12.5px, which is what shipped first; in the product it
+// read as too round across the board.  The asset measurements were taken from
+// marketing-scale artwork (a 598px card, a large button); the same radius on a
+// 28px-tall inline input approaches a pill, which is not what the brand shows.
+// Radius does not scale linearly with component size, so the measured figure is
+// right for .m-card and too large for controls.
+//
+// 8px is a visible step down while staying clearly rounder than stock Odoo (4px)
+// and Bootstrap (6px) — "less rounded, not edgy".  Tune here and nowhere else:
+// these three feed Bootstrap's whole $border-radius family.
+// --m-radius-card is deliberately NOT reduced with them; see css_tokens.scss.
+$o-border-radius:     8px;
+$o-border-radius-sm:  4px;
+$o-border-radius-lg: 10px;
 
 // --- Odoo surface variables ------------------------------------------------
 $o-webclient-background-color: $m-bg-primary;
@@ -79,6 +102,27 @@ $o-main-text-color:            $m-text;
 // emphasis and secondary primary-actions, applied per-component in P5.
 $o-brand-primary:              $m-text;
 $o-brand-odoo:                 $m-text;
+
+// --- Links: orange, but NOT via $o-brand-primary (§15.3) -------------------
+// The owner asked for orange links.  §6.2 had locked $o-brand-primary to black
+// with a rationale that still holds, so this is granted one level down instead
+// of by reverting that decision:
+//
+//   ✗ Flipping $o-brand-primary feeds focus rings, checkboxes, radio fills AND
+//     the primary button — it would turn the black primary button orange and
+//     re-open every contrast decision in §6.2 at once.
+//   ✓ $o-main-link-color feeds links and nothing else.
+//
+// Set the ODOO variable, not Bootstrap's $link-color, even though §15.3 names
+// the latter.  Odoo defines `$link-color: $o-main-link-color !default`
+// (bootstrap_overridden.scss:76) from `$o-main-link-color: darken($o-brand-primary, 5%)
+// !default` (primary_variables.scss:123) — so this is the upstream lever, and
+// anything else Odoo derives from the semantic name follows it too.  Same
+// configure-don't-override principle as the surface variables below.
+//
+// The VALUE is the darkened accent, not $m-accent: #FAA140 as link text is
+// 1.97:1, which is genuinely hard to read rather than merely non-compliant.
+$o-main-link-color:            $m-accent-text;
 
 $o-success: $m-success;
 $o-info:    $m-info;
@@ -115,6 +159,30 @@ $o-kanban-background:              $m-bg-primary;
 // $popover-bg over it.  Chasing $dropdown-bg would have changed nothing.
 $popover-bg:           $m-bg-primary;
 $popover-border-color: $m-ink-border;
+
+// ⚠ The active notebook tab (§15.2 B1).  Bootstrap's default is
+// `$nav-tabs-link-active-bg: $white !default` (bootstrap_overridden.scss:226),
+// which on our #F2F2F2 sheet made the selected tab read as a NOTCH CUT OUT of
+// the sheet rather than part of it.  Following the sheet is the whole point of
+// a tab: it is meant to look continuous with the panel it opens.
+//
+// ⚠ Do NOT also write a `border-bottom` rule to close the tab-to-content seam.
+// Bootstrap derives $nav-tabs-link-active-border-color's bottom edge from THIS
+// SAME variable, so the seam closes itself the moment this line lands.  Adding
+// the rule anyway would be a second declaration of the same intent — exactly
+// the additive-patching habit §0.1 documents in Aura.
+$nav-tabs-link-active-bg: $o-view-background-color;
+
+// The line under the whole tab strip — the one the active tab "breaks" to look
+// open into the panel below.  Bootstrap defaults it to $border-color (a light
+// grey), which left the active tab's black left/right edges terminating into a
+// pale line that read as unfinished.  Ink matches those edges, so the strip
+// closes as one shape.  Owner-directed.
+//
+// Not set on `.nav-tabs` as a rule: this is Bootstrap's own `!default`
+// (_variables.scss), and Odoo never overrides it — so §15.1's "configure, don't
+// override" applies cleanly and this survives Odoo restructuring its markup.
+$nav-tabs-border-color: $m-ink-border;
 
 // --- Typography (THEME_PLAN §5.2) ------------------------------------------
 // Nunito is vendored at static/lib/nunito/ and @font-face'd in typography.scss.

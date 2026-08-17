@@ -1,22 +1,104 @@
 // ---------------------------------------------------------------------------
-// Status bar — THEME_PLAN Rule 1 (§7)
+// Status bar — THEME_PLAN Rule 1 (§7), punch list §15.2 B3 + B4
 //
 // ⚠ Rule 1 and D1 together: keep Odoo's NATIVE arrow/clip-path statusbar and
 // only colour it.  Do NOT rebuild it as pills — that was Aura's status_bar.js
 // (plus .tbt-step-done / .tbt-step-future), deliberately abandoned per D1.
+// Everything below is a custom-property value; the arrow geometry, the
+// clip-path polygons and the markup all stay Odoo's.
 //
-// Odoo drives the whole widget from custom properties declared on the field
-// (views/fields/statusbar/statusbar_field.scss:13-20), so colouring it is a
-// handful of property overrides rather than any clip-path work.  The arrow
-// geometry is Odoo's and stays Odoo's.
+// ⚠⚠ THE SELECTOR IS LOAD-BEARING — READ BEFORE CHANGING IT.
+//
+// The first version of this file set these properties on `.o_field_statusbar`
+// and rendered NO CHANGE AT ALL, with nothing in the console to explain why.
+// Odoo declares them one level down, on the direct child:
+//
+//     statusbar_field.scss:1   .o_field_statusbar {
+//     statusbar_field.scss:3       > .o_statusbar_status {
+//     statusbar_field.scss:12          --o-statusbar-radius: 0.1rem;
+//     statusbar_field.scss:15          --o-statusbar-border-active: …;
+//
+// Custom properties inherit, but an element's OWN declaration beats a value
+// inherited from an ancestor.  So setting them on the parent is always lost.
+// Verified by reading Odoo 19's source, not inferred — §15.2 B3 recorded this
+// as an unconfirmed guess from indentation depth, and it turned out correct.
 // ---------------------------------------------------------------------------
 
-.o_field_statusbar {
-    // The accent marks the CURRENT step.  Legitimate use: this is a border and
-    // a fill, never text (§5.1).  Odoo's default here is the btn-secondary
-    // design map's active-border, i.e. a neutral grey.
-    --o-statusbar-border-active: var(--m-accent);
-    --o-statusbar-background-active: var(--m-accent-soft);
+.o_field_statusbar > .o_statusbar_status {
+    // --- B3: the accent marks the CURRENT step --------------------------
+    // Odoo's default comes from the btn-secondary design map, i.e. a neutral
+    // grey.  The accent is legitimate here: fill and border, never text (§5.1).
+    //
+    // A FILL, not the 14% wash this file used before.  B4 is explicit that the
+    // active step should carry the accent as a fill — the wash was too faint to
+    // read as "you are here" on a dense form, which is the widget's only job.
+    // Text on top stays black ($m-text is what Odoo already renders here):
+    // black on #FAA140 is 10.3:1, whereas white would be 2.05:1.
+    --o-statusbar-background-active: var(--m-accent);
+
+    // The active step's outline colour.  Only the CARET actually shows it —
+    // see the gradient rule below, which is what makes that true.
+    --o-statusbar-border-active: var(--m-ink-border);
 
     --o-statusbar-background-hover: var(--m-bg-secondary);
+
+    // --- B4: give it the brand's material -------------------------------
+    // Stock is a hairline-edged 33px strip that reads thin and weak next to the
+    // heavy outline-and-offset language everywhere else — and it is the
+    // most-looked-at widget on a sales document.
+    //
+    // Odoo parameterises all of this, so it is four values rather than any
+    // geometry work:
+    //   --o-statusbar-border        the separator BETWEEN steps; stock is
+    //                               $o-view-background-color, i.e. the sheet
+    //                               colour, which is why the steps currently
+    //                               blend into one another.  The hairline
+    //                               outline is the brand's separator (§6.1).
+    //   --o-statusbar-radius        stock 0.1rem is nearly square and fights
+    //                               the $o-border-radius: 10px cascade.
+    //   --o-statusbar-border-width  drives the clip-path inset maths as well as
+    //                               the visible edge — it is used in the
+    //                               `sqrt(2)` point calculations, so it thickens
+    //                               the outline without breaking the arrows.
+    //   --o-statusbar-padding-y     the height lever.
+    --o-statusbar-border: var(--m-ink-border);
+    --o-statusbar-radius: var(--m-radius-sm);
+    --o-statusbar-border-width: 1px;
+    --o-statusbar-padding-y: var(--m-space-2);
+}
+
+// --- Outline the CARET only, not the whole step (owner-directed) ------------
+//
+// ⚠ There is no property for this.  Odoo does not draw four borders; it draws a
+// single RING as a `::before` with `inset: 0`, a `clip-path` polygon that traces
+// the arrow's outer edge and then its inner edge (a donut), and ONE
+// `background-color: var(--o-statusbar-border-active)`
+// (statusbar_field.scss:123-132).  Colour it and the entire perimeter changes
+// together — top, bottom, left notch and caret.  That is what made the active
+// step read as a bordered rectangle rather than a filled step with a black
+// point.
+//
+// So the ring is painted with a GRADIENT instead of a flat colour: accent
+// everywhere (invisible against the step's own accent fill) and ink only in the
+// final --o-statusbar-caret-width, which is exactly the arrow zone. Two hard
+// stops at the same position — no blur, consistent with §6.1.
+//
+// The clip-path still does all the shaping; this only changes what fills it.
+//
+// ⚠ Specificity must MATCH Odoo's, which is (0,6,0) once its nesting is
+// flattened:
+//   .o_field_statusbar > .o_statusbar_status
+//     > .o_arrow_button:not(.d-none).o_arrow_button_current:disabled::before
+// `:not(.d-none)` is carried below purely to reach that weight — dropping it
+// gives (0,5,0) and the rule silently loses. This sheet loads later, so an
+// exact tie is enough.
+.o_field_statusbar > .o_statusbar_status
+    > .o_arrow_button:not(.d-none).o_arrow_button_current:disabled::before {
+    background: linear-gradient(
+        to right,
+        var(--m-accent) 0,
+        var(--m-accent) calc(100% - var(--o-statusbar-caret-width)),
+        var(--m-ink-border) calc(100% - var(--o-statusbar-caret-width)),
+        var(--m-ink-border) 100%
+    );
 }

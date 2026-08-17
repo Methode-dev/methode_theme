@@ -19,10 +19,64 @@
     --Notebook__link-border-top-color--active: var(--m-accent);
     --Notebook__link-border-color--hover: var(--m-accent-border);
 
+    // Inactive tabs are outlined too, in the quieter grey — owner-directed.
+    // Odoo's default is `transparent` (notebook.scss:4), which left them as
+    // floating text with no tab shape at all, so the notebook read as one
+    // outlined tab beside some links rather than as a row of tabs.
+    // --m-border-soft is the deliberate step down from --m-ink-border: present,
+    // but never competing with the active tab for attention.
+    //
+    // ⚠ Three borders, not four — the bottom stays transparent, via the rule
+    // further down. Read it before changing this line; the two go together.
+    --Notebook__link-border-color: var(--m-border-soft);
+
+    // ⚠ Inactive tabs get three borders. The bottom one stays transparent, and
+    // that is what seats them ON the strip line.
+    //
+    // Bootstrap pulls every tab down by
+    // `margin-bottom: calc(-1 * var(--nav-tabs-border-width))` (_nav.scss:73)
+    // so the tab's own bottom border occupies exactly the same 1px as the
+    // strip's border-bottom. Stock gets away with it because that border is
+    // transparent. Giving inactive tabs a border on all four sides therefore
+    // painted grey over the black strip line beneath each tab — which reads as
+    // a 1px gap between tab and line rather than as a border, because the eye
+    // takes the black line to be where the tab ends.
+    //
+    // Transparent lets the strip line show through. That is also the
+    // conventional tab shape: an inactive tab has no bottom of its own.
+    .nav-link:not(.active) {
+        border-bottom-color: transparent;
+    }
+
     // The active tab reads as the selected one through weight as well as
-    // colour — the 2px accent alone is easy to miss on a dense form.
+    // colour — the accent edge alone is easy to miss on a dense form.
     .nav-link.active {
         font-weight: 600;
+
+        // §15.2 B2: the accent edge is drawn at Bootstrap's
+        // $nav-tabs-border-width (1px), which is a hairline against a brand
+        // whose whole language is heavy — a 1px accent contradicts the 3px
+        // offset shadow used everywhere else.
+        //
+        // Odoo's notebook exposes only COLOUR hooks
+        // (--Notebook__link-border-top-color--active and friends,
+        // notebook.scss:1-7) — there is no width hook — so unlike B1 and B3
+        // this genuinely cannot be done by setting a variable.
+        //
+        // ⚠ WAS an inset shadow; changed after the owner spotted a seam at the
+        // rounded top corners.  The reason is geometric and worth keeping:
+        // an inset box-shadow is clipped to the PADDING box while a border
+        // follows the BORDER box, so on a curve the orange band and the black
+        // side border traced two slightly different arcs and visibly diverged
+        // at each corner.  No amount of colour matching fixes that; only using
+        // the same box does.
+        //
+        // The cost of `border-top-width` is that it grows the tab by 2px, so the
+        // active tab sits 2px taller than its neighbours.  That was the original
+        // objection to it — but it is also the conventional tab idiom (the
+        // selected tab pops toward the reader), and a clean corner is worth more
+        // than perfect label alignment.
+        border-top-width: 3px;
     }
 }
 

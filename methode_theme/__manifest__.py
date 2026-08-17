@@ -14,6 +14,10 @@
     'website': 'https://methode.dev',
     'license': 'LGPL-3',
     'depends': ['web', 'aura_backend_theme'],
+    # The module was assets-only until the login rebrand (§3.3 / §15.2 B9).
+    'data': [
+        'views/login_templates.xml',
+    ],
     'assets': {
         'web._assets_primary_variables': [
             ('before', 'web/static/src/scss/primary_variables.scss',
@@ -29,6 +33,7 @@
             'methode_theme/static/src/scss/forms.scss',
             'methode_theme/static/src/scss/cards.scss',
             'methode_theme/static/src/scss/surfaces.scss',
+            'methode_theme/static/src/scss/navbar.scss',
             # Views come after components: they tune what the component sheets
             # above establish, so they must be able to win at equal specificity.
             'methode_theme/static/src/scss/views/list_view.scss',
@@ -49,6 +54,11 @@
             'methode_theme/static/src/scss/css_tokens.scss',
             'methode_theme/static/src/scss/typography.scss',
             'methode_theme/static/src/scss/buttons.scss',
+            # Frontend-ONLY, deliberately — its selectors exist only on the
+            # login page, so shipping it to the backend too would be dead CSS.
+            # The "add it to both bundles" warning above is about sheets the
+            # login page NEEDS; see the header comment in login.scss.
+            'methode_theme/static/src/scss/login.scss',
         ],
     },
     'installable': True,

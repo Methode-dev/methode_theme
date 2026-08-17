@@ -26,7 +26,20 @@
 :root {
     // --- Brand surfaces: bridged to the company-configurable values ---------
     --m-bg-primary:   var(--tbt-content-bg-dynamic, #FDFAF6);
-    --m-bg-card:      var(--tbt-card-bg-dynamic, #FFFFFF);
+    // ⚠ The fallback is #F2F2F2, NOT white — it must agree with what P3's
+    // migration actually stores (tbt_card_bg = #F2F2F2).  A fallback that
+    // disagrees with the stored value is a latent bug: it renders correctly
+    // everywhere the variable is injected and wrongly everywhere it is not,
+    // which is the hardest kind to notice.
+    //
+    // For the record, since it is easy to assume otherwise: the variable IS
+    // injected on the frontend as well as the backend.  aura_backend_theme's
+    // views/web_assets.xml server-renders the whole --tbt-* palette into the
+    // page <style>, so /web/login gets --tbt-card-bg-dynamic: #F2F2F2 even
+    // though theme_bootstrap.js is a backend-only asset and never runs there.
+    // The fallback is therefore rarely exercised — which is precisely why it
+    // has to be right.
+    --m-bg-card:      var(--tbt-card-bg-dynamic, #F2F2F2);
     --m-topbar-bg:    var(--tbt-topbar-bg-dynamic, #000000);
     --m-topbar-text:  var(--tbt-topbar-text-dynamic, #FFFFFF);
 
@@ -85,9 +98,26 @@
     --m-ink-border:      #191A22;
     --m-border-hairline: 1px solid var(--m-ink-border);
 
-    --m-radius-sm:      6px;
-    --m-radius-control: 10px;   // buttons, inputs, display plate (measured 10.5-12.5)
-    --m-radius-lg:      20px;
+    // The measured border of asset 01's button — the brand's *quieter* outline,
+    // for edges that should read as present but not structural.  Full-strength
+    // --m-ink-border is for the thing being outlined; this is for its neighbours
+    // (inactive notebook tabs, resting input borders), where a wall of full-ink
+    // outlines would read as noise.  Promoted to a token when it acquired its
+    // second consumer; it was previously a literal in forms.scss.
+    --m-border-soft:     #898989;
+
+    // ⚠ Control radii are OWNER-REDUCED below the measured values — see the long
+    // note in brand_variables.scss, which reduces $o-border-radius in lockstep.
+    // Radius does not scale linearly with component size: the figure measured
+    // off a 598px marketing card reads as a pill on a 28px inline input.
+    --m-radius-sm:       4px;
+    --m-radius-control:  8px;   // buttons, inputs, display plate
+    --m-radius-lg:      14px;
+
+    // NOT reduced.  This is the marketing card of asset 03 at the scale it was
+    // drawn for — the one component where the measured 34.5px is correct, and
+    // the login card (owner-approved) uses it.  Shrinking it with the controls
+    // would be applying a fix to the one place that did not have the problem.
     --m-radius-card:    34px;   // measured 34.5 — §6 guessed 40
     --m-radius-pill:   999px;
 

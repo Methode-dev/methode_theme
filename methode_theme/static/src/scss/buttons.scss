@@ -152,6 +152,48 @@
     text-underline-offset: 2px;
 }
 
+// --- Segmented controls: the GROUP is raised, its buttons are not -----------
+// A .btn-group is one control made of several buttons — the pager's prev/next
+// pair, the view switcher. The raised treatment above is per-button, which
+// breaks down here in two ways:
+//
+//   * every button draws its own offset shadow, so shadow appears *inside* the
+//     group at each internal seam, as though the segments were separate objects;
+//   * hover presses only the hovered segment, so one part of a single control
+//     sinks 3px while the rest stays put.
+//
+// ⚠ The first attempt at this simply flattened the group, and that was wrong:
+// it stripped the brand shadow off the view switcher, which is exactly the kind
+// of prominent control that should carry it. The shadow was never the problem —
+// its *subdivision* was.
+//
+// So the elevation moves up one level: the group carries a single shadow around
+// its whole outline, and the segments inside are flat. One object, one shadow.
+//
+// The radius is required, not decorative: box-shadow follows the element's own
+// border-radius, and .btn-group has none of its own (the children carry
+// rounded-start / rounded-end). Without it the shadow renders as a
+// square-cornered bar under a rounded control.
+.btn-group {
+    box-shadow: var(--m-shadow-hard);
+    border-radius: var(--m-radius-control);
+}
+
+// Deliberately static — no press. The travel gesture says "this whole object
+// is being pushed", which is true of a button and false of a segment inside a
+// group; a segmented control's segments are usually toggles rather than
+// actions. Hover feedback still arrives through --btn-hover-bg.
+//
+// States are listed explicitly because %m-raised sets them on :hover, :active
+// and .active, and each needs beating at equal-or-better specificity.
+.btn-group > .btn,
+.btn-group > .btn:hover,
+.btn-group > .btn:active,
+.btn-group > .btn.active {
+    box-shadow: none;
+    transform: none;
+}
+
 // --- Discuss call button: white-on-white glyph ------------------------------
 // mail/…/action_list.scss:48 hardcodes `color: white !important` on this icon,
 // and :54 paints its chip with `background: var(--btn-bg)`.  That pairing is

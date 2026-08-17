@@ -19,20 +19,30 @@
 //   Odoo's PADDING is kept.  Verify at 1280x800 in P7.
 // ---------------------------------------------------------------------------
 
-// Rest state uses #898989 — the measured border of asset 01's button — rather
-// than the full-strength #191A22 of the asset's inputs.  At backend density,
-// dozens of full-ink outlines read as noise; this keeps the outlined character
-// while letting focus be the strong signal.  Both greys are measured brand
-// values, so neither is invented.
+// Rest state uses --m-border-soft (#898989 — the measured border of asset 01's
+// button) rather than the full-strength #191A22 of the asset's inputs.  At
+// backend density, dozens of full-ink outlines read as noise; this keeps the
+// outlined character while letting focus be the strong signal.  Both greys are
+// measured brand values, so neither is invented.
 .o_form_view .o_field_widget {
     .o_input,
     input.o_input,
     textarea.o_input,
     .o_input_dropdown > input {
-        border: 1px solid #898989;
+        border: 1px solid var(--m-border-soft);
         border-radius: var(--m-radius-control);
         background-color: #FFFFFF;
         transition: border-color 90ms ease-out;
+
+        // HORIZONTAL padding only — deliberately.  The header note above keeps
+        // Odoo's vertical padding because backend forms carry 20-40 fields and
+        // any added height multiplies across all of them, blowing §8's 1280x800
+        // budget.  Horizontal padding costs nothing vertically.
+        //
+        // Needed because a rounded corner eats into the text's usable box: at
+        // Odoo's default padding the placeholder sat visually against the curve.
+        // 8px is one step on the 4px rhythm (§8).
+        padding-inline: var(--m-space-2);
 
         &:hover { border-color: var(--m-ink-border); }
 
