@@ -28,12 +28,21 @@
                                                      no use for four hues.
       Login Page / Login Links (tbt_login_*)       — P5, when the login page is
                                                      rebranded from stock.
-      Loading Indicator (tbt_loading_*)            — P8; loading_style.js is kept
-                                                     but its six .tbt-loading-style-*
-                                                     rule sets went with misc.scss
-                                                     (§13.5), so the picker would
-                                                     appear to work and render
-                                                     nothing.
+      Loading Indicator (tbt_loading_*)            — RESOLVED in P8e: stays out,
+                                                     permanently.  The six styles
+                                                     were retired rather than
+                                                     rebuilt (§13.5) in favour of
+                                                     one brand loader — the mark
+                                                     building itself, in
+                                                     methode_theme/static/src/scss/
+                                                     loader.scss.  One brand, one
+                                                     loader, so there is no longer
+                                                     a choice to expose.
+                                                     tbt_loading_style keeps its
+                                                     stored column so no migration
+                                                     is needed; loading_style.js
+                                                     was deleted (see the aura
+                                                     manifest for why).
       High Contrast (tbt_high_contrast)            — never scheduled; consumed by
                                                      Aura's form_view.scss (deleted).
 

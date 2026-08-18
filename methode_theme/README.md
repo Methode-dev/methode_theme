@@ -193,6 +193,106 @@ components → views → fixes.
 
 ---
 
+## The home dashboard
+
+`/odoo/dashboard`. Chrome stacked above a three-column grid:
+
+```
+stats row      fixed KPI tiles       (preference: show_stats_row)
+insight banners  dismissible alerts  (preference: show_insights)
+shortcuts      quick actions         (preference: show_shortcuts)
+grid           the widgets           (per-user placements, arrangeable)
+```
+
+**The catalogue is data.** A widget type is a `methode.dashboard.widget.type`
+record carrying its own `render` (which component draws it) and
+`fetch_model` / `fetch_method` (a public `@api.model` returning its payload).
+Nothing scans installed modules; **presence is the gate**, so a widget exists
+exactly while the module contributing it does.
+
+### Adding a widget
+
+Two files in a bridge module that `depends` on the app and sets
+`auto_install: True` — no core changes, no new JavaScript:
+
+**1. The fetcher**, on the model that owns the data:
+
+```python
+class AccountMove(models.Model):
+    _inherit = 'account.move'
+
+    @api.model                      # PUBLIC name: Odoo refuses RPC to _names
+    def dashboard_fetch_open_invoices(self, limit=5, **kwargs):
+        return {
+            'count': 12,
+            'rows': [{
+                'id': invoice.id,
+                'icon': 'fa-file-text-o',
+                'title': ...,        # strings, never False — see below
+                'subtitle': ...,
+                'meta': ...,         # trailing figure, e.g. an amount
+                'res_model': 'account.move',
+                'res_id': invoice.id,
+                'pill': {'tone': 'overdue', 'text': "3 days late"},
+            }],
+            'action': {...},         # every number is a door into its records
+            'empty': {'title': ..., 'hint': ...},
+        }
+```
+
+Grouped lists return `groups: [{key, label, count, rows}]` instead of `rows`;
+stat tiles return `{value, label, meta, tone, action}`; charts return
+`{points: [{label, value, tone}], total}`.
+
+**2. The record**, in the bridge's data XML:
+
+```xml
+<record id="dashboard_widget_type_invoices" model="methode.dashboard.widget.type">
+    <field name="code">invoices</field>
+    <field name="name">Open Invoices</field>
+    <field name="render">list</field>          <!-- list | activities | stat | chart -->
+    <field name="fetch_model">account.move</field>
+    <field name="fetch_method">dashboard_fetch_open_invoices</field>
+    <field name="default_col_span">2</field>
+    <field name="is_default" eval="True"/>
+</record>
+```
+
+Set `zone="stats"` instead for a KPI tile.
+
+Insight banners and shortcuts are contributed by inheriting
+`methode.dashboard.insight` / `methode.dashboard.shortcut` /
+`methode.dashboard.focus` / `methode.dashboard.recent`, calling `super()` and
+appending.
+
+### Four rules, each learned the hard way
+
+- **Check access before you query.** Start every contribution with
+  `if not self._dashboard_can_read('account.move'): return rows`. Contributions
+  chain through `super()`, so one unguarded query raises `AccessError` for a user
+  without that app's rights and takes **every** banner down with it — including
+  the ones they were entitled to.
+- **Never return `False` where a string is expected.** An unset Odoo `Char` reads
+  as `False`, and OWL's prop validation *throws* rather than skipping the field —
+  a blank dashboard, not a missing word. Coerce with `or ''`.
+- **Public method names.** `get_public_method` refuses anything starting with `_`,
+  so the RPC entry point is public and the helpers around it stay private.
+- **Colour comes from the data, never the widget type.** There is no colour field
+  on the catalogue, deliberately (§13.2). A tile turns red because something *is*
+  overdue — `tone` is computed in the fetcher, from the numbers.
+
+### Deliberately not built
+
+- **User-built custom widgets** (pick any model/fields at runtime). Built, then
+  removed: a large surface where the client assembles a query, on a screen whose
+  job is converting leads. The catalogue + bridge pattern covers "add a widget
+  for X" with a fetcher someone has tested. The `render`/`needs_config`/
+  `config_json` plumbing remains for a narrower successor.
+- **Drag-and-drop reordering.** Arrows instead — a pointer-only drag is
+  unreachable by keyboard, unusable on touch, and would need a drag library.
+
+---
+
 ## Rules for anything added here
 
 - **Configure, don't override.** Prefer setting an Odoo/Bootstrap SCSS variable

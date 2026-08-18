@@ -31,6 +31,19 @@ $m-accent:         #FAA140;  // accent + hover
 // mean a future tweak to warning silently repaints every link in the product.
 $m-accent-text:    #9A6510;
 
+// --- Secondary brand colours -----------------------------------------------
+// Owner-supplied, and previously missing from every token file — which is why
+// the dashboard's first pass at coloured buttons invented amber/blue/violet
+// hues out of nowhere.  The brand is NOT monochrome-plus-orange after all: it is
+// monochrome plus three, and having them declared here is what stops the next
+// person inventing a fourth.
+//
+// ⚠ FILLS, like $m-accent.  Both are mid-lightness, so they carry ink text
+// comfortably (black on $m-brand-teal is 4.91:1, on $m-brand-pink 10.1:1) and
+// white text poorly (4.27:1 on teal).  Put black on them, not white.
+$m-brand-pink:     #FD96A9;
+$m-brand-teal:     #1985A1;
+
 // --- Semantic colours (THEME_PLAN §5.1 / §14 open question 2) --------------
 // The brand defines no success/warning/danger, but Odoo needs them for alerts,
 // statusbars and validation.  Odoo's stock values are unusable here: they were
@@ -183,6 +196,24 @@ $nav-tabs-link-active-bg: $o-view-background-color;
 // (_variables.scss), and Odoo never overrides it — so §15.1's "configure, don't
 // override" applies cleanly and this survives Odoo restructuring its markup.
 $nav-tabs-border-color: $m-ink-border;
+
+// --- Navbar (§5.4, owner-directed P9) --------------------------------------
+// The navbar becomes part of the page instead of a bar on top of it: page
+// colour, ink text, no bottom edge.  Configured here rather than overridden in
+// navbar.scss because every one of these is a `!default` in
+// webclient/navbar/navbar.variables.scss, which this file precedes.
+//
+// ⚠ This is what makes the topbar colour in Theme Settings inert — it was
+// already inert (--m-topbar-bg has no consumer), but now it is inert BY DESIGN.
+// Remove the field or repoint it at these variables; do not leave a setting
+// that silently does nothing.
+$o-navbar-background:         $m-bg-primary;
+$o-navbar-border-bottom:      0;
+$o-navbar-entry-color:        $m-text;
+$o-navbar-entry-color--hover: $m-text;
+$o-navbar-entry-bg--hover:    rgba($m-accent, .22);
+$o-navbar-entry-bg--active:   rgba($m-accent, .35);
+$o-navbar-brand-color:        $m-text;
 
 // --- Typography (THEME_PLAN §5.2) ------------------------------------------
 // Nunito is vendored at static/lib/nunito/ and @font-face'd in typography.scss.

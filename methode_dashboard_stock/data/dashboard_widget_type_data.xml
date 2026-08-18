@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        Inventory's widgets.  Neither is in the default layout and neither ships a
+        stat tile: on a services or construction demo, stock levels are not the
+        first thing a prospect needs to see, and the stats row has room for four
+        numbers that matter to everyone.  The picker offers both to anyone whose
+        job is the warehouse.
+    -->
+    <data>
+
+        <record id="dashboard_widget_type_reorder" model="methode.dashboard.widget.type">
+            <field name="name">Products to Reorder</field>
+            <field name="code">inventory_reorder</field>
+            <field name="description">Items at or below their reorder point</field>
+            <field name="icon">fa-cubes</field>
+            <field name="group_name">Inventory</field>
+            <field name="sequence">150</field>
+            <field name="default_col_span">2</field>
+            <field name="expected_rows">5</field>
+            <field name="is_default" eval="False"/>
+            <field name="render">list</field>
+            <field name="fetch_model">stock.warehouse.orderpoint</field>
+            <field name="fetch_method">dashboard_fetch_reorder</field>
+        </record>
+
+        <record id="dashboard_widget_type_receipts" model="methode.dashboard.widget.type">
+            <field name="name">Pending Receipts</field>
+            <field name="code">inventory_receipts</field>
+            <field name="description">Incoming shipments waiting to be received</field>
+            <field name="icon">fa-truck</field>
+            <field name="group_name">Inventory</field>
+            <field name="sequence">160</field>
+            <field name="default_col_span">1</field>
+            <field name="expected_rows">4</field>
+            <field name="is_default" eval="False"/>
+            <field name="render">list</field>
+            <field name="fetch_model">stock.picking</field>
+            <field name="fetch_method">dashboard_fetch_receipts</field>
+        </record>
+
+    </data>
+</odoo>

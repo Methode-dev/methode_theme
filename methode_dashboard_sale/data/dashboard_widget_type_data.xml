@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Sales' widgets and stat tile.  Presence is the gate — see the accounting
+         bridge's data file. -->
+    <data>
+
+        <record id="dashboard_stat_to_invoice" model="methode.dashboard.widget.type">
+            <field name="name">To Invoice</field>
+            <field name="code">stat_to_invoice</field>
+            <field name="icon">fa-file-text</field>
+            <field name="group_name">Sales</field>
+            <field name="sequence">50</field>
+            <field name="zone">stats</field>
+            <field name="render">stat</field>
+            <field name="fetch_model">sale.order</field>
+            <field name="fetch_method">dashboard_fetch_to_invoice_stat</field>
+        </record>
+
+        <record id="dashboard_widget_type_quotations" model="methode.dashboard.widget.type">
+            <field name="name">Quotations</field>
+            <field name="code">sale_quotations</field>
+            <field name="description">Draft and sent quotations, largest first</field>
+            <field name="icon">fa-shopping-cart</field>
+            <field name="group_name">Sales</field>
+            <field name="sequence">130</field>
+            <field name="default_col_span">1</field>
+            <field name="expected_rows">4</field>
+            <field name="is_default" eval="True"/>
+            <field name="render">list</field>
+            <field name="fetch_model">sale.order</field>
+            <field name="fetch_method">dashboard_fetch_quotations</field>
+        </record>
+
+        <record id="dashboard_widget_type_to_invoice" model="methode.dashboard.widget.type">
+            <field name="name">Orders to Invoice</field>
+            <field name="code">sale_to_invoice</field>
+            <field name="description">Confirmed orders that have not been billed</field>
+            <field name="icon">fa-file-text</field>
+            <field name="group_name">Sales</field>
+            <field name="sequence">140</field>
+            <field name="default_col_span">1</field>
+            <field name="expected_rows">4</field>
+            <field name="is_default" eval="False"/>
+            <field name="render">list</field>
+            <field name="fetch_model">sale.order</field>
+            <field name="fetch_method">dashboard_fetch_to_invoice</field>
+        </record>
+
+    </data>
+</odoo>

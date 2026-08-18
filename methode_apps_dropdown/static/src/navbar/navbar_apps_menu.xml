@@ -48,7 +48,9 @@
               bottomSheet="false"
               navigationOptions="appsLauncherNavigation">
               <button data-hotkey="h" title="Home Menu">
-                <i class="oi oi-apps"/>
+                <!-- A hamburger, not oi-apps: this opens the whole menu, and the
+                     tiled grid is what the panel shows, not what the button is. -->
+                <i class="fa fa-bars"/>
               </button>
               <t t-set-slot="content">
                 <!-- getMenuItemHref is passed down rather than re-implemented so

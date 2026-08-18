@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_methode_dashboard_widget_type_user,methode.dashboard.widget.type user,model_methode_dashboard_widget_type,base.group_user,1,0,0,0
+access_methode_dashboard_widget_type_system,methode.dashboard.widget.type system,model_methode_dashboard_widget_type,base.group_system,1,1,1,1
+access_methode_dashboard_widget_user,methode.dashboard.widget user,model_methode_dashboard_widget,base.group_user,1,1,1,1
+access_methode_dashboard_preferences_user,methode.dashboard.preferences user,model_methode_dashboard_preferences,base.group_user,1,1,1,1

@@ -58,11 +58,20 @@
     --m-accent-soft:    rgba(250, 161, 64, 0.1);
     --m-accent-border:  rgba(250, 161, 64, 0.45);
 
+    // --- Secondary brand colours -------------------------------------------
+    // Kept in lockstep with brand_variables.scss (the two injection points
+    // cannot see each other — see the header note).  Same rule as --m-accent:
+    // these are FILLS carrying ink text, never text colours themselves.
+    --m-brand-pink:     #FD96A9;
+    --m-brand-teal:     #1985A1;
+
     // --- Semantics (derived in brand_variables.scss; see the table there) ----
     --m-success: #3E7C4F;
     --m-info:    #2E6B8A;
     --m-warning: #9A6510;
     --m-danger:  #B3261E;
+
+    --m-navbar-bg: #FBF6EF;
 
     // --- Material language (§6) — MEASURED from the brand assets ------------
     // The brand's signature is a HARD offset shadow with ZERO blur — not the

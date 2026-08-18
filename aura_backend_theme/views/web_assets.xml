@@ -16,10 +16,10 @@
             <t t-set="tbt_topbar_text" t-value="tbt_company.tbt_topbar_text or '#FFFFFF'"/>
             <t t-set="tbt_content_bg" t-value="tbt_company.tbt_content_bg or '#FDFAF6'"/>
             <t t-set="tbt_card_bg" t-value="tbt_company.tbt_card_bg or '#F2F2F2'"/>
-            <t t-set="tbt_dashboard_card_1" t-value="tbt_company.tbt_dashboard_card_1_color or '#2F6BFF'"/>
-            <t t-set="tbt_dashboard_card_2" t-value="tbt_company.tbt_dashboard_card_2_color or '#EF4444'"/>
-            <t t-set="tbt_dashboard_card_3" t-value="tbt_company.tbt_dashboard_card_3_color or '#F59E0B'"/>
-            <t t-set="tbt_dashboard_card_4" t-value="tbt_company.tbt_dashboard_card_4_color or '#22C55E'"/>
+            <t t-set="tbt_dashboard_card_1" t-value="tbt_company.tbt_dashboard_card_1_color or '#000000'"/>
+            <t t-set="tbt_dashboard_card_2" t-value="tbt_company.tbt_dashboard_card_2_color or '#6D6D6D'"/>
+            <t t-set="tbt_dashboard_card_3" t-value="tbt_company.tbt_dashboard_card_3_color or '#FAA140'"/>
+            <t t-set="tbt_dashboard_card_4" t-value="tbt_company.tbt_dashboard_card_4_color or '#E9DBCA'"/>
             <t t-set="tbt_loading_display" t-value="'inline-flex' if tbt_company.tbt_loading_enabled else 'none'"/>
             <t t-set="tbt_loading_text" t-value="tbt_company.tbt_loading_text or '#FFFFFF'"/>
             <t t-set="tbt_loading_style" t-value="tbt_company.tbt_loading_style or 'arc'"/>
@@ -105,10 +105,10 @@
             <t t-set="tbt_topbar_text" t-value="tbt_company.tbt_topbar_text or '#FFFFFF'"/>
             <t t-set="tbt_content_bg" t-value="tbt_company.tbt_content_bg or '#FDFAF6'"/>
             <t t-set="tbt_card_bg" t-value="tbt_company.tbt_card_bg or '#F2F2F2'"/>
-            <t t-set="tbt_dashboard_card_1" t-value="tbt_company.tbt_dashboard_card_1_color or '#2F6BFF'"/>
-            <t t-set="tbt_dashboard_card_2" t-value="tbt_company.tbt_dashboard_card_2_color or '#EF4444'"/>
-            <t t-set="tbt_dashboard_card_3" t-value="tbt_company.tbt_dashboard_card_3_color or '#F59E0B'"/>
-            <t t-set="tbt_dashboard_card_4" t-value="tbt_company.tbt_dashboard_card_4_color or '#22C55E'"/>
+            <t t-set="tbt_dashboard_card_1" t-value="tbt_company.tbt_dashboard_card_1_color or '#000000'"/>
+            <t t-set="tbt_dashboard_card_2" t-value="tbt_company.tbt_dashboard_card_2_color or '#6D6D6D'"/>
+            <t t-set="tbt_dashboard_card_3" t-value="tbt_company.tbt_dashboard_card_3_color or '#FAA140'"/>
+            <t t-set="tbt_dashboard_card_4" t-value="tbt_company.tbt_dashboard_card_4_color or '#E9DBCA'"/>
             <t t-set="tbt_loading_display" t-value="'inline-flex' if tbt_company.tbt_loading_enabled else 'none'"/>
             <t t-set="tbt_loading_text" t-value="tbt_company.tbt_loading_text or '#FFFFFF'"/>
             <t t-set="tbt_loading_style" t-value="tbt_company.tbt_loading_style or 'arc'"/>

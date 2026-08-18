@@ -47,10 +47,10 @@
     // content
     s.setProperty('--tbt-content-bg-dynamic',    theme.content_bg);
     s.setProperty('--tbt-card-bg-dynamic',       theme.card_bg);
-    s.setProperty('--tbt-dashboard-card-1',       theme.dashboard_card_1 || '#2F6BFF');
-    s.setProperty('--tbt-dashboard-card-2',       theme.dashboard_card_2 || '#EF4444');
-    s.setProperty('--tbt-dashboard-card-3',       theme.dashboard_card_3 || '#F59E0B');
-    s.setProperty('--tbt-dashboard-card-4',       theme.dashboard_card_4 || '#22C55E');
+    s.setProperty('--tbt-dashboard-card-1',       theme.dashboard_card_1 || '#000000');
+    s.setProperty('--tbt-dashboard-card-2',       theme.dashboard_card_2 || '#6D6D6D');
+    s.setProperty('--tbt-dashboard-card-3',       theme.dashboard_card_3 || '#FAA140');
+    s.setProperty('--tbt-dashboard-card-4',       theme.dashboard_card_4 || '#E9DBCA');
     s.setProperty('--tbt-dashboard-card-pattern', theme.dashboard_card_pattern === false ? 'none' : 'pattern');
     root.classList.toggle('tbt-dashboard-card-pattern-off', theme.dashboard_card_pattern === false);
 

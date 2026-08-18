@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Aura Backend Theme - Community Edition',
-    'version': '19.0.1.5.0',
+    # 19.0.1.6.0 re-seeds the four dashboard card colours off Aura's hues; the
+    # migration only fires because this number moved.
+    'version': '19.0.1.6.0',
     'category': 'Themes/Backend',
     'summary': 'Premium backend theme for Odoo 19 Community',
     'description': """
@@ -43,7 +45,24 @@ Covers:
 
             'aura_backend_theme/static/src/scss/fa_v6_shim.scss',
 
-            'aura_backend_theme/static/src/webclient/loading/loading_style.js',
+            # ⚠ loading_style.js was REMOVED here in P8e, along with the file.
+            # THEME_PLAN §13.5 planned to keep it and rebuild the six
+            # .tbt-loading-style-* rule sets it depends on; P8e retired the six
+            # styles instead, in favour of the single brand loader in
+            # methode_theme/static/src/scss/loader.scss.  That left the script
+            # writing two class families — tbt-loading-style-<name> and
+            # tbt-loading-active — that nothing anywhere reads.
+            #
+            # It was not merely inert.  To maintain tbt-loading-active it ran a
+            # MutationObserver over document.documentElement with subtree:true
+            # AND attributes:true, so every DOM mutation in the SPA woke a
+            # callback that did a querySelector + getComputedStyle, to set a
+            # class with no consumer.  Deleting it is a performance fix as much
+            # as a cleanup.
+            #
+            # --tbt-loading-style-dynamic is still injected by views/web_assets.xml
+            # and tbt_loading_style still stores its column; both are harmless and
+            # left alone so no migration is needed.
             'aura_backend_theme/static/src/webclient/theme_settings/theme_settings_dialog.js',
             'aura_backend_theme/static/src/webclient/theme_settings/theme_settings_dialog.xml',
             'aura_backend_theme/static/src/webclient/theme_settings/theme_settings_dialog.scss',

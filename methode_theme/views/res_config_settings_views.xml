@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Dashboard thresholds on the Settings page (HOMEPAGE_DASHBOARD_PLAN §2.4:
+    "Thresholds are configuration, not constants").
+
+    The anchor matches aura_backend_theme's theme-settings block, which is known
+    to resolve against Odoo 19's general settings form.
+-->
+<odoo>
+
+    <record id="res_config_settings_view_form_methode_dashboard" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.methode.dashboard</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//app[@name='general_settings']/div[@id='companies']" position="after">
+                <div id="methode_dashboard_settings">
+                    <block title="Dashboard Alerts" name="methode_dashboard_container" groups="base.group_system">
+                        <setting id="methode_dashboard_overdue_setting"
+                                 string="Overdue Invoice Alert"
+                                 company_dependent="1"
+                                 help="An unpaid customer invoice raises a dashboard banner once it is this many days past due.">
+                            <div class="d-flex align-items-center gap-2">
+                                <field name="methode_dashboard_overdue_days" class="w-25"/>
+                                <span>days past due</span>
+                            </div>
+                        </setting>
+                        <setting id="methode_dashboard_stalled_setting"
+                                 string="Stalled Deal Alert"
+                                 company_dependent="1"
+                                 help="An open opportunity with no update for this many days raises a dashboard banner.">
+                            <div class="d-flex align-items-center gap-2">
+                                <field name="methode_dashboard_stalled_days" class="w-25"/>
+                                <span>days without an update</span>
+                            </div>
+                        </setting>
+                    </block>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

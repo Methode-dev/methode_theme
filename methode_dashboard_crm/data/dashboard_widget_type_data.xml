@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- CRM's widget and stat tile, contributed as records.  See the accounting
+         bridge's data file for why there is no module gate anywhere. -->
+    <data>
+
+        <record id="dashboard_stat_pipeline" model="methode.dashboard.widget.type">
+            <field name="name">Pipeline</field>
+            <field name="code">stat_pipeline</field>
+            <field name="icon">fa-line-chart</field>
+            <field name="group_name">CRM</field>
+            <field name="sequence">40</field>
+            <field name="zone">stats</field>
+            <field name="render">stat</field>
+            <field name="fetch_model">crm.lead</field>
+            <field name="fetch_method">dashboard_fetch_pipeline_stat</field>
+        </record>
+
+        <record id="dashboard_widget_type_pipeline" model="methode.dashboard.widget.type">
+            <field name="name">My Pipeline</field>
+            <field name="code">pipeline</field>
+            <field name="description">Open opportunities grouped by stage</field>
+            <field name="icon">fa-bullseye</field>
+            <field name="group_name">CRM</field>
+            <field name="sequence">120</field>
+            <field name="default_col_span">2</field>
+            <field name="expected_rows">5</field>
+            <field name="is_default" eval="True"/>
+            <field name="render">list</field>
+            <field name="fetch_model">crm.lead</field>
+            <field name="fetch_method">dashboard_fetch_pipeline</field>
+        </record>
+
+    </data>
+</odoo>

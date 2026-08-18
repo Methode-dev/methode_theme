@@ -39,10 +39,26 @@ METHODE_TOPBAR_TEXT = "#FFFFFF"
 # White was the interim value; the owner rejected it because a white sheet on
 # the warm #FDFAF6 page reads as an unfinished gap rather than a surface.
 METHODE_CARD_BG = "#F2F2F2"
-DEFAULT_DASHBOARD_CARD_1 = "#2F6BFF"
-DEFAULT_DASHBOARD_CARD_2 = "#EF4444"
-DEFAULT_DASHBOARD_CARD_3 = "#F59E0B"
-DEFAULT_DASHBOARD_CARD_4 = "#22C55E"
+# ⚠ THESE WERE AURA'S FOUR SATURATED HUES (#2F6BFF blue, #EF4444 red, #F59E0B
+# amber, #22C55E green) and they are now the brand's own ramp: ink, secondary
+# ink, the single orange accent, warm raised surface.  THEME_PLAN §13.2 forbids
+# dropping four saturated hues on a monochrome-plus-orange brand, and P8's
+# dashboard honours that — its stat tiles take emphasis from the SIZE of the
+# figure, not from a tile colour.
+#
+# ⚠ AND NOTHING CURRENTLY READS THEM.  Grep for `--tbt-dashboard-card-` : the
+# variables are injected on every page load (twice — see views/web_assets.xml,
+# which server-renders them for backend AND frontend) and consumed by no
+# stylesheet, because the Aura dashboard SCSS that used them was deleted in
+# §3.4.  They are kept rather than removed because the Theme Settings dialog
+# still reads and writes the fields, so deleting the columns would break a
+# working screen to tidy four dead variables.  Re-seeding them costs nothing and
+# means that if anything ever does consume them — or an administrator simply
+# opens the colour pickers — what comes out is the brand rather than Aura.
+DEFAULT_DASHBOARD_CARD_1 = "#000000"
+DEFAULT_DASHBOARD_CARD_2 = "#6D6D6D"
+DEFAULT_DASHBOARD_CARD_3 = "#FAA140"
+DEFAULT_DASHBOARD_CARD_4 = "#E9DBCA"
 DEFAULT_SIDEBAR_DARKNESS = 70
 DEFAULT_LOGIN_BRAND_COPY = (
     "Your all-in-one business platform. Manage sales, inventory,\n"

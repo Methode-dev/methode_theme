@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        Accounting's widgets and stat tiles, contributed as RECORDS.
+
+        This is the whole of §4's gating story: these rows exist while this module
+        does, and this module auto-installs with `account` and is removed with it.
+        The widget type model has no `module_name` field to check and the client
+        has no installed-module map to consult.
+
+        ⚠ Widget types are FK targets for user placements with ondelete='cascade',
+        so uninstalling account also removes these widgets from every user's grid.
+        That is the intended behaviour, not a side effect.
+    -->
+    <data>
+
+        <!-- Stats zone: the two money numbers (§3.2, §3.3) -->
+        <record id="dashboard_stat_open_invoices" model="methode.dashboard.widget.type">
+            <field name="name">Outstanding</field>
+            <field name="code">stat_open_invoices</field>
+            <field name="icon">fa-money</field>
+            <field name="group_name">Accounting</field>
+            <field name="sequence">20</field>
+            <field name="zone">stats</field>
+            <field name="render">stat</field>
+            <field name="fetch_model">account.move</field>
+            <field name="fetch_method">dashboard_fetch_open_invoices_stat</field>
+        </record>
+
+        <record id="dashboard_stat_overdue" model="methode.dashboard.widget.type">
+            <field name="name">Overdue</field>
+            <field name="code">stat_overdue_receivables</field>
+            <field name="icon">fa-exclamation-triangle</field>
+            <field name="group_name">Accounting</field>
+            <field name="sequence">30</field>
+            <field name="zone">stats</field>
+            <field name="render">stat</field>
+            <field name="fetch_model">account.move</field>
+            <field name="fetch_method">dashboard_fetch_overdue_stat</field>
+        </record>
+
+        <!-- Grid zone -->
+        <record id="dashboard_widget_type_invoices" model="methode.dashboard.widget.type">
+            <field name="name">Open Invoices</field>
+            <field name="code">invoices</field>
+            <field name="description">Unpaid customer invoices, oldest due first</field>
+            <field name="icon">fa-file-text-o</field>
+            <field name="group_name">Accounting</field>
+            <field name="sequence">100</field>
+            <field name="default_col_span">2</field>
+            <field name="expected_rows">5</field>
+            <field name="is_default" eval="True"/>
+            <field name="render">list</field>
+            <field name="fetch_model">account.move</field>
+            <field name="fetch_method">dashboard_fetch_open_invoices</field>
+        </record>
+
+        <!--
+            Not in the default layout: aged receivables answers the same question
+            as Open Invoices at a different resolution, so shipping both by default
+            would spend two of the three columns on one subject.  The picker offers
+            it to anyone whose job is collections.
+        -->
+        <record id="dashboard_widget_type_aged_receivables" model="methode.dashboard.widget.type">
+            <field name="name">Aged Receivables</field>
+            <field name="code">aged_receivables</field>
+            <field name="description">Open customer invoices bucketed by how late they are</field>
+            <field name="icon">fa-hourglass-half</field>
+            <field name="group_name">Accounting</field>
+            <field name="sequence">110</field>
+            <field name="default_col_span">2</field>
+            <field name="expected_rows">5</field>
+            <field name="is_default" eval="False"/>
+            <field name="render">list</field>
+            <field name="fetch_model">account.move</field>
+            <field name="fetch_method">dashboard_fetch_aged_receivables</field>
+        </record>
+
+    </data>
+</odoo>
