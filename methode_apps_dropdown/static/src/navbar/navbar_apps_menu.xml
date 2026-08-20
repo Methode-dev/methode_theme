@@ -15,7 +15,7 @@
     across. Worst case is "last writer wins".
 
     Two things keep the upstream-drift cost near zero:
-      1. the env.isSmall and isScopedApp branches are re-emitted VERBATIM,
+      1. the this.ui.isSmall and isScopedApp branches are re-emitted VERBATIM,
          including the t-call to web.NavBar.AppsMenu.Sidebar, so mobile stays
          100% stock and keeps receiving upstream fixes;
       2. the stock skeleton is preserved -
@@ -32,7 +32,7 @@
     <xpath expr="." position="replace">
       <t>
         <!-- ===== small screens: untouched stock ===== -->
-        <t t-if="env.isSmall">
+        <t t-if="this.ui.isSmall">
           <a href="/odoo" class="o_menu_toggle border-0"
              t-att-class="{'hasImage': currentApp?.webIconData}"
              accesskey="h" t-ref="menuApps" t-on-click.prevent="_openAppMenuSidebar">

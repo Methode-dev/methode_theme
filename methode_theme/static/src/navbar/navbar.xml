@@ -31,7 +31,7 @@
       <xpath expr="//DropdownItem[contains(@class, 'o_menu_brand')]" position="move"/>
       <span t-if="!currentApp" class="m-nav-company" t-esc="companyName"/>
       <xpath expr="//div[hasclass('o_navbar_breadcrumbs')]" position="move"/>
-      <xpath expr="//t[@t-if='!env.isSmall']" position="move"/>
+      <xpath expr="//t[@t-if='!this.ui.isSmall']" position="move"/>
     </xpath>
 
   </t>
