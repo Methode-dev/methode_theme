@@ -346,7 +346,7 @@
 
             <t t-if="isEmpty">
                 <div class="m-dash-empty-inline">
-                    <p class="m-dash-empty-title" t-esc="(state.empty and state.empty.title) or 'Nothing here'"/>
+                    <p class="m-dash-empty-title" t-esc="emptyTitle"/>
                     <p t-if="state.empty and state.empty.hint" class="m-dash-empty-hint" t-esc="state.empty.hint"/>
                 </div>
             </t>

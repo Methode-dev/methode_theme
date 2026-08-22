@@ -123,6 +123,10 @@ export class ListWidget extends Component {
         return this.state.count === 0;
     }
 
+    get emptyTitle() {
+        return (this.state.empty && this.state.empty.title) || _t("Nothing here");
+    }
+
     get shownCount() {
         if (this.state.groups) {
             return this.state.groups.reduce((total, group) => total + group.rows.length, 0);
