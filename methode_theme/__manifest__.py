@@ -87,6 +87,11 @@
             'methode_theme/static/src/scss/css_tokens.scss',
             'methode_theme/static/src/scss/typography.scss',
             'methode_theme/static/src/scss/buttons.scss',
+            # .m-tree-loader + its keyframes, for qcm_guest_walkthrough's final
+            # step to reuse the same animated mark as the backend boot loader.
+            # The rest of this sheet (.m-boot-loader, .o_loading_indicator)
+            # matches nothing on the login page — inert there, not dead code.
+            'methode_theme/static/src/scss/loader.scss',
             # Frontend-ONLY, deliberately — its selectors exist only on the
             # login page, so shipping it to the backend too would be dead CSS.
             # The "add it to both bundles" warning above is about sheets the
