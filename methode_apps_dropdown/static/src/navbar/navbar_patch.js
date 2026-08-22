@@ -103,4 +103,10 @@ patch(NavBar.prototype, {
             },
         };
     },
+
+    // The homepage has no sub-navigation of its own, so the mobile sidebar
+    // skips the "current app" section when it is the current app.
+    get isHomepageApp() {
+        return this.currentApp?.xmlid === 'methode_theme.menu_home_dashboard_root';
+    },
 });

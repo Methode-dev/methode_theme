@@ -196,3 +196,21 @@ class TestAppsDropdown(TransactionCase):
             settings.methode_apps_favorite_menu_ids, [visible],
             'Duplicates, invisible menus and non-integers must be dropped',
         )
+
+    def test_new_user_gets_homepage_favorited_by_default(self):
+        homepage_menu = self.env.ref(
+            'methode_theme.menu_home_dashboard_root', raise_if_not_found=False)
+        if not homepage_menu:
+            self.skipTest('methode_theme not installed')
+
+        plain = self.env['res.users'].create({
+            'name': 'Fresh Favorite User',
+            'login': 'fresh_favorite_user',
+            'group_ids': [(6, 0, [self.env.ref('base.group_user').id])],
+        })
+        settings = self.env['res.users.settings'].with_user(
+            plain)._find_or_create_for_user(plain)
+        self.assertEqual(
+            settings.methode_apps_favorite_menu_ids, [homepage_menu.id],
+            'A brand-new user should have the homepage favorited by default',
+        )

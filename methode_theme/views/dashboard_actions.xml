@@ -21,7 +21,7 @@
             session_info and the ORM.
         -->
         <record id="action_home_dashboard" model="ir.actions.client">
-            <field name="name">Dashboard</field>
+            <field name="name">Homepage</field>
             <field name="tag">methode_theme.home_dashboard</field>
             <field name="path">dashboard</field>
             <field name="target">main</field>
@@ -38,7 +38,7 @@
             through its normal resolution chain.
         -->
         <menuitem id="menu_home_dashboard_root"
-                  name="Dashboard"
+                  name="Homepage"
                   action="action_home_dashboard"
                   web_icon="methode_theme,static/description/brand/05-logo-graphic.png"
                   sequence="1"/>

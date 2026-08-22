@@ -36,6 +36,12 @@ msgid "Administration"
 msgstr "Administration"
 
 #. module: methode_apps_dropdown
+#. odoo-javascript
+#: code:addons/methode_apps_dropdown/static/src/navbar/navbar_apps_menu.xml:0
+msgid "All applications"
+msgstr "Tous les modules"
+
+#. module: methode_apps_dropdown
 #: model:ir.model.fields,field_description:methode_apps_dropdown.field_methode_apps_category__app_count
 msgid "App Count"
 msgstr "Nombre d'applications"
