@@ -139,3 +139,28 @@ $o-mad-icon-size: 44px  !default;
         }
     }
 }
+
+// Mobile apps-menu sidebar tab strip (methode_apps_dropdown.NavBar.AppsMenu.Sidebar):
+// [ current app | All applications ]. Not scoped under .o_mad_launcher: the
+// sidebar is a separate stock template, not the tiled desktop dropdown.
+.o_mad_sidebar_tabs {
+    gap: map-get($spacers, 4);
+    overflow-x: auto;
+    border-bottom: $border-width solid var(--#{$prefix}border-color);
+}
+
+.o_mad_sidebar_tab {
+    flex-shrink: 0;
+    padding: 0 0 map-get($spacers, 2);
+    margin-bottom: -$border-width; // sit on top of the parent's bottom border
+    border: 0;
+    border-bottom: 2px solid transparent;
+    background: transparent;
+    color: var(--#{$prefix}secondary-color);
+    white-space: nowrap;
+
+    &.is-active {
+        color: var(--#{$prefix}body-color);
+        border-bottom-color: var(--#{$prefix}primary);
+    }
+}

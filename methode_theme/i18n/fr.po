@@ -217,8 +217,8 @@ msgstr "Personnaliser"
 #. module: methode_theme
 #: model:ir.actions.client,name:methode_theme.action_home_dashboard
 #: model:ir.ui.menu,name:methode_theme.menu_home_dashboard_root
-msgid "Dashboard"
-msgstr "Tableau de bord"
+msgid "Homepage"
+msgstr "Accueil"
 
 #. module: methode_theme
 #: model_terms:ir.ui.view,arch_db:methode_theme.res_config_settings_view_form_methode_dashboard

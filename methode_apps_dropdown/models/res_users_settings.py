@@ -4,8 +4,18 @@ from odoo import api, fields, models
 class ResUsersSettings(models.Model):
     _inherit = 'res.users.settings'
 
+    def _default_favorite_menu_ids(self):
+        # Soft reference: this module deliberately doesn't depend on
+        # methode_theme, so a missing homepage just means no default favorite.
+        homepage_menu = self.env.ref(
+            'methode_theme.menu_home_dashboard_root', raise_if_not_found=False)
+        if not homepage_menu:
+            return []
+        visible_ids = set(self.env['ir.ui.menu'].get_user_roots().ids)
+        return [homepage_menu.id] if homepage_menu.id in visible_ids else []
+
     methode_apps_favorite_menu_ids = fields.Json(
-        string="Pinned Apps", default=list,
+        string="Pinned Apps", default=_default_favorite_menu_ids,
         help="Ordered list of ir.ui.menu ids pinned by the user in the Apps "
              "launcher.")
 
