@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="chained_datetime.ChainedDateTimeField">
+        <div class="o_chained_datetime d-flex align-items-center gap-1" t-ref="root">
+            <t t-if="props.readonly">
+                <span
+                    t-if="!isEmpty(props.name)"
+                    class="text-truncate"
+                    t-esc="getFormattedValue(0)"
+                    t-att-data-tooltip="getFormattedValue(0, true)"
+                />
+            </t>
+            <t t-else="">
+                <!-- Date half: drives the calendar popover -->
+                <input
+                    t-ref="start-date"
+                    type="text"
+                    t-att-id="props.id"
+                    t-att-class="'o_input o_chained_date_input cursor-pointer ' + (props.warnFuture and isDateInTheFuture(0) ? 'text-danger' : '')"
+                    t-att-size="dateInputSize"
+                    autocomplete="off"
+                    t-att-placeholder="props.placeholder"
+                    t-att-data-field="props.name"
+                    t-on-input="onInput"
+                    t-on-focus="() => this.picker.activeInput = props.name"
+                    t-att-title="props.warnFuture and isDateInTheFuture(0) ? futureWarningMsg : ''"
+                />
+                <!-- Time half: two independent scrollable columns -->
+                <HourMinutePicker
+                    t-if="props.showTime"
+                    value="timeValue"
+                    rounding="minutesRounding"
+                    muted="isEmpty(props.name)"
+                    onCommit.bind="commitTime"
+                />
+            </t>
+        </div>
+    </t>
+</templates>

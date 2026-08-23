@@ -1,0 +1,36 @@
+// The two halves sit next to each other at the start of the field's space,
+// each just wide enough for what it holds (their `size` attribute), rather than
+// one of them stretching and pushing the other to the far edge.
+.o_chained_datetime {
+    min-width: 0;
+
+    .o_chained_date_input,
+    .o_chained_time_input {
+        flex: 0 1 auto;
+        width: auto;
+        min-width: 0;
+    }
+}
+
+// Hours on the left, minutes on the right, each scrolling on its own.
+.o_chained_hm_menu.o-dropdown--menu {
+    --dropdown-min-width: unset;
+
+    .o_chained_hm_col {
+        position: relative; // offsetTop is read against the column when scrolling
+        max-height: 15rem;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+
+        + .o_chained_hm_col {
+            border-left: 1px solid var(--border-color, #dee2e6);
+        }
+    }
+
+    .o_chained_hm_option {
+        width: auto;
+        min-width: 3.5rem;
+        text-align: center;
+        cursor: pointer;
+    }
+}

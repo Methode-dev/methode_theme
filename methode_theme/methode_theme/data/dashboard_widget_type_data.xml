@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        The widget catalogue (THEME_PLAN §13.2), as records rather than the
+        Python constant Aura used.
+
+        ⚠ ONLY THE ALWAYS-AVAILABLE, GRID widgets are here.  App-gated widgets
+        (invoices, pipeline, …) ship from bridge modules that depend on their app
+        and auto-install, so the record exists exactly when the app does.  Stats
+        tiles, insight banners and shortcuts are CHROME, contributed the same way
+        — they are not grid records and never appear here.
+
+        ⚠ `quick_actions` and `stats` used to live here as widgets.  They are not
+        widgets — they are fixed chrome you can only show or hide (§9).  Their
+        records are deleted; the StatsRow and QuickActions zones replace them.
+
+        ⚠ NO COLOUR ATTRIBUTE.  Owner-decided; the model has no such field.
+
+        noupdate="0" deliberately: these are shipped defaults and SHOULD refresh
+        on upgrade.  A user's own grid lives in methode.dashboard.widget.
+    -->
+    <data>
+
+        <!--
+            STATS ZONE.  A KPI tile, not a placement: it lives in the fixed stats
+            row above the grid and is governed by the show_stats_row preference
+            (§9).  Bridges contribute their own tiles the same way.
+        -->
+        <record id="dashboard_stat_activities_due" model="methode.dashboard.widget.type">
+            <field name="name">Activities Due</field>
+            <field name="code">stat_activities_due</field>
+            <field name="icon">fa-calendar-check-o</field>
+            <field name="group_name">General</field>
+            <field name="sequence">10</field>
+            <field name="zone">stats</field>
+            <field name="render">stat</field>
+            <field name="fetch_model">mail.activity</field>
+            <field name="fetch_method">dashboard_fetch_activities_stat</field>
+        </record>
+
+        <record id="dashboard_widget_type_activities" model="methode.dashboard.widget.type">
+            <field name="name">My Activities</field>
+            <field name="code">activities</field>
+            <field name="description">What is scheduled for you, grouped by due date</field>
+            <field name="icon">fa-check-square-o</field>
+            <field name="group_name">General</field>
+            <field name="sequence">30</field>
+            <field name="default_col_span">2</field>
+            <field name="expected_rows">5</field>
+            <field name="is_default" eval="True"/>
+            <field name="render">activities</field>
+            <field name="fetch_model">mail.activity</field>
+            <field name="fetch_method">dashboard_fetch_activities</field>
+        </record>
+
+        <!--
+            focus / recent render as generic lists but have no fetcher yet, so
+            they show the honest pending frame until Phase C wires them up.
+        -->
+        <record id="dashboard_widget_type_focus" model="methode.dashboard.widget.type">
+            <field name="name">Today's Focus</field>
+            <field name="code">focus</field>
+            <field name="description">Urgent items and things that need a decision</field>
+            <field name="icon">fa-bullseye</field>
+            <field name="group_name">General</field>
+            <field name="sequence">40</field>
+            <field name="default_col_span">1</field>
+            <field name="expected_rows">4</field>
+            <field name="is_default" eval="True"/>
+            <field name="render">list</field>
+            <field name="fetch_model">methode.dashboard.widget</field>
+            <field name="fetch_method">dashboard_fetch_focus</field>
+        </record>
+
+        <record id="dashboard_widget_type_recent" model="methode.dashboard.widget.type">
+            <field name="name">Continue Working</field>
+            <field name="code">recent</field>
+            <field name="description">Records you touched most recently</field>
+            <field name="icon">fa-history</field>
+            <field name="group_name">General</field>
+            <field name="sequence">50</field>
+            <field name="default_col_span">1</field>
+            <field name="expected_rows">4</field>
+            <field name="is_default" eval="True"/>
+            <field name="render">list</field>
+            <field name="fetch_model">methode.dashboard.widget</field>
+            <field name="fetch_method">dashboard_fetch_recent</field>
+        </record>
+
+        <!--
+            Not in the default layout: a trend chart is meaningless on a database
+            with no history behind it, which is a fresh demo's starting state. It
+            stays in the catalogue so the picker can offer it.
+        -->
+        <record id="dashboard_widget_type_activity_trend" model="methode.dashboard.widget.type">
+            <field name="name">My Activity Trend</field>
+            <field name="code">activity_trend</field>
+            <field name="description">How your workload has moved over recent weeks</field>
+            <field name="icon">fa-area-chart</field>
+            <field name="group_name">General</field>
+            <field name="sequence">60</field>
+            <field name="default_col_span">1</field>
+            <field name="expected_rows">3</field>
+            <field name="is_default" eval="False"/>
+            <field name="render">chart</field>
+            <field name="fetch_model">mail.activity</field>
+            <field name="fetch_method">dashboard_fetch_activity_trend</field>
+        </record>
+
+        <!--
+            ⚠ THERE IS NO "CUSTOM WIDGET" TYPE, AND THAT IS A DECISION.
+            A user-built widget (pick any model, any fields, render as table or
+            KPI) was built and then removed: it is a large surface where the user
+            aims a query at an arbitrary model, and on a screen whose job is to
+            convert leads it earned far more failure modes than value.  The
+            catalogue + bridge pattern already covers "add a widget for X" — by
+            shipping a fetcher that someone has tested, rather than by letting the
+            client assemble one at runtime.
+
+            The `render='custom'` and `needs_config` plumbing stays on the widget
+            type model: it costs nothing, and it is what a future, narrower
+            version (a saved-filter widget, say) would build on.
+        -->
+
+    </data>
+</odoo>

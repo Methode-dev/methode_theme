@@ -17,9 +17,6 @@
     # The module was assets-only until the login rebrand (§3.3 / §15.2 B9).
     'data': [
         'views/login_templates.xml',
-        # The Odoo-rendered 404 (NOT nginx's — see the file header).  Frontend
-        # QWeb, same brand surface as the login page.
-        'views/error_templates.xml',
         # Must be server-side QWeb: it has to paint before OWL exists (P8e).
         'views/boot_loader_templates.xml',
         # --- Home dashboard, P8a ------------------------------------------
@@ -90,21 +87,11 @@
             'methode_theme/static/src/scss/css_tokens.scss',
             'methode_theme/static/src/scss/typography.scss',
             'methode_theme/static/src/scss/buttons.scss',
-            # .m-tree-loader + its keyframes, for qcm_guest_walkthrough's final
-            # step to reuse the same animated mark as the backend boot loader.
-            # The rest of this sheet (.m-boot-loader, .o_loading_indicator)
-            # matches nothing on the login page — inert there, not dead code.
-            'methode_theme/static/src/scss/loader.scss',
             # Frontend-ONLY, deliberately — its selectors exist only on the
             # login page, so shipping it to the backend too would be dead CSS.
             # The "add it to both bundles" warning above is about sheets the
             # login page NEEDS; see the header comment in login.scss.
             'methode_theme/static/src/scss/login.scss',
-            # Frontend-ONLY for the same reason: its selectors exist only on the
-            # branded 404 (views/error_templates.xml).  Must load AFTER
-            # login.scss — that sheet is what re-declares --body-bg, --primary
-            # and the radii for the whole frontend, and this one builds on them.
-            'methode_theme/static/src/scss/error_pages.scss',
         ],
     },
     'installable': True,

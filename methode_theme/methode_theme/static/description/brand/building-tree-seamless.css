@@ -1,0 +1,196 @@
+:root {
+  --loader-size: clamp(180px, 42vw, 320px);
+  --bg: #ffffff;
+  --face: #ffffff;       /* top face, as in Logo_new.svg */
+  --shade: #0a0c10;      /* extruded side walls */
+  --shade-top: #171b26;  /* wall closest to the top face, reads as a highlight */
+  --face-line: rgba(10, 12, 16, .55);
+  --cycle: 3.6s;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  background: var(--bg);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.stage {
+  display: grid;
+  justify-items: center;
+  padding: 40px;
+}
+
+.loader {
+  position: relative;
+  width: var(--loader-size);
+  aspect-ratio: 694 / 653;
+}
+
+.graph-logo {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* -------------------------
+   3D LOGO
+   One copy of the 19 shapes lives in <defs>; the extrusion is a stack of
+   <use> layers offset downward, and the top face is a final <use> on top.
+   currentColor lets every layer be tinted from its own <use>/group.
+   ------------------------- */
+.extrude { color: var(--shade); }
+.extrude use:last-child { color: var(--shade-top); }
+
+/* Union outline. The face is drawn twice: the lower copy carries a
+   double-width stroke, the upper copy is fill-only and paints over every
+   internal seam — including the outer half of a stroke that falls inside a
+   neighbouring shape — so only the silhouette of the whole logo, and the
+   inside of each ring, keeps a hairline. Edges and nodes merge smoothly.
+   Both copies reference the same animated shapes, so they stay in lockstep. */
+.face-outline {
+  color: var(--face);
+  stroke: var(--face-line);
+  stroke-width: 5;       /* half of it sits outside the union: ~2.5 shows */
+  stroke-linejoin: round;
+}
+
+.face { color: var(--face); }
+
+/* -------------------------
+   TREE — grows from the top, unbuilds from the top, seams merged
+   The graph is a 3-level tree hanging from the two topmost nodes. Branches
+   extend from a parent, and the child node lands where a branch arrives.
+
+     tier 1 (roots)   n9  n8
+     tier 2           n4  n3  n7      via e5/e8 (n9) and e4/e2 (n8)
+     tier 3 (leaves)  n5  n6  n2  n1  via e6/e10 (n4), e7/e9 (n3), e3/e1 (n7)
+
+   Every branch runs down-left from its parent, so all ten edges grow from the
+   top-right corner of their own box, then re-anchor to the bottom-left one so
+   they also vanish downward, into the child.
+
+   Teardown order is root -> leaf like the build, but it is NOT a single shared
+   exit window: that would make every exit trail its build delay exactly, so an
+   edge could only ever leave 0.31s after its parent node. Each tier gets its
+   own exit percentage instead, tuned so edges follow their node closely while
+   the next tier waits a little longer:
+
+     tier   fades at   lands at        gap after the tier above
+     n1     65%        2.34 - 2.41s     —
+     e1     60%        2.48 - 2.54s    ~0.12s after its own node
+     n2     58%        2.73 - 2.77s    ~0.25s
+     e2     52%        2.85 - 2.93s    ~0.10s after its own node
+     n3     51%        3.09 - 3.17s    ~0.25s
+
+   Full logo stands 1.63s -> 2.34s, clear by 3.35s, next cycle at 3.60s.
+   ------------------------- */
+.node {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation-duration: var(--cycle);
+  animation-timing-function: cubic-bezier(.3, 1.4, .6, 1);
+  animation-iteration-count: infinite;
+}
+
+.edge {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: top right;   /* parent end; the keyframes flip it for the exit */
+  animation-duration: var(--cycle);
+  animation-timing-function: cubic-bezier(.45, 0, .25, 1);
+  animation-iteration-count: infinite;
+}
+
+/* tier 1 — the two nodes at the top of the logo */
+.n9 { animation-name: node-tier1; animation-delay: .00s; }
+.n8 { animation-name: node-tier1; animation-delay: .07s; }
+
+/* branches from tier 1 */
+.e8 { animation-name: edge-tier1; animation-delay: .32s; }  /* n9 -> n3 */
+.e4 { animation-name: edge-tier1; animation-delay: .34s; }  /* n8 -> n3 */
+.e5 { animation-name: edge-tier1; animation-delay: .36s; }  /* n9 -> n4 */
+.e2 { animation-name: edge-tier1; animation-delay: .38s; }  /* n8 -> n7 */
+
+/* tier 2 — the three nodes those branches reach */
+.n3 { animation-name: node-tier2; animation-delay: .64s; }
+.n4 { animation-name: node-tier2; animation-delay: .66s; }
+.n7 { animation-name: node-tier2; animation-delay: .68s; }
+
+/* branches from tier 2 */
+.e6 { animation-name: edge-tier2; animation-delay: .96s; }   /* n4 -> n5 */
+.e7 { animation-name: edge-tier2; animation-delay: .98s; }   /* n3 -> n6 */
+.e10 { animation-name: edge-tier2; animation-delay: 1.00s; } /* n4 -> n6 */
+.e3 { animation-name: edge-tier2; animation-delay: 1.00s; }  /* n7 -> n2 */
+.e9 { animation-name: edge-tier2; animation-delay: 1.02s; }  /* n3 -> n2 */
+.e1 { animation-name: edge-tier2; animation-delay: 1.04s; }  /* n7 -> n1 */
+
+/* tier 3 — the four leaves */
+.n5 { animation-name: node-tier3; animation-delay: 1.26s; }
+.n6 { animation-name: node-tier3; animation-delay: 1.30s; }
+.n2 { animation-name: node-tier3; animation-delay: 1.32s; }
+.n1 { animation-name: node-tier3; animation-delay: 1.34s; }
+
+/* Entry is identical in all five: hidden, pop/grow in over ~0.3s, hold.
+   Only the hold length differs — that is what orders the teardown. */
+@keyframes node-tier1 {
+  0%, 2% { opacity: 0; transform: scale(.4); }
+  8% { opacity: 1; transform: scale(1.06); }
+  13% { transform: scale(1); }
+  65% { opacity: 1; transform: scale(1); }
+  70%, 100% { opacity: 0; transform: scale(.5); }
+}
+
+/* Edges grow out of the parent, then re-anchor to the child end so they
+   vanish downward too. The swap happens between 20% and 35%, where the edge
+   sits at scale(1): the transform is identity there, so moving the origin
+   has no visible effect. */
+@keyframes edge-tier1 {
+  0%, 2% { opacity: 0; transform: scale(0); transform-origin: 100% 0%; }
+  4% { opacity: 1; }
+  9% { transform: scale(1); }
+  20% { transform: scale(1); transform-origin: 100% 0%; }
+  35% { transform: scale(1); transform-origin: 0% 100%; }
+  60% { opacity: 1; transform: scale(1); }
+  65%, 100% { opacity: 0; transform: scale(0); transform-origin: 0% 100%; }
+}
+
+@keyframes node-tier2 {
+  0%, 2% { opacity: 0; transform: scale(.4); }
+  8% { opacity: 1; transform: scale(1.06); }
+  13% { transform: scale(1); }
+  58% { opacity: 1; transform: scale(1); }
+  63%, 100% { opacity: 0; transform: scale(.5); }
+}
+
+@keyframes edge-tier2 {
+  0%, 2% { opacity: 0; transform: scale(0); transform-origin: 100% 0%; }
+  4% { opacity: 1; }
+  9% { transform: scale(1); }
+  20% { transform: scale(1); transform-origin: 100% 0%; }
+  35% { transform: scale(1); transform-origin: 0% 100%; }
+  52% { opacity: 1; transform: scale(1); }
+  57%, 100% { opacity: 0; transform: scale(0); transform-origin: 0% 100%; }
+}
+
+@keyframes node-tier3 {
+  0%, 2% { opacity: 0; transform: scale(.4); }
+  8% { opacity: 1; transform: scale(1.06); }
+  13% { transform: scale(1); }
+  51% { opacity: 1; transform: scale(1); }
+  56%, 100% { opacity: 0; transform: scale(.5); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .edge,
+  .node {
+    animation: none;
+    opacity: 1;
+  }
+}

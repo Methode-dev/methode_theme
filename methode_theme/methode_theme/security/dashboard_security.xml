@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!--
+            ⚠ THIS RULE IS THE ONLY THING SEPARATING USERS' DASHBOARDS.
+
+            ir.model.access.csv grants every internal user full CRUD on
+            methode.dashboard.widget, which is correct — a user must be able to
+            add, move, resize and remove widgets on their own grid without an
+            administrator. Access rights are per MODEL and cannot express "your
+            own rows", so without this record rule that same grant would let any
+            user read and rewrite everyone else's layout.
+
+            Applied to base.group_user rather than left global so that
+            base.group_system keeps unrestricted access for support and for the
+            uninstall path; global=False means the rule is OR-ed for users who
+            hold several matching groups, which is the standard Odoo idiom for
+            per-owner rules.
+
+            noupdate="1": an administrator who deliberately widens this should not
+            have it silently reinstated on the next module upgrade.
+        -->
+        <record id="dashboard_widget_own_rows_rule" model="ir.rule">
+            <field name="name">Dashboard widgets: own rows only</field>
+            <field name="model_id" ref="model_methode_dashboard_widget"/>
+            <field name="domain_force">[('user_id', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <!--
+            Same reasoning for the preferences row: full CRUD is granted per MODEL
+            so a user can change their own settings without an administrator, and
+            only this rule stops that grant from reaching everyone else's.
+        -->
+        <record id="dashboard_preferences_own_rows_rule" model="ir.rule">
+            <field name="name">Dashboard preferences: own rows only</field>
+            <field name="model_id" ref="model_methode_dashboard_preferences"/>
+            <field name="domain_force">[('user_id', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+    </data>
+</odoo>
