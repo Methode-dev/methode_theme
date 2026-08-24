@@ -17,6 +17,10 @@
     # The module was assets-only until the login rebrand (§3.3 / §15.2 B9).
     'data': [
         'views/login_templates.xml',
+        # Tab + home-screen icons, on web.layout and both layouts derived from
+        # it.  The PWA manifest half of the same change is Python
+        # (controllers/webmanifest.py) and needs no entry here.
+        'views/favicon_templates.xml',
         # The Odoo-rendered 404 (NOT nginx's — see the file header).  Frontend
         # QWeb, same brand surface as the login page.
         'views/error_templates.xml',
