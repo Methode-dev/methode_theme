@@ -80,6 +80,15 @@
             'methode_theme/static/src/scss/views/kanban_view.scss',
             'methode_theme/static/src/scss/views/status_bar.scss',
             'methode_theme/static/src/scss/views/settings_view.scss',
+            # --- Empty states (§7) -------------------------------------------
+            # The branded "no records" surface. TWO files on purpose: the sheet
+            # brands the `.o_nocontent_help` wrapper every helper template in
+            # the product shares, and the patch rewrites the string every one of
+            # them is handed. Neither can be done by t-inheriting web's helper —
+            # sale, hr and lunch ship their own, and their modules are not
+            # dependencies here. Read both file headers before changing either.
+            'methode_theme/static/src/scss/views/no_content.scss',
+            'methode_theme/static/src/views/no_content_help.js',
             # Theme settings live on the Settings page, not in a systray popup —
             # see aura_backend_theme/views/res_config_settings_views.xml.
         ],
