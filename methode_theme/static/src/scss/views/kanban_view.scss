@@ -24,3 +24,168 @@
         color: var(--m-text);
     }
 }
+
+// ---------------------------------------------------------------------------
+// Document card layout (sales, invoices, bills, purchases, payments)
+//
+// Odoo's "mobile" document cards all ship the same two-container arch:
+//
+//   <div class="d-flex …">   [priority] <field fs-5 = title> … <monetary>
+//   <footer>                 <div> ref, date, activity </div> <label_selection>
+//
+// which paints as  name | amount  /  ref+date | status.  We want
+//
+//   [status]            ref  date
+//   👤 Business name   1 234,56 €
+//
+// The two rows have to interleave — the status badge comes from the footer but
+// belongs on the first line, the amount comes from the header but belongs on
+// the last — so the record becomes a grid and both containers `display:
+// contents`, letting their children be placed directly.  That is why the
+// Bootstrap spacing utilities on those containers (`mb-2`, `ms-auto`,
+// `align-items-end`) stop applying: display:contents removes the box.  The
+// gaps below replace them deliberately.
+//
+// The triple `:has()` is the guard, not decoration: it admits ONLY cards that
+// carry all three parts of the shape above — a label_selection straight in the
+// footer, an `fs-5` title and a monetary in the header row.  As of 19.0 that
+// is sale.order, purchase.order, account.move and account.payment, and
+// nothing else.  Cards that merely look similar are left completely alone:
+// stock.picking and crm.lead have no monetary, mrp.production hand-rolls its
+// badge as a <span>, and pos.order marks its title with `fw-bolder` alone and
+// so cannot show the name row this layout is built around.  Widen the guard
+// and you WILL scramble a card it was never designed for.
+// ---------------------------------------------------------------------------
+.o_kanban_renderer .o_kanban_record:not(.o_kanban_ghost):not(.o-kanban-button-new):has(> footer > .o_field_label_selection):has(> div:not(.o_dropdown_kanban) > .fs-5):has(> div:not(.o_dropdown_kanban) > .o_field_monetary) {
+    // `!important` is not a shortcut here, it is the only lever.  OWL stamps
+    // Bootstrap's `d-flex` onto every card in getRecordClasses()
+    // (kanban_record.js:244) and the arch puts it on the header row too, and
+    // every Bootstrap utility is `!important` by construction — no amount of
+    // specificity beats it.  The same goes for the margin reset and the
+    // `display: contents` below.
+    display: grid !important;
+    // The last col is the right-hand stack — the reference above the amount,
+    // both sized to their content so they end flush against the card edge.
+    // The `.` col is pure slack, and it has to be its OWN track: hand the
+    // slack to `extra` instead and that track shrinks below the badge's
+    // min-content width, so the badge spills over the reference.  The title
+    // spans everything up to the amount so it can use every pixel left of it.
+    grid-template-columns: auto auto minmax(0, 1fr) auto;
+    grid-template-areas:
+        "status extra   .       meta"
+        "title  title   title   amount";
+    align-items: center;
+    row-gap: var(--m-space-2);
+    column-gap: var(--m-space-2);
+
+    // Only the cards that actually carry a priority star get the leading
+    // track for it.  Declaring it unconditionally would indent the status
+    // badge away from the card edge on every card WITHOUT a star: the empty
+    // track is 0 wide, but the column-gap beside it is not.
+    &:has(> div:not(.o_dropdown_kanban):not(.o_field_widget) > .o_field_priority) {
+        grid-template-columns: auto auto auto minmax(0, 1fr) auto;
+        grid-template-areas:
+            "prio   status  extra   .       meta"
+            "title  title   title   title   amount";
+    }
+
+    // Dissolve the arch's two wrappers so their children become grid items.
+    // Two kinds of direct div child must survive:
+    //
+    //   .o_dropdown_kanban  the card's own ⋮ menu, absolutely positioned by
+    //                       web.KanbanRecordMenu — dissolving it drops the
+    //                       positioning context and spills the dropdown into
+    //                       the grid.
+    //   .o_field_widget     a field dropped straight on the record rather than
+    //                       inside a row (web.Field renders every field as a
+    //                       div).  Dissolving one orphans its value as bare
+    //                       text and the grid places it as an anonymous item.
+    > div:not(.o_dropdown_kanban):not(.o_field_widget),
+    > footer {
+        display: contents !important;
+    }
+
+    // Default landing zone.  Anything the arch adds that we have not named
+    // below (account.move's "To Review" badge, a stray widget) trails the
+    // status badge instead of being auto-placed into someone else's cell.
+    //
+    // The margin reset is load-bearing, not tidying: the arch pins its own
+    // layout with Bootstrap utilities on the FIELDS (`ms-auto` on both the
+    // amount and the status badge, `me-2` on the title).  Those survive the
+    // wrappers dissolving, and an auto margin beats `justify-self` on a grid
+    // item — leave them in and every element we place start still sticks to
+    // the right of its cell.  `!important` for the reason given at the top:
+    // `.ms-auto` is `margin-left: auto !important`.
+    > div:not(.o_dropdown_kanban):not(.o_field_widget) > *,
+    > footer > * {
+        grid-area: extra;
+        justify-self: start;
+        margin: 0 !important;
+    }
+
+    // --- row 1 -----------------------------------------------------------
+    // Written as a child selector, not `.o_field_priority`, so it outweighs
+    // the landing-zone rule above — `> div:not(…) > *` already carries a class
+    // and an element, and a bare class would silently lose to it.
+    > div:not(.o_dropdown_kanban):not(.o_field_widget) > .o_field_priority {
+        grid-area: prio;
+        justify-self: start;
+    }
+
+    // The type/state badge, promoted out of the footer.
+    > footer > .o_field_label_selection {
+        grid-area: status;
+        justify-self: start;
+    }
+
+    // Reference + date (+ the activity clock) — the footer's muted group.
+    > footer > div:not(.o_field_widget) {
+        grid-area: meta;
+        justify-self: end;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: var(--m-space-1);
+        justify-content: flex-end;
+        color: var(--m-text-secondary);
+        font-size: .8125rem;
+        white-space: nowrap;
+    }
+
+    // The reference now sits top-right, i.e. exactly where the card's ⋮ menu
+    // is pinned.  It is `visibility: hidden` until hover on desktop and always
+    // visible under md (kanban_record.scss:126), so reserve its width instead
+    // of letting it land on top of the reference.
+    &:has(> .o_dropdown_kanban) > footer > div:not(.o_field_widget) {
+        padding-right: 1.25rem;
+    }
+
+    // --- row 2 -----------------------------------------------------------
+    // `fs-5` is how every card in this family marks its title field, and it is
+    // the only element in the header carrying it (partner_id and journal_id
+    // are mutually `invisible`, so exactly one is in the DOM).
+    > div:not(.o_dropdown_kanban):not(.o_field_widget) > .fs-5 {
+        grid-area: title;
+        justify-self: start;
+        display: flex;
+        align-items: center;
+        gap: var(--m-space-1);
+        min-width: 0;
+
+        &::before {
+            content: "\f2be";  // fa-user-circle-o
+            font-family: FontAwesome;
+            font-size: 1rem;
+            line-height: 1;
+            color: var(--m-text-secondary);
+            flex: 0 0 auto;
+        }
+    }
+
+    > div:not(.o_dropdown_kanban):not(.o_field_widget) > .o_field_monetary {
+        grid-area: amount;
+        justify-self: end;
+        font-size: 1.125rem;
+        font-weight: 700;
+    }
+}
