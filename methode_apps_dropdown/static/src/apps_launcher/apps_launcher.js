@@ -2,11 +2,11 @@ import { Component, useState } from "@odoo/owl";
 import { _t } from "@web/core/l10n/translation";
 import { useService } from "@web/core/utils/hooks";
 import { DropdownItem } from "@web/core/dropdown/dropdown_item";
-import { getAppIcon } from "@methode_apps_dropdown/utils/app_icon";
+import { AppIcon } from "@methode_apps_dropdown/app_icon/app_icon";
 
 export class AppsLauncher extends Component {
     static template = "methode_apps_dropdown.AppsLauncher";
-    static components = { DropdownItem };
+    static components = { AppIcon, DropdownItem };
     static props = {
         apps: { type: Array }, // menuService.getApps(), in server order
         getMenuItemHref: { type: Function }, // NavBar.getMenuItemHref, bound
@@ -47,7 +47,6 @@ export class AppsLauncher extends Component {
             name: app.name,
             xmlid: app.xmlid,
             href: this.props.getMenuItemHref(app),
-            icon: getAppIcon(app),
             isCurrent: app.id === currentAppId,
             isFavorite: favoriteIds.includes(app.id),
             menu: app,

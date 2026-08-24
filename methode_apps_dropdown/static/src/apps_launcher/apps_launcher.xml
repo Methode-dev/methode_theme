@@ -35,17 +35,13 @@
                 title: tile.name,
               }">
 
-              <!-- Icon: image, or a font-awesome tile, mirroring web.AppIconCommand. -->
-              <img t-if="tile.icon.src"
-                   class="o_app_icon o_mad_tile_icon"
-                   t-att-src="tile.icon.src" alt="" aria-hidden="true"/>
-              <span t-else=""
-                    class="o_app_icon o_mad_tile_icon o_mad_tile_icon_font d-flex align-items-center justify-content-center"
-                    aria-hidden="true"
-                    t-attf-style="background-color: {{ tile.icon.backgroundColor }};">
-                <i t-att-class="tile.icon.iconClass"
-                   t-attf-style="color: {{ tile.icon.color }};"/>
-              </span>
+              <!--
+                The unified chip, NOT the app's own webIconData PNG - see the
+                header of app_icon/app_glyphs.js for why the launcher draws its
+                own set. The tile sizes it through a custom property, so the
+                component needs no size prop.
+              -->
+              <AppIcon app="tile.menu"/>
 
               <span class="o_mad_tile_label" t-esc="tile.name"/>
 

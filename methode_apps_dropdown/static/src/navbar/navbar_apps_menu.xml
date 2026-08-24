@@ -100,7 +100,7 @@
                         <button type="button" class="o_mad_sidebar_tab d-flex align-items-center"
                                 t-att-class="{'is-active': !state.isAllAppsMenuOpened}"
                                 t-on-click="() => state.isAllAppsMenuOpened = false">
-                          <img style="height: 2em;" t-if="currentApp.webIconData" class="o_app_icon me-2" t-attf-src="{{currentApp.webIconData}}"/>
+                          <AppIcon app="currentApp"/>
                           <span class="fs-4 fw-bolder"><t t-esc="currentApp.name"/></span>
                         </button>
                         <button type="button" class="o_mad_sidebar_tab"
@@ -143,7 +143,7 @@
       <t t-foreach="apps" t-as="app" t-key="app_index">
         <li t-att-data-menu-xmlid="app.xmlid" class="o_app fw-bolder py-2" t-att-class="{'bg-primary-subtle': menuService.getCurrentApp() === app}" t-on-click="() => {this.onNavBarDropdownItemSelection(app); this._closeAppMenuSidebar();}">
           <div class="d-flex align-items-center">
-            <img style="height: 3em;" t-if="app.webIconData" class="o_app_icon me-2" t-attf-src="{{app.webIconData}}"/>
+            <AppIcon app="app"/>
             <t t-esc="app.name"/>
           </div>
         </li>

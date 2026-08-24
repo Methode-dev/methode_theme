@@ -32,6 +32,15 @@ registry.category("web_tour.tours").add("methode_apps_launcher_tour", {
             trigger: ".o_mad_tile[data-menu-xmlid='mail.menu_root_discuss'][href^='/odoo/']",
         },
         {
+            // The whole point of AppIcon: no <img>, a drawn glyph in a chip the
+            // category tints. Discuss is mapped, so it must render a glyph and
+            // not the monogram fallback.
+            content: "Tiles render the drawn icon set, not the module PNG",
+            trigger:
+                ".o_mad_tile[data-menu-xmlid='mail.menu_root_discuss'] " +
+                ".o_mad_app_icon[data-app-category] svg.o_mad_app_glyph path",
+        },
+        {
             content: "Pin Discuss. The click must not navigate nor close the dropdown.",
             trigger: ".o_mad_tile[data-menu-xmlid='mail.menu_root_discuss'] .o_mad_pin",
             run: "click",

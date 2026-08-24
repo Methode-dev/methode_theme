@@ -67,6 +67,11 @@ $o-mad-icon-size: 44px  !default;
         --#{$prefix}dropdown-item-padding-x: 0;
         --#{$prefix}dropdown-item-padding-y: 0;
 
+        // The chip draws itself (app_icon/app_icon.scss); the grid only decides
+        // how big it is. Declared with the other custom properties, before any
+        // nested rule: Dart Sass deprecates declarations that follow one.
+        --AppIcon-size: var(--AppsLauncher-icon-size);
+
         position: relative;
         display: flex;
         flex-direction: column;
@@ -91,15 +96,12 @@ $o-mad-icon-size: 44px  !default;
             box-shadow: inset 0 0 0 $border-width var(--#{$prefix}primary);
         }
 
-        .o_mad_tile_icon {
-            width: var(--AppsLauncher-icon-size);
-            height: var(--AppsLauncher-icon-size);
-            border-radius: $border-radius;
-            object-fit: contain;
-        }
-
-        .o_mad_tile_icon_font {
-            font-size: $font-size-lg;
+        // A tile is a link, and .dropdown-item paints its text colour onto
+        // everything inside it -- including the glyph, which is meant to stay
+        // ink on its tint. currentColor is the whole colour contract of the
+        // icon set, so the chip re-asserts it here rather than in a hover rule.
+        .o_mad_app_icon {
+            color: var(--m-ink-border, #191A22);
         }
 
         .o_mad_tile_label {
@@ -137,6 +139,16 @@ $o-mad-icon-size: 44px  !default;
         &:hover .o_mad_pin {
             opacity: 1;
         }
+    }
+}
+
+// Mobile apps-menu sidebar: the same chips, one size down. Set on the sidebar
+// rather than passed to AppIcon as a prop -- see the note in app_icon.js.
+.o_app_menu_sidebar {
+    --AppIcon-size: 34px;
+
+    .o_mad_app_icon {
+        margin-inline-end: map-get($spacers, 2); // RTL-safe; replaces the me-2
     }
 }
 

@@ -12,6 +12,21 @@ Replaces the plain Apps dropdown in the navbar with a tiled launcher:
 * app tiles, 3 per row, in stacked sections
 * apps grouped by *business* category rather than Odoo's technical one
 * a per-user Favorites section pinned at the top
+* one icon set for every app, in place of the module PNGs
+
+Icons
+-----
+
+Each tile draws its own icon rather than rendering the app's ``web_icon``: a
+stroke glyph on a 24x24 grid, in an ink-outlined chip tinted by the app's
+business category. Thirty module PNGs side by side are thirty illustration
+styles; one drawn set is one. An app the set has no drawing for keeps the same
+chip and shows its initial, so it still belongs to the grid.
+
+Add a glyph, or re-point an app at another one, in
+``static/src/app_icon/app_glyphs.js``. Retint a category, or add one, in
+``$o-mad-category-fills`` (``static/src/app_icon/app_icon.scss``) - the
+component only emits the category code, so no JS change is needed.
 
 Categories are resolved per app, highest priority first:
 
@@ -38,7 +53,9 @@ navbar header, so the launcher will not appear when one of them is installed.
         'web.assets_backend': [
             # Listed dependency-first for readability; the module loader resolves
             # ES-module deps by name, so JS order does not affect correctness.
-            'methode_apps_dropdown/static/src/utils/app_icon.js',
+            'methode_apps_dropdown/static/src/app_icon/app_glyphs.js',
+            'methode_apps_dropdown/static/src/app_icon/app_icon.js',
+            'methode_apps_dropdown/static/src/app_icon/app_icon.xml',
             'methode_apps_dropdown/static/src/services/apps_launcher_service.js',
             'methode_apps_dropdown/static/src/apps_launcher/apps_launcher.js',
             'methode_apps_dropdown/static/src/apps_launcher/apps_launcher.xml',
@@ -48,6 +65,7 @@ navbar header, so the launcher will not appear when one of them is installed.
             # depends=['web'] guarantees.
             'methode_apps_dropdown/static/src/navbar/navbar_apps_menu.xml',
             # SCSS last so it wins the cascade at equal specificity.
+            'methode_apps_dropdown/static/src/app_icon/app_icon.scss',
             'methode_apps_dropdown/static/src/apps_launcher/apps_launcher.scss',
         ],
         'web.assets_unit_tests': [

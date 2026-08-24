@@ -49,11 +49,31 @@ export const appsLauncherService = {
             return pending;
         };
 
+        const categories = payload.categories || []; // pre-sorted server side
+        const codeByCategoryId = new Map(categories.map((c) => [c.id, c.code]));
+
         return {
-            categories: payload.categories || [], // pre-sorted server side
+            categories,
             categoryByMenuId,
+            codeByCategoryId,
             fallbackCategoryId: payload.fallback_category_id || null,
             state,
+            /**
+             * The launcher category CODE of an app, e.g. "sales".
+             *
+             * Codes rather than ids because they are the stable technical key
+             * (methode.apps.category.code) and survive a re-seeded database,
+             * which is what makes them safe to key a stylesheet on.
+             *
+             * Falls back to the fallback category's own code, and then to
+             * "other": an app can legitimately have no category yet -- right
+             * after a module install, menuService may still be serving it from
+             * its localStorage cache while session_info has never seen it.
+             */
+            categoryCodeOf(menuId) {
+                const categoryId = categoryByMenuId.get(menuId) ?? payload.fallback_category_id;
+                return codeByCategoryId.get(categoryId) || "other";
+            },
             isFavorite(menuId) {
                 return state.favoriteIds.includes(menuId);
             },

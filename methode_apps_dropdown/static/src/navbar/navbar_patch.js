@@ -1,6 +1,7 @@
 import { patch } from "@web/core/utils/patch";
 import { NavBar } from "@web/webclient/navbar/navbar";
 import { AppsLauncher } from "@methode_apps_dropdown/apps_launcher/apps_launcher";
+import { AppIcon } from "@methode_apps_dropdown/app_icon/app_icon";
 
 /**
  * Move the navigation cursor one visual row up (dy = -1) or down (dy = +1).
@@ -52,8 +53,10 @@ function moveByRow(navigator, dy) {
     (best || (dy > 0 ? items[0] : items.at(-1))).setActive();
 }
 
+// AppIcon as well as AppsLauncher: the mobile sidebar renders in the NavBar's
+// own scope, not the launcher's, and it shows the same chips.
 patch(NavBar, {
-    components: { ...NavBar.components, AppsLauncher },
+    components: { ...NavBar.components, AppsLauncher, AppIcon },
 });
 
 patch(NavBar.prototype, {
