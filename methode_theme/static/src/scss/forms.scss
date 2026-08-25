@@ -57,6 +57,31 @@
         }
     }
 
+    // ⚠ The monetary widget is TWO layers wearing one class, and the opaque
+    // fill above lands on the wrong one.  monetary_field.xml:7 renders an
+    // absolutely-positioned `.o_input` span holding the currency symbol (and an
+    // `opacity-0` ghost copy of the value that spaces it) OVER the real input
+    // that holds the digits.  Odoo can do that because $o-input-bg is
+    // `transparent`: both layers are the same box, one showing through the
+    // other.  Setting an opaque background turned the top layer into a white
+    // pane over a white field — the price the user typed was still there,
+    // painted over.  Same markup, same bug, in the properties widget's monetary
+    // value (property_value.xml:46).
+    //
+    // The overlay STAYS in the rule above: it has to keep the input's
+    // padding-inline and border WIDTH or the symbol drifts off the digits it is
+    // drawn next to (French locale puts it after them, hard against the last
+    // one).  So only the two paints it must not do are undone — `transparent`
+    // border rather than none, to keep the 1px the geometry depends on.
+    //
+    // (0,5,0) — deliberately above the two state rules below, which both reach
+    // .o_input at (0,4,0) and would otherwise repaint this layer: the required
+    // wash would apply twice, and an invalid field would draw two red boxes.
+    .o_input.position-absolute.pe-none {
+        background-color: transparent;
+        border-color: transparent;
+    }
+
     // Required fields: re-expressed from 2000_theme's marker (§4) in brand
     // colours.  Accent is legitimate here — it is a fill and a border, not text.
     //
@@ -72,7 +97,7 @@
     // above.  That is the intent — the wash is a tint on the field, not a new
     // opaque surface — and the shift is ~4% because the sheet is #F2F2F2.
     //
-    // Beats the white above on specificity: (0,4,0) vs (0,3,0).
+    // Beats the white above on specificity: (0,5,0) vs (0,4,0).
     &.o_required_modifier .o_input {
         background-color: var(--m-accent-soft);
         border-color: white;
