@@ -21,7 +21,13 @@
     }
 
     .m-tree-extrude { color: var(--m-tree-shade); }
-    .m-tree-extrude use:last-child { color: var(--m-tree-shade-top); }
+    // The wall nearest the top face, tinted lighter so the solid reads as lit.
+    // A GROUP, not a `use:last-child`: each wall is now nineteen <use> elements
+    // (one per shape) rather than one <use> of a shape group — see the comment
+    // on the SVG in views/boot_loader_templates.xml for why the shapes cannot
+    // be animated inside <defs>. Against the old markup this selector would
+    // have lit the last shape of every wall instead of the last wall.
+    .m-tree-extrude > g:last-child { color: var(--m-tree-shade-top); }
 
     .m-tree-face-outline {
         color: var(--m-tree-face);

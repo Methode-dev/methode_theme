@@ -528,7 +528,7 @@
     border: 1px solid var(--m-ink-border);
     border-radius: var(--m-radius-lg);
     background-color: var(--m-dash-card-bg);
-    box-shadow: var(--m-shadow-hard);
+    box-shadow: var(--m-shadow-soft);
 }
 
 .m-dash-picker-group {
@@ -565,13 +565,15 @@
 
 // --- Card -------------------------------------------------------------------
 // The same material as .m-card and the kanban record (cards.scss), at dashboard
-// scale.  Not @extend'ed from %m-surface only because that hardcodes #F2F2F2 and
-// this card's whole point is the warm --m-dash-card-bg above.
+// scale.  Not @extend'ed from %m-surface only because that pins a background and
+// this card's whole point is the warm --m-dash-card-bg above.  Everything else —
+// the half-strength outline, --m-shadow-soft — is shared deliberately: a
+// dashboard is a wall of cards, which is the case --m-shadow-soft exists for.
 .m-dash-card {
     background-color: var(--m-dash-card-bg);
-    border: 1px solid var(--m-ink-border);
+    border: 1px solid var(--m-ink-border-soft);
     border-radius: var(--m-radius-lg);
-    box-shadow: var(--m-shadow-hard);
+    box-shadow: var(--m-shadow-soft);
     // Cards are the one place §6 allows more padding; this is the control-scale
     // reading of that, not the marketing card's var(--m-space-6).
     padding: var(--m-space-4);

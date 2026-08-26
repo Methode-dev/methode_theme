@@ -97,16 +97,33 @@
     --m-shadow-hard:     0 3px 0 0 var(--m-shadow-color);
     --m-shadow-hard-lg:  0 5px 0 0 var(--m-shadow-color);
 
-    // --m-shadow-hard-lg is the measured asset value, used by .m-card.
-    // --m-shadow-hard keeps the same shadow-to-height ratio at control scale
-    // and is what every button uses.  Kanban records are deliberately flat —
-    // a board shows dozens at once and a wall of hard shadows is noise.
+    // --m-shadow-hard-lg is the measured asset value; --m-shadow-hard keeps the
+    // same shadow-to-height ratio at control scale.  Between them they are the
+    // BUTTON language: a control is small, there are few of them in view, and
+    // the hard offset is what makes it read as pressable.
+    //
+    // SURFACES took the same shadow at first and it did not survive contact
+    // with a real board — a kanban view shows dozens of records at once and a
+    // wall of 3px black offsets reads as noise, not elevation.  So cards get
+    // their own scale of the SAME shadow: still zero blur, still straight down
+    // (§6 is not negotiable), just one pixel of it.  Enough to lift the card
+    // off the page, quiet enough to repeat forty times.
+    //
+    // Owner call, P9: every card surface — .m-card, kanban records, the
+    // dashboard widgets — uses this.  Buttons keep the hard shadows above.
+    --m-shadow-soft:     0 1px 0 0 var(--m-shadow-color);
 
     // Outlines in the assets are #191A22, a very dark navy — NOT pure black,
     // which reads harsher.  Pure black stays for fills and shadows.  This is a
     // measured border colour, not a sixth brand colour.
     --m-ink-border:      #191A22;
     --m-border-hairline: 1px solid var(--m-ink-border);
+
+    // The same ink at half strength (#191A2280).  Card surfaces use this rather
+    // than full --m-ink-border for the same reason they use --m-shadow-soft: a
+    // board full of full-ink outlines is a grid of dark boxes.  Kept as rgba()
+    // rather than 8-digit hex to match the other alpha tokens in this file.
+    --m-ink-border-soft: rgba(25, 26, 34, 0.5);
 
     // The measured border of asset 01's button — the brand's *quieter* outline,
     // for edges that should read as present but not structural.  Full-strength

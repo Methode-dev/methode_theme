@@ -7,6 +7,13 @@
 //   Shadow is straight down (dx=0) and has ZERO blur — the right edge of the
 //   card shows outline only, no shadow beyond it.
 //
+// ⚠ The measurement above is the RECORD, not the current values.  Owner call in
+// P9 softened all three of surface, outline and shadow weight for cards — warm
+// --m-navbar-bg instead of the grey, half-strength ink instead of full, 1px of
+// offset instead of 5.  The GEOMETRY the measurement pinned down is untouched
+// and is the part that must never drift: zero blur, dx = 0.  Do not "restore"
+// the measured values; read %m-surface and --m-shadow-soft for the why.
+//
 // The display plate lives here rather than in typography.scss (where §5.4
 // sketched it) because what makes it a *plate* is material, not type: it shares
 // the offset-shadow language with the card and the button.  Its font is already
@@ -17,8 +24,15 @@
 // the hard zero-blur offset — not one component that may use it.  Surfaces and
 // buttons share it; only its scale changes.
 %m-surface {
-    background-color: #F2F2F2;
-    border: 1px solid var(--m-ink-border);
+    // The warm off-white the navbar already uses, not the grey #F2F2F2 measured
+    // off the asset: the asset card sat on white, these sit on --m-bg-primary
+    // (#FDFAF6), and grey against warm cream reads as dirty rather than as a
+    // second surface.  Sharing the navbar's value is what makes the chrome and
+    // the cards look like one material.
+    background-color: var(--m-navbar-bg);
+    // Half-strength ink — see --m-ink-border-soft in css_tokens.scss.  Full ink
+    // is for the thing being outlined; a board shows dozens of these at once.
+    border: 1px solid var(--m-ink-border-soft);
 }
 
 // Full marketing-weight card — the literal asset.  Used for dashboard tiles in
@@ -29,9 +43,10 @@
     @extend %m-surface;
     border-radius: var(--m-radius-card);
     padding: var(--m-space-6);
-    // The one place the hard offset shadow survives.  Cards are few, large and
-    // marketing-weight, which is the scale the asset was drawn at.
-    box-shadow: var(--m-shadow-hard-lg);
+    // Same shadow language as the buttons — zero blur, straight down — at the
+    // card scale (§6, --m-shadow-soft).  The measured 5px belongs to the asset
+    // as a standalone marketing object; in a UI it fights everything near it.
+    box-shadow: var(--m-shadow-soft);
 }
 
 // Kanban records take the same material at their own scale.  Only the radius
@@ -60,9 +75,9 @@
 .o_kanban_renderer .o_kanban_record:not(.o_kanban_ghost):not(.o-kanban-button-new) {
     @extend %m-surface;
     border-radius: var(--m-radius-lg);
-    // Control-scale shadow, not the card's 5px: these sit between a button and
-    // a marketing card in size.
-    box-shadow: var(--m-shadow-hard);
+    // Same soft shadow as .m-card: the whole point of the token is that every
+    // card surface in the theme carries the identical lift, whatever its size.
+    box-shadow: var(--m-shadow-soft);
 }
 
 // Odoo's tag-colour strip (kanban_record.scss) is an absolutely-positioned
@@ -81,7 +96,7 @@
     }
 
     .o_kanban_renderer .o_kanban_record.o_kanban_color_#{$i - 1}:not(.o_kanban_ghost):not(.o-kanban-button-new) {
-        box-shadow: inset 3px 0 0 $-color, var(--m-shadow-hard);
+        box-shadow: inset 3px 0 0 $-color, var(--m-shadow-soft);
     }
 }
 
