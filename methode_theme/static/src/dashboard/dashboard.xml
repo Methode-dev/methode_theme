@@ -253,7 +253,17 @@
     <t t-name="methode_theme.QuickActions">
         <div class="m-dash-shortcuts">
             <t t-foreach="props.shortcuts" t-as="shortcut" t-key="shortcut.key">
-                <button class="m-dash-shortcut" t-on-click="() => this.run(shortcut)">
+                <!--
+                    data-shortcut is the only stable handle on this button: the
+                    label is translated and the fill is assigned by position, so
+                    anything outside this component (a guided tour, an
+                    acceptance test) would otherwise have to match on the visible
+                    text. The key is already the contributing module's own
+                    identifier — see methode.dashboard.shortcut._collect_shortcuts.
+                -->
+                <button class="m-dash-shortcut"
+                        t-att-data-shortcut="shortcut.key"
+                        t-on-click="() => this.run(shortcut)">
                     <i class="fa fa-fw" t-att-class="shortcut.icon" aria-hidden="true"/>
                     <span t-esc="shortcut.label"/>
                 </button>
@@ -503,7 +513,15 @@
         are load-bearing duplicates.
     -->
     <t t-name="methode_theme.HomeDashboardSkeleton">
-        <div aria-hidden="true">
+        <!--
+            The class is not decoration: under the phone breakpoint the zones are
+            re-ordered with flex `order` (dashboard.scss), and the skeleton draws
+            the same zones one level deeper. Without a container of its own to
+            order them in, the placeholder would keep the desktop order and the
+            page would visibly re-stack the moment content landed — the §13.4
+            jump this whole template exists to prevent.
+        -->
+        <div class="m-dash-skeleton" aria-hidden="true">
             <!--
                 ⚠ THE CHROME IS DRAWN TOO, not just the grid.
 

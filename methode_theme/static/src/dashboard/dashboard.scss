@@ -351,6 +351,64 @@
     &:nth-child(4n + 4) { --sc-fill: var(--m-bg-secondary); }
 }
 
+// --- Phone: what you START comes first --------------------------------------
+//
+// On a laptop the chrome reads top-down as "numbers, then what needs you, then
+// what you start", and the stats row costs one band of a wide screen. On a
+// phone every zone is full-width and stacked, so the same order buries the
+// shortcut bar under four tiles the visitor has to scroll past before they can
+// DO anything — and the shortcuts are the only zone that starts work rather
+// than reporting on it.
+//
+// So under the phone breakpoint the shortcut bar moves to the top and nothing
+// else changes. Reordered with flex `order` rather than by moving the nodes:
+// the zones are conditionally rendered (`t-if` on three separate preferences),
+// so a DOM order that depended on the viewport would have to be re-derived in
+// dashboard.xml for every combination of them.
+//
+// 767.98px is Odoo's own small/large switch (ui_service's isSmall), so the
+// layout flips on the same pixel the webclient swaps list views for kanban.
+@media (max-width: 767.98px) {
+    .m-dash,
+    .m-dash-skeleton {
+        display: flex;
+        flex-direction: column;
+
+        // ⚠ LOAD-BEARING, and the reason this block is not two lines.
+        //
+        // .m-dash is the scroll container (height: 100%, overflow-y: auto).
+        // A flex item defaults to `flex-shrink: 1`, so in a column flexbox of
+        // a FIXED height the zones would each be squeezed to fit the viewport
+        // instead of overflowing it — the cards would compress and the page
+        // would stop scrolling. Pinning every child to its content height is
+        // what makes the flex container behave like the block one it replaces.
+        > * {
+            flex: 0 0 auto;
+        }
+    }
+
+    .m-dash-topbar { order: 0; }
+    .m-dash-prefs { order: 1; }
+    .m-dash-picker { order: 2; }
+    .m-dash-shortcuts { order: 3; }
+    .m-dash-stats { order: 4; }
+    .m-dash-banners { order: 5; }
+    // Everything the loading and empty states put in the same slot as the grid,
+    // so none of them can float above the chrome.
+    .m-dash-skeleton,
+    .m-dash-empty,
+    .m-dash-grid { order: 6; }
+
+    // A row of pills wraps into a ragged block on a narrow screen and each one
+    // is a 32px-tall tap target in the middle of it. Full width, stacked, so
+    // the first thing on the page is also the easiest thing to hit.
+    .m-dash-shortcut {
+        flex: 1 0 100%;
+        justify-content: center;
+        padding: var(--m-space-3) var(--m-space-4);
+    }
+}
+
 // Compact density: one step down the spacing scale, nothing restyled.
 .m-dash--compact {
     .m-dash-stats,
