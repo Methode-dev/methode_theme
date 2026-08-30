@@ -24,6 +24,10 @@
         # The Odoo-rendered 404 (NOT nginx's — see the file header).  Frontend
         # QWeb, same brand surface as the login page.
         'views/error_templates.xml',
+        # The animated mark itself, t-called by the boot loader below and by
+        # qcm_guest_walkthrough's waiting state. Listed first so the one copy
+        # is registered before anything calls it.
+        'views/tree_mark_templates.xml',
         # Must be server-side QWeb: it has to paint before OWL exists (P8e).
         'views/boot_loader_templates.xml',
         # --- Home dashboard, P8a ------------------------------------------
