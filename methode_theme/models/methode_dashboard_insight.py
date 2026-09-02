@@ -158,6 +158,34 @@ class MethodeDashboardShortcut(models.AbstractModel):
         return self.env['methode.dashboard.insight']._dashboard_can_read(model_name)
 
     @api.model
+    def _dashboard_app_menu_id(self, xmlid):
+        """The app a shortcut belongs to, for the navbar to switch to.
+
+        ⚠ WITHOUT THIS THE TOP BAR LIES ABOUT WHERE THE USER IS.
+
+        A shortcut's action is an anonymous act_window dict -- no id, no xmlid,
+        no menu -- and action_service.doAction() never touches the menu
+        service. setCurrentMenu() has exactly two callers in core
+        (menu_service.selectMenu, from a real click on an app tile, and
+        webclient.loadRouterState, on boot), so opening a quotation from this
+        dashboard leaves currentAppId on whatever the webclient resolved at
+        load: the Homepage menu.
+
+        The visible damage is worse than a wrong title. NavBar.currentAppSections
+        is the children of currentApp, this menu has none, and core's
+        SectionsMenu is rendered under t-if="currentAppSections.length" -- so
+        the Sales menus are not hidden, they are never mounted. Reported as
+        "the module title says Accueil and the Sales menus have disappeared".
+
+        raise_if_not_found: these bridges ship to templates that install
+        different app sets, and a shortcut is still worth offering when the
+        menu it would select is absent -- QuickActions.run() simply does not
+        call setCurrentMenu, and menu_service ignores an unknown id anyway.
+        """
+        menu = self.env.ref(xmlid, raise_if_not_found=False)
+        return menu.id if menu else False
+
+    @api.model
     def _collect_shortcuts(self):
         """Always-available shortcuts.  Bridges append app-specific ones."""
         return [
@@ -165,6 +193,7 @@ class MethodeDashboardShortcut(models.AbstractModel):
                 'key': 'new_contact',
                 'label': _("New Contact"),
                 'icon': 'fa-user-plus',
+                'menu_id': self._dashboard_app_menu_id('contacts.menu_contacts'),
                 'action': {
                     'type': 'ir.actions.act_window',
                     'name': _("New Contact"),

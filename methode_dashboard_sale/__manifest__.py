@@ -1,6 +1,6 @@
 {
     'name': 'Méthode Dashboard — Sales',
-    'version': '19.0.1.0.0',
+    'version': '19.0.1.1.0',
     'category': 'Themes/Backend',
     'summary': "Quotation and order widgets for the Méthode home dashboard",
     'description': "Contributes the sales widgets, stat tile and shortcut to the "

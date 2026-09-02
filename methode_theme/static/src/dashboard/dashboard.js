@@ -388,12 +388,33 @@ export class QuickActions extends Component {
 
     setup() {
         this.action = useService("action");
+        this.menu = useService("menu");
     }
 
+    /**
+     * ⚠ setCurrentMenu IS NOT COSMETIC, AND doAction WILL NOT DO IT FOR YOU.
+     *
+     * A shortcut's action is an anonymous act_window dict built server-side,
+     * so nothing links it to a menu, and action_service never consults the
+     * menu service anyway. Left alone, opening "Nouveau devis" from here keeps
+     * currentApp on the Homepage: the module title still reads "Accueil", and
+     * because that menu has no children NavBar.currentAppSections is empty and
+     * core's SectionsMenu is not rendered at all -- the Sales menus vanish.
+     *
+     * Done through onActionReady rather than after the await, mirroring
+     * menu_service.selectMenu(): it fires once the controller is ready but
+     * before the UPDATE that swaps the screen, so the title changes with the
+     * content instead of a frame after it.
+     */
     run(shortcut) {
-        if (shortcut.action) {
-            this.action.doAction(shortcut.action);
+        if (!shortcut.action) {
+            return;
         }
+        const menuId = shortcut.menu_id;
+        this.action.doAction(
+            shortcut.action,
+            menuId ? { onActionReady: () => this.menu.setCurrentMenu(menuId) } : {}
+        );
     }
 }
 

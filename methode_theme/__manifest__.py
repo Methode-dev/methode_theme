@@ -1,6 +1,6 @@
 {
     'name': 'Méthode Theme',
-    'version': '19.0.1.0.0',
+    'version': '19.0.1.1.0',
     'category': 'Themes/Backend',
     'summary': 'Méthode brand identity for the Odoo backend',
     # Set explicitly, and keep it set.  Odoo's load_manifest() falls back to

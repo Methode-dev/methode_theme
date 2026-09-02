@@ -88,6 +88,23 @@ class TestDashboardSale(TransactionCase):
         shortcuts = self.env["methode.dashboard.widget"].dashboard_fetch_shortcuts()
         self.assertIn("new_quotation", [s["key"] for s in shortcuts["shortcuts"]])
 
+    def test_the_quotation_shortcut_names_the_sales_app(self):
+        """QuickActions.run() feeds this to menu.setCurrentMenu().
+
+        Without it the navbar stays on whatever app the webclient resolved at
+        load — the Homepage, in these clones — so the module title reads
+        "Accueil" over a quotation form AND, because that menu has no children,
+        core renders no SectionsMenu at all and the Sales menus disappear.
+        Neither symptom raises anything, hence this assertion.
+        """
+        shortcuts = self.env["methode.dashboard.widget"].dashboard_fetch_shortcuts()
+        quotation = next(
+            s for s in shortcuts["shortcuts"] if s["key"] == "new_quotation"
+        )
+        self.assertEqual(
+            quotation["menu_id"], self.env.ref("sale.sale_menu_root").id
+        )
+
     def test_no_sales_rights_no_sales_shortcut(self):
         plain = new_test_user(self.env, login="dash_nosale", groups="base.group_user")
         shortcuts = self.env["methode.dashboard.widget"].with_user(
