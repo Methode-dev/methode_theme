@@ -32,7 +32,7 @@
     <xpath expr="." position="replace">
       <t>
         <!-- ===== small screens: untouched stock ===== -->
-        <t t-if="this.ui.isSmall">
+        <t t-if="env.isSmall">
           <a href="/odoo" class="o_menu_toggle border-0"
              t-att-class="{'hasImage': currentApp?.webIconData}"
              accesskey="h" t-ref="menuApps" t-on-click.prevent="_openAppMenuSidebar">
