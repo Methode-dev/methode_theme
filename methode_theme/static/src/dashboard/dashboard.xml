@@ -9,7 +9,7 @@
         the honest WidgetPending frame; none pretend to have data (§0).
     -->
     <t t-name="methode_theme.HomeDashboard">
-        <div class="m-dash" t-att-class="{ 'm-dash--compact': state.preferences.layout_density === 'compact' }">
+        <div class="m-dash" t-att-class="{ 'm-dash__compact': state.preferences.layout_density === 'compact' }">
 
             <header class="m-dash-topbar">
                 <h1 class="m-dash-greeting">
@@ -212,7 +212,7 @@
             <div class="m-dash-stat-value" t-esc="props.data ? props.data.value : '—'"/>
             <!-- Tone comes from the DATA, not the widget type: red means late. -->
             <div t-if="props.data and props.data.meta"
-                 t-attf-class="m-dash-stat-meta m-dash-stat-meta--{{ props.data.tone or 'neutral' }}"
+                 t-attf-class="m-dash-stat-meta m-dash-stat-meta__{{ props.data.tone or 'neutral' }}"
                  t-esc="props.data.meta"/>
         </div>
     </t>
@@ -225,7 +225,7 @@
     <t t-name="methode_theme.InsightBanners">
         <div class="m-dash-banners">
             <t t-foreach="visible" t-as="insight" t-key="insight.key">
-                <div t-attf-class="m-dash-banner m-dash-banner--{{ insight.tone }}">
+                <div t-attf-class="m-dash-banner m-dash-banner__{{ insight.tone }}">
                     <i class="m-dash-banner-icon fa fa-fw" t-att-class="insight.icon" aria-hidden="true"/>
                     <span class="m-dash-banner-message" t-esc="insight.message"/>
                     <button t-if="insight.action_label"
@@ -315,7 +315,7 @@
             </div>
             <span t-if="props.meta" class="m-dash-row-meta" t-esc="props.meta"/>
             <span t-if="props.pill"
-                  t-attf-class="m-dash-pill m-dash-pill--{{ props.pill.tone }}"
+                  t-attf-class="m-dash-pill m-dash-pill__{{ props.pill.tone }}"
                   t-esc="props.pill.text"/>
             <div class="m-dash-row-action">
                 <t t-slot="action"/>
@@ -331,7 +331,7 @@
         <WidgetFrame colSpan="props.placement.col_span"
                      icon="props.placement.icon"
                      title="props.placement.name">
-            <div class="m-dash-card-body--pending">
+            <div class="m-dash-card-body__pending">
                 No content yet — this widget is wired up in a later step.
             </div>
         </WidgetFrame>
@@ -429,7 +429,7 @@
                         <div class="m-dash-chart-row">
                             <span class="m-dash-chart-label" t-esc="point.label"/>
                             <span class="m-dash-chart-track">
-                                <span t-attf-class="m-dash-chart-bar m-dash-chart-bar--{{ point.tone }}"
+                                <span t-attf-class="m-dash-chart-bar m-dash-chart-bar__{{ point.tone }}"
                                       t-attf-style="width: {{ point.percent }}%"/>
                             </span>
                             <span class="m-dash-chart-value" t-esc="point.value"/>

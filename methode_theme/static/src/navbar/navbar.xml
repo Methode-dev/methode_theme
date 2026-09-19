@@ -15,23 +15,23 @@
   <t t-name="methode_theme.NavBar" t-inherit="web.NavBar" t-inherit-mode="extension">
 
     <xpath expr="//nav" position="inside">
-      <div class="m-nav-row m-nav-row--menu"/>
-      <div class="m-nav-row m-nav-row--app"/>
+      <div class="m-nav-row m-nav-row__menu"/>
+      <div class="m-nav-row m-nav-row__app"/>
     </xpath>
 
-    <xpath expr="//div[hasclass('m-nav-row--menu')]" position="inside">
+    <xpath expr="//div[hasclass('m-nav-row__menu')]" position="inside">
       <xpath expr="//t[@t-call='web.NavBar.AppsMenu']" position="move"/>
       <NavBarSearch/>
       <xpath expr="//div[hasclass('o_menu_systray')]" position="move"/>
     </xpath>
 
-    <xpath expr="//div[hasclass('m-nav-row--app')]" position="inside">
+    <xpath expr="//div[hasclass('m-nav-row__app')]" position="inside">
       <!-- contains() rather than hasclass(): the brand's class is an OWL
            expression, quotes included, so hasclass() cannot see through it. -->
       <xpath expr="//DropdownItem[contains(@class, 'o_menu_brand')]" position="move"/>
       <span t-if="!currentApp" class="m-nav-company" t-esc="companyName"/>
       <xpath expr="//div[hasclass('o_navbar_breadcrumbs')]" position="move"/>
-      <xpath expr="//t[@t-if='!env.isSmall']" position="move"/>
+      <xpath expr="//t[@t-if='!this.ui.isSmall']" position="move"/>
     </xpath>
 
   </t>

@@ -176,7 +176,7 @@
     opacity: 1;
     transition: opacity 240ms ease-out;
 
-    &.m-boot-loader--done {
+    &.m-boot-loader__done {
         opacity: 0;
         // The webclient is mounted and must be clickable during the fade.
         pointer-events: none;

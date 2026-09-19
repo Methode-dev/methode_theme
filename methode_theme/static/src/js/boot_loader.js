@@ -25,7 +25,7 @@ function removeBootLoader() {
         // Already gone, or we are on a page that never rendered one.
         return;
     }
-    el.classList.add("m-boot-loader--done");
+    el.classList.add("m-boot-loader__done");
 
     // Whichever lands first wins; remove() on a detached node is a no-op, so the
     // double call is safe.  The timeout is not belt-and-braces — `transitionend`
