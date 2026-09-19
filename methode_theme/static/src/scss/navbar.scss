@@ -24,12 +24,12 @@
     --NavBar-entry-padding-left: 0;
 }
 
-.m-nav-row--menu {
+.m-nav-row__menu {
     --o-navbar-height: 48px;
     background-color: var(--m-nav-menu-bg);
 }
 
-.m-nav-row--app {
+.m-nav-row__app {
     --o-navbar-height: 40px;
     --NavBar-entry-backgroundColor: transparent;
     background-color: var(--m-nav-app-bg);

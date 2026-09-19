@@ -208,12 +208,12 @@
 // not decoration — it is the difference between "2 due today" and "2 overdue",
 // which is the whole point of the tile. Both are derived brand tokens with
 // verified contrast (see the table in brand_variables.scss).
-.m-dash-stat-meta--danger {
+.m-dash-stat-meta__danger {
     color: var(--m-danger);
     font-weight: 600;
 }
 
-.m-dash-stat-meta--warning {
+.m-dash-stat-meta__warning {
     color: var(--m-warning);
     font-weight: 600;
 }
@@ -237,7 +237,7 @@
     background-color: var(--m-dash-card-bg);
 }
 
-.m-dash-banner--warning {
+.m-dash-banner__warning {
     background-color: var(--m-accent-soft);
     border-color: var(--m-accent-border);
 }
@@ -410,7 +410,7 @@
 }
 
 // Compact density: one step down the spacing scale, nothing restyled.
-.m-dash--compact {
+.m-dash__compact {
     .m-dash-stats,
     .m-dash-banners,
     .m-dash-shortcuts {
@@ -719,7 +719,7 @@
 
 // P8a only.  Muted and italic so it reads as scaffolding rather than as data —
 // see the note in dashboard.xml about not shipping convincing fake content.
-.m-dash-card-body--pending {
+.m-dash-card-body__pending {
     color: var(--m-text-secondary);
     font-style: italic;
     font-size: 0.875rem;
@@ -923,23 +923,23 @@
     border-radius: var(--m-radius-pill);
 }
 
-.m-dash-pill--overdue {
+.m-dash-pill__overdue {
     color: var(--m-warning);
     background-color: var(--m-accent-soft);
 }
 
-.m-dash-pill--today {
+.m-dash-pill__today {
     color: var(--m-text);
     background-color: var(--m-bg-secondary);
 }
 
-.m-dash-pill--planned {
+.m-dash-pill__planned {
     color: var(--m-text-secondary);
     background-color: transparent;
 }
 
 // Generic non-urgent status (draft, sent, paid, …). Muted neutral chip.
-.m-dash-pill--neutral {
+.m-dash-pill__neutral {
     color: var(--m-text-secondary);
     background-color: var(--m-bg-secondary);
 }
@@ -1036,8 +1036,8 @@
 
 // Tone is a property of the DATA (overdue is late, today is now), never of the
 // widget type — same rule as the stat tiles.
-.m-dash-chart-bar--danger { background-color: var(--m-danger); }
-.m-dash-chart-bar--accent { background-color: var(--m-accent); }
+.m-dash-chart-bar__danger { background-color: var(--m-danger); }
+.m-dash-chart-bar__accent { background-color: var(--m-accent); }
 
 .m-dash-chart-value {
     flex: 0 0 auto;
