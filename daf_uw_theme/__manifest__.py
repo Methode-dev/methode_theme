@@ -57,6 +57,7 @@
         # "Your logo" placeholder.  Runs on every update; never overwrites a logo an
         # admin chose (see res_company.py::_m_seed_appbar_image).
         'data/appbar_image_data.xml',
+        'data/mail_labels_data.xml',
     ],
     'assets': {
         'web._assets_primary_variables': [
@@ -82,6 +83,15 @@
             # muk_web_appsbar's, mounted on web.WebClient).
             'daf_uw_theme/static/src/navbar/navbar.js',
             'daf_uw_theme/static/src/navbar/navbar.xml',
+            # The sidebar lists what a person does, by role (staff / broker), not the
+            # installed apps.  JS + XML + SCSS are one change; see role_menu.js.
+            'daf_uw_theme/static/src/appsbar/role_menu_layout.js',
+            'daf_uw_theme/static/src/appsbar/role_menu.js',
+            'daf_uw_theme/static/src/appsbar/role_menu_navbar.js',
+            'daf_uw_theme/static/src/appsbar/role_menu.xml',
+            'daf_uw_theme/static/src/appsbar/role_menu.scss',
+            # User menu: drop "My Odoo.com Account".
+            'daf_uw_theme/static/src/user_menu/user_menu_items.js',
             # Page transitions between actions (open record, breadcrumb back,
             # menu / app switch, doAction redirects) + dropdown open motion.
             # JS + SCSS are one change; the durations are mirrored in both.
