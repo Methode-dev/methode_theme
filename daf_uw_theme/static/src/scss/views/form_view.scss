@@ -276,7 +276,7 @@
 
 // --- Chatter: full width, but its content on the sheet's content edge ---------
 // The chatter spans the whole renderer (owner call), while the sheet bg stops
-// at $o-form-view-sheet-max-width and hugs the left.  Without this, the
+// at $o-form-view-sheet-max-width (centred, see below).  Without this, the
 // chatter's first column (composer buttons, avatars, the date separator)
 // started on the sheet's OUTER border — a sheet-padding (16–24px) left of the
 // field labels it sits under — which reads as misaligned at any width and is
@@ -304,6 +304,32 @@
     }
 }
 
+// --- The sheet centred in the page (owner call, 2026-11-26) -------------------
+// Core stops the sheet bg at $o-form-view-sheet-max-width (1400px) and leaves
+// it on the left: on any screen wider than that, the form's bento hugged the
+// sidebar with an empty band on the right. Auto inline margins centre it.
+//
+// `width: 100%` belongs to the same fix: where the renderer is a flex COLUMN
+// (the chatter rule above), auto margins on a flex item also cancel its
+// stretch, and the sheet would shrink to its content. Full width capped by
+// core's max-width is the block layout's behaviour, centred.
+//
+// The chatter, full width until now, takes the same cap and margins: centred
+// under a centred sheet, its content keeps the sheet's left edge (the inset
+// above), which a full-width chatter would lose.
+.o_form_view:not(.o_base_settings_view) .o_form_renderer {
+    > .o_form_sheet_bg {
+        width: 100%;
+        margin-inline: auto;
+    }
+
+    > .o-mail-Form-chatter:not(.o-aside) {
+        width: 100%;
+        max-width: $o-form-view-sheet-max-width;
+        margin-inline: auto;
+    }
+}
+
 // --- The form header bar: sticky, so frosted (owner call) ---------------------
 // views/status_bar.scss is the pre-glass file, restored untouched: it styles
 // the STAGE widget.  This is the BAR around it, which core makes sticky with
@@ -325,6 +351,23 @@
             -webkit-backdrop-filter: var(--m-glass-filter);
             backdrop-filter: var(--m-glass-filter);
             pointer-events: none;
+        }
+    }
+
+    // Edge to edge in the page (2026-11-26). Since the sheet is centred, the
+    // bar's frost stopped at the sheet's edges and floated as a pale box with
+    // a band of page on each side. The layer now runs past both edges and the
+    // renderer clips it to the content area: one toolbar across the page,
+    // its stage widget and buttons still on the sheet's edges.
+    // `overflow-x: clip`, not `hidden`: clip makes no scroll container, so
+    // the bar stays sticky to .o_content. Dialogs are not under the action
+    // manager and keep the sheet-wide bar.
+    .o_action_manager .o_form_view .o_form_renderer {
+        overflow-x: clip;
+
+        .o_form_statusbar::before {
+            left: -100vw;
+            right: -100vw;
         }
     }
 }
